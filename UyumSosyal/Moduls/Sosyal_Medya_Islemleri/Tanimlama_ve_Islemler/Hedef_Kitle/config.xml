@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<example title="Kullanici Tanimlari">
+    <description>
+        <![CDATA[Kullanıcı bilgilerini getirir.]]>
+    </description>
+    <include>
+      <file url="../../Shared/SosyalMedyaForm.cs" />
+      <file url="../../Shared/SosyalMedyaFormRes.cs" />
+      <file url="../../Shared/FirsatSariAlanListesi.cs" />
+      <file url="../../Shared/FirsatSariAlanListesiRes.cs" />
+      <file url="../../Shared/HedefKitleM.cs" />
+      <file url="../../Shared/HedefKitleMRes.cs" />
+      <file url="../../Shared/SehirSariAlanListesi.cs" />
+      <file url="../../Shared/SehirSariAlanListesiRes.cs" />
+      <file url="../../Shared/SektorSariAlanListesi.cs" />
+      <file url="../../Shared/SektorSariAlanListesiRes.cs" />
+      <file url="../../Shared/UrunSariAlanListesi.cs" />
+      <file url="../../Shared/UrunSariAlanListesiRes.cs" />
+    </include>
+</example>

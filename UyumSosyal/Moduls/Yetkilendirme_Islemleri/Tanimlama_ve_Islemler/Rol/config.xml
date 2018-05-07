@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<example title="Kullanici Tanimlari">
+  <description>
+    <![CDATA[Rol bilgilerini getirir.]]>
+  </description>
+  <include>
+    <file url="../../Shared/UserRol.cs" />
+    <file url="../../Shared/UserRolRes.cs" />
+  </include>
+</example>

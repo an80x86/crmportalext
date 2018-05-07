@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<example title="Kullanici Tanimlari">
+    <description>
+        <![CDATA[Modul bilgilerini getirir.]]>
+    </description>
+    <include>
+      <file url="../../Shared/Modul.cs" />
+      <file url="../../Shared/ModulRes.cs" />
+      <file url="../../Shared/BaseRes.cs" />
+    </include>
+</example>

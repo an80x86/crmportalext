@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<example>
+  <order>
+    <folder name="Getting_Started" />
+    <folder name="Kitchen_Sink" />
+  </order>
+</example>

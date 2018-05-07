@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<example title="Kullanici Tanimlari">
+    <description>
+        <![CDATA[Kullanıcı bilgilerini getirir.]]>
+    </description>
+    <include>
+      <file url="../../Shared/HedefKitleM.cs" />
+      <file url="../../Shared/HedefKitleMRes.cs" />
+    </include>
+</example>
