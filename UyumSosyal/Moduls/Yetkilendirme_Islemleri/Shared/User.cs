@@ -126,6 +126,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
 
         private static List<Dto.UserRes> GetCustomers(int start, int limit, out int count, string ara)
         {
+
             var cache = (List<Dto.UserRes>)HttpRuntime.Cache["UserRes"];
             var _count = HttpRuntime.Cache["UserResCount"] == null ? 0 : (int)HttpRuntime.Cache["UserResCount"];
             if (cache == null)
@@ -150,6 +151,33 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
                 var ret = CutList(cache, start, limit);
                 return ret;
             }
+
+            return null;
+        }
+
+        private static List<Dto.UserRes> GetCustomers(out int count, string ara)
+        {
+
+            var cache = (List<Dto.UserRes>)HttpRuntime.Cache["UserRes"];
+            var _count = HttpRuntime.Cache["UserResCount"] == null ? 0 : (int)HttpRuntime.Cache["UserResCount"];
+            if (cache == null)
+            {
+                cache = LoadData(out count);
+
+                if (ara.Trim().Length > 0) cache = FilterList(cache, ara);
+                count = cache == null ? 0 : cache.Count;
+
+                return cache;
+            }
+            else
+            {
+                //count = (int)_count;
+
+                if (ara.Trim().Length > 0) cache = FilterList(cache, ara);
+                count = cache == null ? 0 : cache.Count;
+
+                return cache;
+            }
         }
 
         private static void ReLoad()
@@ -160,7 +188,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
 
         public static List<Dto.UserRes> GetFilter(int start, int limit, DataSorter sort, out int count, string ara)
         {
-            var ret = GetCustomers(start, limit, out count, ara);
+            var ret = GetCustomers(out count, ara);
 
             var orderBy = String.IsNullOrEmpty(sort.Property) ? "user_kod" : sort.Property;
             
@@ -174,6 +202,10 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
             {
                 ret = ret.OrderByDescending(x => dynamicPropFromStr.GetValue(x, null)).ToList();
             }
+
+            if (ret.Count < start) { start = 0; } // fixleme önemli!
+            count = ret.Count;
+            ret = CutList(ret, start, limit);
 
             return ret;
         }
