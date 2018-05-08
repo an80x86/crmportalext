@@ -5,25 +5,32 @@
     public static bool UserCheck(string userName, string userPass)
     {
         var ret = false;
-        var liste = Helper.GetWebService().PortalUserList(userName, 0, 100);
-        if (!string.IsNullOrEmpty(liste.Message))
+        try
         {
-            Helper.Error("Login işleminde hata : " + liste.Message);
-            return false;
-        }
-
-        foreach (var kul in liste.Value.KullaniciListesi)
-        {
-            if (kul.user_sifre == userPass.Md5Hash())
+            var liste = Helper.GetWebService().PortalUserList(userName, Helper.MIN, Helper.MAX);
+            if (!string.IsNullOrEmpty(liste.Message))
             {
-                ret = true;
-                break;
+                Helper.Error("Login işleminde hata : " + liste.Message);
+                return false;
             }
+
+            foreach (var kul in liste.Value.KullaniciListesi)
+            {
+                if (kul.user_sifre == userPass.Md5Hash())
+                {
+                    ret = true;
+                    break;
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            Helper.Error("PortalUserList'de web service hatası : " + ex.Message);
         }
 
         return ret;
     }
-    
+
     protected void btnLogin_Click(object sender, DirectEventArgs e)
     {
         var userCheck = UserCheck(this.txtUsername.Text, this.txtPassword.Text);
@@ -31,7 +38,7 @@
         {
             Session["user"] = this.txtUsername.Text;
             Response.Redirect(this.txtPassword.Text == "1" ? "UpdatePassword.aspx" : "Default.aspx");
-            return;            
+            return;
         }
 
         this.txtPassword.Text = "";

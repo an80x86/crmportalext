@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.Dto;
 
 namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
 {
@@ -18,7 +19,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
                     user_ad = "Yönetici",
                     user_soyad = "Kullanıcı",
                     user_sifre = "c81e728d9d4c2f636f067f89cc14862c",
-                    durum = true
+                    durum = "aktif"
                 });
                 ret.Add(new UserRes
                 {
@@ -27,7 +28,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
                     user_ad = "Normal",
                     user_soyad = "Kullanıcı",
                     user_sifre = "c81e728d9d4c2f636f067f89cc14862c",
-                    durum = true
+                    durum = "aktif"
                 });
                 ret.Add(new UserRes
                 {
@@ -36,7 +37,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
                     user_ad = "Rapor",
                     user_soyad = "Kullanıcı",
                     user_sifre = "c81e728d9d4c2f636f067f89cc14862c",
-                    durum = true
+                    durum = "aktif"
                 });
 
                 foreach(var r in ret)

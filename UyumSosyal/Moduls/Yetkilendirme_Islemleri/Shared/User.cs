@@ -6,6 +6,7 @@ using UyumSosyal.WebReference;
 using System.Net;
 using System.Configuration;
 using System.Data;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -13,6 +14,7 @@ using System.Web.Caching;
 using System.Web.Services;
 using System.Web;
 using Ext.Net.Utilities;
+using UserRes = UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.Dto.UserRes;
 
 namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
 {
@@ -49,89 +51,120 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
             return "ok";
         }
 
-        private static List<UserRes> GetData(int start, int limit, out int count, string arax)
+        private static List<Dto.UserRes> GetData(out int count)
         {
-            //var liste = Helper.GetWebService().PortalUserList(arax, start, limit);
-            var liste = Helper.GetWebService().PortalUserList("", start, limit);
+            var liste = Helper.GetWebService().PortalUserList("", Helper.MIN, Helper.MAX);
             if (!string.IsNullOrEmpty(liste.Message))
             {
                 throw new Exception(liste.Message);
             }
 
-            count = liste.Value.totalcount;
-            var ret = new List<UserRes>(liste.Value.totalcount);
-            ret.AddRange(liste.Value.KullaniciListesi.Select(l => new UserRes()
+            count = liste.Value.KullaniciListesi.Length;// totalcount;
+            var ret = new List<Dto.UserRes>(liste.Value.KullaniciListesi.Length/*liste.Value.totalcount*/);
+            ret.AddRange(liste.Value.KullaniciListesi.Select(l => new Dto.UserRes()
             {
-                durum = l.durum,
+                durum = l.durum ? "aktif" : "pasif",
                 id = l.id,
                 user_ad = l.user_ad,
                 user_kod = l.user_kod,
                 user_sifre = l.user_sifre,
                 user_soyad = l.user_soyad,
-                _count = liste.Value.totalcount
+                _count = liste.Value.KullaniciListesi.Length//liste.Value.totalcount
             }));
 
             return ret;
         }
 
-        private static List<UserRes> GetCustomers(int start, int limit, out int count, string arax, bool bypassCache = true)
+        private static List<Dto.UserRes> CutList(IReadOnlyList<UserRes> cache, int start, int limit)
         {
-            var cache = (List<UserRes>) HttpRuntime.Cache["UserRes"];
-            if (bypassCache || cache == null)
+            var ret = new List<Dto.UserRes>();
+            var count = cache.Count;
+            for (var i = 0; i < count; i++)
             {
-                cache = GetData(start, limit, out count, arax);
+                if (i >= start && ret.Count < limit)
+                {
+                    ret.Add(cache[i]);
+                }
+            }
+            return ret;
+        }
 
-                HttpRuntime.Cache.Insert(
-                    "UserRes",
-                    cache,
-                    null,
-                    DateTime.Now.AddHours(ConfigurationManager.AppSettings["cachetime"].ToInt()),
-                    System.Web.Caching.Cache.NoSlidingExpiration
-                );
+        private static List<Dto.UserRes> FilterList(IEnumerable<UserRes> cache, string ara)
+        {
+            var ret = cache.Where(
+                e => e.user_ad.ToLower().Contains(ara.ToLower()) ||
+                     e.user_kod.ToLower().Contains(ara.ToLower()) ||
+                     e.user_soyad.ToLower().Contains(ara.ToLower()) ||
+                     e.durum.ToLower().Contains(ara.ToLower())
+            );
 
-                return cache;
+            return ret.ToList();
+        }
+
+        private static List<Dto.UserRes> LoadData(out int count)
+        {
+            var cache = GetData(out count);
+
+            HttpRuntime.Cache.Insert(
+                "UserRes",
+                cache,
+                null,
+                DateTime.Now.AddHours(ConfigurationManager.AppSettings["cachetime"].ToInt()),
+                System.Web.Caching.Cache.NoSlidingExpiration
+            );
+
+            HttpRuntime.Cache.Insert(
+                "UserResCount",
+                count,
+                null,
+                DateTime.Now.AddHours(ConfigurationManager.AppSettings["cachetime"].ToInt()),
+                System.Web.Caching.Cache.NoSlidingExpiration
+            );
+
+            return cache;
+        }
+
+        private static List<Dto.UserRes> GetCustomers(int start, int limit, out int count, string ara)
+        {
+            var cache = (List<Dto.UserRes>)HttpRuntime.Cache["UserRes"];
+            var _count = HttpRuntime.Cache["UserResCount"] == null ? 0 : (int)HttpRuntime.Cache["UserResCount"];
+            if (cache == null)
+            {
+                cache = LoadData(out count);
+
+                if (ara.Trim().Length > 0) cache = FilterList(cache, ara);
+                count = cache == null ? 0 : cache.Count;
+
+                if (cache.Count < start) { start = 0; } // fixleme önemli!
+                var ret = CutList(cache, start, limit);
+                return ret;
             }
             else
             {
-                count = cache.Count; 
-                return cache;
+                //count = (int)_count;
+
+                if (ara.Trim().Length>0 ) cache = FilterList(cache, ara);
+                count = cache == null ? 0 : cache.Count;
+
+                if (cache.Count < start) {start = 0;} // fixleme önemli!
+                var ret = CutList(cache, start, limit);
+                return ret;
             }
         }
 
         private static void ReLoad()
         {
             int count;
-            GetCustomers(0, 1000, out count, "", true);
+            LoadData(out count);
         }
 
-        public static List<UserRes> GetFilter(int start, int limit, DataSorter sort, out int count, string arax)
+        public static List<Dto.UserRes> GetFilter(int start, int limit, DataSorter sort, out int count, string ara)
         {
-
-            var ret = GetCustomers(start, limit, out count, arax);
+            var ret = GetCustomers(start, limit, out count, ara);
 
             var orderBy = String.IsNullOrEmpty(sort.Property) ? "user_kod" : sort.Property;
-
-            // filtreleme
-            if (!string.IsNullOrEmpty(orderBy) && arax.Trim() != "")
-            {
-                switch (orderBy)
-                {
-                    case "user_kod":
-                        ret = ret.Where(x => x.user_kod.ToLower().Contains(arax.ToLower())).ToList();
-                        count = ret.Count;
-                        break;
-                    case "user_ad":
-                        ret = ret.Where(x => x.user_ad.ToLower().Contains(arax.ToLower())).ToList();
-                        count = ret.Count;
-                        break;
-                    case "user_soyad":
-                        ret = ret.Where(x => x.user_soyad.ToLower().Contains(arax.ToLower())).ToList();
-                        count = ret.Count;
-                        break;
-                }
-            }
-
-            var dynamicPropFromStr = typeof(UserRes).GetProperty(orderBy);
+            
+            var dynamicPropFromStr = typeof(Dto.UserRes).GetProperty(orderBy);
 
             if (sort.Direction == SortDirection.ASC)
             {

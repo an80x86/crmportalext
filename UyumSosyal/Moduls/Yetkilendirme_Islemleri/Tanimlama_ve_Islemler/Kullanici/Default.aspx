@@ -3,7 +3,7 @@
 
 <script runat="server">
     StoreReadDataEventArgs e;
-    
+
     protected void Store1_RefreshData(object sender, StoreReadDataEventArgs e)
     {
         this.e = e;
@@ -15,7 +15,7 @@
         e.InputParameters["start"] = this.e.Start;
         e.InputParameters["limit"] = this.e.Limit;
         e.InputParameters["sort"] = this.e.Sort[0];
-        e.InputParameters["arax"] = TextFieldArama.Text;
+        e.InputParameters["ara"] = TextFieldArama.Text;
     }
 
     protected void ObjectDataSource1_Selected(object sender, ObjectDataSourceStatusEventArgs e)
@@ -49,17 +49,24 @@
             return;
         }
 
-        var err = UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.User.Save(
-            gizli.Value, // ekle ise boş düzelt ise dolu gelir
-            TextFieldUserKod.Text.Trim(),
-            TextFieldAd.Text.Trim(),
-            TextFieldSoyad.Text.Trim(),
-            TextFieldSifre.Text.Trim(),
-            CheckboxDurum.Checked);
-        if (err != "ok")
+        try
         {
-            X.Msg.Alert("Dikkat", err).Show();
-            return;
+            var err = UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.User.Save(
+                gizli.Value, // ekle ise boş düzelt ise dolu gelir
+                TextFieldUserKod.Text.Trim(),
+                TextFieldAd.Text.Trim(),
+                TextFieldSoyad.Text.Trim(),
+                TextFieldSifre.Text.Trim(),
+                CheckboxDurum.Checked);
+            if (err != "ok")
+            {
+                Helper.Error("InsertPortalUSer", err);
+                return;
+            }
+        }
+        catch(Exception ex)
+        {
+            Helper.Error("InsertPortalUSer", ex);
         }
 
         // tazele
@@ -81,7 +88,7 @@
             X.MessageBox.Hide();
             if (don != "ok")
             {
-                X.Msg.Alert("Dikkat", don).Show();
+                Helper.Error("PortalKullaniciSil", don);
             }
             else
             {
@@ -91,11 +98,15 @@
                 lbUser.Text = "Seçilen Kullanıcı : Yok!";
             }
         }
+        catch(Exception ex)
+        {
+            Helper.Error("PortalKullaniciSil", ex);
+        }
         finally
         {
             X.MessageBox.Hide();
         }
-    }        
+    }
 </script>
 
 <!DOCTYPE html>
@@ -168,7 +179,7 @@
                 <asp:Parameter Name="limit" Type="Int32" />
                 <asp:Parameter Name="sort" Type="Object" />                
                 <asp:Parameter Name="count" Direction="Output" Type="Int32" />
-                <asp:Parameter Name="arax" Type="String" />
+                <asp:Parameter Name="ara" Type="String" />
             </SelectParameters>
         </asp:ObjectDataSource>
 
@@ -277,7 +288,7 @@
                                         #{TextFieldAd}.setValue(v[0].data.user_ad);
                                         #{TextFieldSoyad}.setValue(v[0].data.user_soyad);
                                         #{TextFieldSifre}.setValue(v[0].data.user_sifre);
-                                        #{CheckboxDurum}.setValue(v[0].data.durum);                                        
+                                        #{CheckboxDurum}.setValue(v[0].data.durum=='aktif');                                        
                                         #{PickWindowUserAdd}.show();" />
                                     </Listeners>   
                                 </ext:Button>
@@ -289,7 +300,7 @@
                                         <Click Handler="
                                                         var v= #{GridPanel1}.getSelectionModel().getSelection();
                                                         if (v.length==0) return;
-                                                        Ext.MessageBox.confirm('Dikkat', 'Silmek istiyor musunız?\n('+v[0].data.user_ad + ' ' + v[0].data.user_soyad + ')', showResult );" Delay="1"/>
+                                                        Ext.MessageBox.confirm('Dikkat', 'Silmek istiyor musunız?\n('+v[0].data.user_kod+')', showResult );" Delay="1"/>
                                     </Listeners>
                                 </ext:Button>                                
 
@@ -315,10 +326,10 @@
                                     DataSourceID="ObjectDataSource1"
                                     RemoteSort="true"
                                     OnReadData="Store1_RefreshData"
-                                    PageSize="23">
+                                    PageSize="11">
                                     <AutoLoadParams>
                                         <ext:Parameter Name="start" Value="0" Mode="Raw" />
-                                        <ext:Parameter Name="limit" Value="23" Mode="Raw" />
+                                        <ext:Parameter Name="limit" Value="11" Mode="Raw" />
                                     </AutoLoadParams>
                                     <Proxy>
                                         <ext:PageProxy />
@@ -331,7 +342,7 @@
                                                 <ext:ModelField Name="user_ad" />
                                                 <ext:ModelField Name="user_soyad" />
                                                 <ext:ModelField Name="user_sifre" />
-                                                <ext:ModelField Name="durum" Type="Boolean" />
+                                                <ext:ModelField Name="durum" />
                                             </Fields>
                                         </ext:Model>
                                     </Model>
@@ -346,9 +357,10 @@
                                     <ext:Column ID="Kod" runat="server" Text="Kullanıcı Kod" DataIndex="user_kod" Sortable="true" Flex="1" />
                                     <ext:Column ID="Column3" runat="server" Text="Ad" DataIndex="user_ad" Width="230" />
                                     <ext:Column ID="Column4" runat="server" Text="Soyad" DataIndex="user_soyad" Width="130" />
-                                    <ext:CheckColumn ID="CheckColumn1" runat="server" DataIndex="durum" Text="Durum"  Width="130"/>
+                                    <ext:Column ID="Column5" runat="server" DataIndex="durum" Text="Durum"  Width="130"/>
                                 </Columns>
                             </ColumnModel>
+
                             <View>
                                 <ext:GridView ID="GridView1" runat="server">
                                     <GetRowClass Handler="return 'x-grid-row-expanded';" />
@@ -362,18 +374,25 @@
                             <Listeners>
                                 <Select Handler="
                                     var v= #{GridPanel1}.getSelectionModel().getSelection();
-                                    if (v.length>0) { #{gizli}.setValue(v[0].data.id); #{lbUser}.setText('Seçilen Kullanıcı : ' + v[0].data.user_ad + ' ' + v[0].data.user_soyad);}
-                                    else {#{gizli}.setValue(''); #{lbUser}.setText('Seçilen Kullanıcı : Yok!');} "/>
+                                    if (v.length>0) { 
+                                        #{gizli}.setValue(v[0].data.id); 
+                                        #{lbUser}.setText('Seçilen Kullanıcı : ' + v[0].data.user_kod);
+                                    }
+                                    else {
+                                        #{gizli}.setValue(''); 
+                                        #{lbUser}.setText('Seçilen Kullanıcı : Yok!');
+                                    } "/>
                             </Listeners>
 
                             <BottomBar>
                                 <ext:PagingToolbar ID="PagingToolbar1" 
                                     runat="server" 
-                                    PageSize="23" 
+                                    PageSize="11" 
                                     StoreID="Store1" 
                                     DisplayInfo="true" 
                                     DisplayMsg="Gösterilen {0} - {1} / {2}" 
                                     EmptyMsg="Kayıt yok."
+                                    HideRefresh="True"
                                 />
                             </BottomBar>
                             <Features>

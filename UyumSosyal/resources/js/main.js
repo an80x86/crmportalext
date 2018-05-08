@@ -86,9 +86,9 @@ var tagLabelConfig = {
 var createTagItems = function (tab, node) {
     var tb = tab.getDockedItems('toolbar[dock="top"]')[0];
 
-    tb.insert(1, {
-        xtype: "tbseparator"
-    });
+    //tb.insert(1, {
+    //    xtype: "tbseparator"
+    //});
 
     if (node.data.tags.length > 0) {
         tb.insert(2, Ext.applyIf({

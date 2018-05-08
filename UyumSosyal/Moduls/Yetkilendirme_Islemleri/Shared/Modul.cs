@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Services;
+using UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.Dto;
 
 namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
 {
@@ -41,7 +42,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
             return "ok";
         }
 
-        public static List<ModulRes> GetFilter(int start, int limit, DataSorter sort, out int count, string arax)
+        public static List<Dto.ModulRes> GetFilter(int start, int limit, DataSorter sort, out int count, string arax)
         {
             var liste = Helper.GetWebService().PortalModulList("", start, limit);
             if (!string.IsNullOrEmpty(liste.Message))
@@ -50,8 +51,8 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
             }
 
             count = liste.Value.totalcount;
-            var ret = new List<ModulRes>(liste.Value.totalcount);
-            ret.AddRange(liste.Value.ModulListesi.Select(l => new ModulRes()
+            var ret = new List<Dto.ModulRes>(liste.Value.totalcount);
+            ret.AddRange(liste.Value.ModulListesi.Select(l => new Dto.ModulRes()
             {
                 aciklama = l.aciklama,
                 durum = l.durum,
@@ -83,7 +84,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
                 }
             }
 
-            var dynamicPropFromStr = typeof(ModulRes).GetProperty(orderBy);
+            var dynamicPropFromStr = typeof(Dto.ModulRes).GetProperty(orderBy);
 
             if (sort.Direction == SortDirection.ASC)
             {

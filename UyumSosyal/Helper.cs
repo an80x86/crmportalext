@@ -47,6 +47,9 @@ namespace UyumSosyal
 
     public static class Helper
     {
+        public static int MIN = 0;
+        public static int MAX = 99999;
+
         public static string Md5Hash(this string input)
         {
             var hash = new StringBuilder();
@@ -82,13 +85,18 @@ namespace UyumSosyal
 
         public static void Error(string msg)
         {
-            X.Msg.Show(new MessageBoxConfig
-            {
-                Title = "Dikkat",
-                Message = msg,
-                Buttons = MessageBox.Button.OK,
-                Icon = MessageBox.Icon.ERROR
-            });
+            X.Msg.Alert("Dikkat", msg).Show();
+        }
+
+        public static void Error(string fnkName, string msg)
+        {
+            X.Msg.Alert("Dikkat", string.Format("Uyum web service'i cevap vermiyor yada hata oluştu : metod adı : {0}, sistemden gelen hatya mesajı : {1}",
+                fnkName, msg)).Show();
+        }
+        public static void Error(string fnkName, Exception ex)
+        {
+            X.Msg.Alert("Dikkat", string.Format("Uyum web service'i de hata oluştu : metod adı : {0}, sistemden gelen hatya mesajı : {1}",
+                fnkName, ex.Message)).Show();
         }
     }
 }

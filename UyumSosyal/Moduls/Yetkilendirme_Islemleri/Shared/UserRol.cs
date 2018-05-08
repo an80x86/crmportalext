@@ -39,7 +39,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
             return "ok";
         }
 
-        public static List<UserRolRes> GetFilter(int start, int limit, DataSorter sort, out int count, string arax)
+        public static List<Dto.UserRolRes> GetFilter(int start, int limit, DataSorter sort, out int count, string arax)
         {
             //var liste = Helper.GetWebService().PortalUSerRolList(0, start, limit); // sifir gelince problem cikiyor
             var liste = Helper.GetWebService().PortalUSerRolList(1, start, limit);
@@ -49,8 +49,8 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
             }
 
             count = liste.Value.totalcount;
-            var ret = new List<UserRolRes>(liste.Value.totalcount);
-            ret.AddRange(liste.Value.KullaniciRolListesi.Select(l => new UserRolRes()
+            var ret = new List<Dto.UserRolRes>(liste.Value.totalcount);
+            ret.AddRange(liste.Value.KullaniciRolListesi.Select(l => new Dto.UserRolRes()
             {
                 aspnet_rol_id = l.rol_id,
                 aspnet_kullanici_id = l.aspnet_kullanici_id,
