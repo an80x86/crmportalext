@@ -79,7 +79,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
                     modul_kod = "kullanici",
                     modul_path = "",
                     aciklama = "Kullanıcı İşlemleri",
-                    durum = true,
+                    durum = "aktif",
                 });
                 ret.Add(new ModulRes()
                 {
@@ -87,7 +87,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
                     modul_kod = "modul",
                     modul_path = "",
                     aciklama = "Modül İşlemleri",
-                    durum = true,
+                    durum = "aktif",
                 });
                 ret.Add(new ModulRes()
                 {
@@ -95,7 +95,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
                     modul_kod = "rol",
                     modul_path = "",
                     aciklama = "Rol İşlemleri",
-                    durum = true,
+                    durum = "aktif",
                 });
                 ret.Add(new ModulRes()
                 {
@@ -103,7 +103,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
                     modul_kod = "yetki",
                     modul_path = "",
                     aciklama = "Yetki İşlemleri",
-                    durum = true,
+                    durum = "aktif",
                 });
                 ret.Add(new ModulRes()
                 {
@@ -111,7 +111,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
                     modul_kod = "form",
                     modul_path = "",
                     aciklama = "Form İşlemleri",
-                    durum = true,
+                    durum = "aktif",
                 });
                 ret.Add(new ModulRes()
                 {
@@ -119,7 +119,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
                     modul_kod = "detay",
                     modul_path = "",
                     aciklama = "Form Detay İşlemleri",
-                    durum = true,
+                    durum = "aktif",
                 });
 
                 foreach (var r in ret)

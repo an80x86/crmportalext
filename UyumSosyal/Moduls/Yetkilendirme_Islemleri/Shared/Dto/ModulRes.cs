@@ -12,7 +12,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.Dto
 
         public string modul_path { get; set; }
 
-        public bool durum { get; set; }
+        public string durum { get; set; }
 
         public string aciklama { get; set; }
     }
