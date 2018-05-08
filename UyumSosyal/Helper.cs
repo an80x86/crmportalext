@@ -13,38 +13,7 @@ namespace UyumSosyal
 {
     using Ext.Net;
     using System;
-
-    public class SingletonService : WsdlUyumCrm
-    {
-        private static SingletonService instance;
-
-        private SingletonService() { }
-
-        public static SingletonService Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    try
-                    {
-                        instance = new SingletonService { CookieContainer = new CookieContainer(1000) };
-                        instance.UyumUserLogin(
-                            ConfigurationManager.AppSettings["val1"],
-                            ConfigurationManager.AppSettings["val2"],
-                            ConfigurationManager.AppSettings["val3"]
-                        );
-                    }
-                    catch(Exception ex)
-                    {
-                        Helper.Error("Web Service bağlantısı yapılamadı!\n"+ex.Message);
-                    }
-                }
-                return instance;
-            }
-        }
-    }
-
+    
     public static class Helper
     {
         public static int MIN = 0;
@@ -70,8 +39,6 @@ namespace UyumSosyal
 
         public static WsdlUyumCrm GetWebService()
         {
-            return SingletonService.Instance;
-            /*
             var serv = new WsdlUyumCrm {CookieContainer = new CookieContainer(1000)};
             serv.UyumUserLogin(
                 ConfigurationManager.AppSettings["val1"],
@@ -80,7 +47,6 @@ namespace UyumSosyal
             );
 
             return serv;
-            */
         }
 
         public static void Error(string msg)
