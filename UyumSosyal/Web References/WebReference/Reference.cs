@@ -31,6 +31,42 @@ namespace UyumSosyal.WebReference {
         
         private System.Threading.SendOrPostCallback CKategoriSilOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GenelSehirListesiOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback SehirKaydetOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback SehirSilOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GenelIlceListesiOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback IlceKaydetOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback IlceSilOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback UlkeListesiOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback UlkeKaydetOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback UlkeSilOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GenelUrunLilstesiOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback UrunSilOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback UrunKaydetOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback ParametrikAlanListesiOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback ParametrikAlanKaydetOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback ParametrikAlanSilOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GenelRakipListesiOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback RakipKaydetOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback RakipSilOperationCompleted;
+        
         private System.Threading.SendOrPostCallback CariYetkiliListesiOperationCompleted;
         
         private System.Threading.SendOrPostCallback CariYetkiliSilOperationCompleted;
@@ -401,6 +437,60 @@ namespace UyumSosyal.WebReference {
         
         /// <remarks/>
         public event CKategoriSilCompletedEventHandler CKategoriSilCompleted;
+        
+        /// <remarks/>
+        public event GenelSehirListesiCompletedEventHandler GenelSehirListesiCompleted;
+        
+        /// <remarks/>
+        public event SehirKaydetCompletedEventHandler SehirKaydetCompleted;
+        
+        /// <remarks/>
+        public event SehirSilCompletedEventHandler SehirSilCompleted;
+        
+        /// <remarks/>
+        public event GenelIlceListesiCompletedEventHandler GenelIlceListesiCompleted;
+        
+        /// <remarks/>
+        public event IlceKaydetCompletedEventHandler IlceKaydetCompleted;
+        
+        /// <remarks/>
+        public event IlceSilCompletedEventHandler IlceSilCompleted;
+        
+        /// <remarks/>
+        public event UlkeListesiCompletedEventHandler UlkeListesiCompleted;
+        
+        /// <remarks/>
+        public event UlkeKaydetCompletedEventHandler UlkeKaydetCompleted;
+        
+        /// <remarks/>
+        public event UlkeSilCompletedEventHandler UlkeSilCompleted;
+        
+        /// <remarks/>
+        public event GenelUrunLilstesiCompletedEventHandler GenelUrunLilstesiCompleted;
+        
+        /// <remarks/>
+        public event UrunSilCompletedEventHandler UrunSilCompleted;
+        
+        /// <remarks/>
+        public event UrunKaydetCompletedEventHandler UrunKaydetCompleted;
+        
+        /// <remarks/>
+        public event ParametrikAlanListesiCompletedEventHandler ParametrikAlanListesiCompleted;
+        
+        /// <remarks/>
+        public event ParametrikAlanKaydetCompletedEventHandler ParametrikAlanKaydetCompleted;
+        
+        /// <remarks/>
+        public event ParametrikAlanSilCompletedEventHandler ParametrikAlanSilCompleted;
+        
+        /// <remarks/>
+        public event GenelRakipListesiCompletedEventHandler GenelRakipListesiCompleted;
+        
+        /// <remarks/>
+        public event RakipKaydetCompletedEventHandler RakipKaydetCompleted;
+        
+        /// <remarks/>
+        public event RakipSilCompletedEventHandler RakipSilCompleted;
         
         /// <remarks/>
         public event CariYetkiliListesiCompletedEventHandler CariYetkiliListesiCompleted;
@@ -923,6 +1013,530 @@ namespace UyumSosyal.WebReference {
             if ((this.CKategoriSilCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.CKategoriSilCompleted(this, new CKategoriSilCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GenelSehirListesi", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfListOfSehir GenelSehirListesi(string sehirad) {
+            object[] results = this.Invoke("GenelSehirListesi", new object[] {
+                        sehirad});
+            return ((MobServiceResultOfListOfSehir)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GenelSehirListesiAsync(string sehirad) {
+            this.GenelSehirListesiAsync(sehirad, null);
+        }
+        
+        /// <remarks/>
+        public void GenelSehirListesiAsync(string sehirad, object userState) {
+            if ((this.GenelSehirListesiOperationCompleted == null)) {
+                this.GenelSehirListesiOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenelSehirListesiOperationCompleted);
+            }
+            this.InvokeAsync("GenelSehirListesi", new object[] {
+                        sehirad}, this.GenelSehirListesiOperationCompleted, userState);
+        }
+        
+        private void OnGenelSehirListesiOperationCompleted(object arg) {
+            if ((this.GenelSehirListesiCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GenelSehirListesiCompleted(this, new GenelSehirListesiCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/SehirKaydet", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfBoolean SehirKaydet(Sehir sehir) {
+            object[] results = this.Invoke("SehirKaydet", new object[] {
+                        sehir});
+            return ((MobServiceResultOfBoolean)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void SehirKaydetAsync(Sehir sehir) {
+            this.SehirKaydetAsync(sehir, null);
+        }
+        
+        /// <remarks/>
+        public void SehirKaydetAsync(Sehir sehir, object userState) {
+            if ((this.SehirKaydetOperationCompleted == null)) {
+                this.SehirKaydetOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSehirKaydetOperationCompleted);
+            }
+            this.InvokeAsync("SehirKaydet", new object[] {
+                        sehir}, this.SehirKaydetOperationCompleted, userState);
+        }
+        
+        private void OnSehirKaydetOperationCompleted(object arg) {
+            if ((this.SehirKaydetCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SehirKaydetCompleted(this, new SehirKaydetCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/SehirSil", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfBoolean SehirSil(int sehirId) {
+            object[] results = this.Invoke("SehirSil", new object[] {
+                        sehirId});
+            return ((MobServiceResultOfBoolean)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void SehirSilAsync(int sehirId) {
+            this.SehirSilAsync(sehirId, null);
+        }
+        
+        /// <remarks/>
+        public void SehirSilAsync(int sehirId, object userState) {
+            if ((this.SehirSilOperationCompleted == null)) {
+                this.SehirSilOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSehirSilOperationCompleted);
+            }
+            this.InvokeAsync("SehirSil", new object[] {
+                        sehirId}, this.SehirSilOperationCompleted, userState);
+        }
+        
+        private void OnSehirSilOperationCompleted(object arg) {
+            if ((this.SehirSilCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SehirSilCompleted(this, new SehirSilCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GenelIlceListesi", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfListOfIlce GenelIlceListesi(string ilcead) {
+            object[] results = this.Invoke("GenelIlceListesi", new object[] {
+                        ilcead});
+            return ((MobServiceResultOfListOfIlce)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GenelIlceListesiAsync(string ilcead) {
+            this.GenelIlceListesiAsync(ilcead, null);
+        }
+        
+        /// <remarks/>
+        public void GenelIlceListesiAsync(string ilcead, object userState) {
+            if ((this.GenelIlceListesiOperationCompleted == null)) {
+                this.GenelIlceListesiOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenelIlceListesiOperationCompleted);
+            }
+            this.InvokeAsync("GenelIlceListesi", new object[] {
+                        ilcead}, this.GenelIlceListesiOperationCompleted, userState);
+        }
+        
+        private void OnGenelIlceListesiOperationCompleted(object arg) {
+            if ((this.GenelIlceListesiCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GenelIlceListesiCompleted(this, new GenelIlceListesiCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IlceKaydet", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfBoolean IlceKaydet(Ilce ilce) {
+            object[] results = this.Invoke("IlceKaydet", new object[] {
+                        ilce});
+            return ((MobServiceResultOfBoolean)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void IlceKaydetAsync(Ilce ilce) {
+            this.IlceKaydetAsync(ilce, null);
+        }
+        
+        /// <remarks/>
+        public void IlceKaydetAsync(Ilce ilce, object userState) {
+            if ((this.IlceKaydetOperationCompleted == null)) {
+                this.IlceKaydetOperationCompleted = new System.Threading.SendOrPostCallback(this.OnIlceKaydetOperationCompleted);
+            }
+            this.InvokeAsync("IlceKaydet", new object[] {
+                        ilce}, this.IlceKaydetOperationCompleted, userState);
+        }
+        
+        private void OnIlceKaydetOperationCompleted(object arg) {
+            if ((this.IlceKaydetCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.IlceKaydetCompleted(this, new IlceKaydetCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/IlceSil", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfBoolean IlceSil(int IlceId) {
+            object[] results = this.Invoke("IlceSil", new object[] {
+                        IlceId});
+            return ((MobServiceResultOfBoolean)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void IlceSilAsync(int IlceId) {
+            this.IlceSilAsync(IlceId, null);
+        }
+        
+        /// <remarks/>
+        public void IlceSilAsync(int IlceId, object userState) {
+            if ((this.IlceSilOperationCompleted == null)) {
+                this.IlceSilOperationCompleted = new System.Threading.SendOrPostCallback(this.OnIlceSilOperationCompleted);
+            }
+            this.InvokeAsync("IlceSil", new object[] {
+                        IlceId}, this.IlceSilOperationCompleted, userState);
+        }
+        
+        private void OnIlceSilOperationCompleted(object arg) {
+            if ((this.IlceSilCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.IlceSilCompleted(this, new IlceSilCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/UlkeListesi", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfListOfUlke UlkeListesi(string ulkead) {
+            object[] results = this.Invoke("UlkeListesi", new object[] {
+                        ulkead});
+            return ((MobServiceResultOfListOfUlke)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void UlkeListesiAsync(string ulkead) {
+            this.UlkeListesiAsync(ulkead, null);
+        }
+        
+        /// <remarks/>
+        public void UlkeListesiAsync(string ulkead, object userState) {
+            if ((this.UlkeListesiOperationCompleted == null)) {
+                this.UlkeListesiOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUlkeListesiOperationCompleted);
+            }
+            this.InvokeAsync("UlkeListesi", new object[] {
+                        ulkead}, this.UlkeListesiOperationCompleted, userState);
+        }
+        
+        private void OnUlkeListesiOperationCompleted(object arg) {
+            if ((this.UlkeListesiCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UlkeListesiCompleted(this, new UlkeListesiCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/UlkeKaydet", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfBoolean UlkeKaydet(Ulke ulke) {
+            object[] results = this.Invoke("UlkeKaydet", new object[] {
+                        ulke});
+            return ((MobServiceResultOfBoolean)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void UlkeKaydetAsync(Ulke ulke) {
+            this.UlkeKaydetAsync(ulke, null);
+        }
+        
+        /// <remarks/>
+        public void UlkeKaydetAsync(Ulke ulke, object userState) {
+            if ((this.UlkeKaydetOperationCompleted == null)) {
+                this.UlkeKaydetOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUlkeKaydetOperationCompleted);
+            }
+            this.InvokeAsync("UlkeKaydet", new object[] {
+                        ulke}, this.UlkeKaydetOperationCompleted, userState);
+        }
+        
+        private void OnUlkeKaydetOperationCompleted(object arg) {
+            if ((this.UlkeKaydetCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UlkeKaydetCompleted(this, new UlkeKaydetCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/UlkeSil", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfBoolean UlkeSil(int ulkeId) {
+            object[] results = this.Invoke("UlkeSil", new object[] {
+                        ulkeId});
+            return ((MobServiceResultOfBoolean)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void UlkeSilAsync(int ulkeId) {
+            this.UlkeSilAsync(ulkeId, null);
+        }
+        
+        /// <remarks/>
+        public void UlkeSilAsync(int ulkeId, object userState) {
+            if ((this.UlkeSilOperationCompleted == null)) {
+                this.UlkeSilOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUlkeSilOperationCompleted);
+            }
+            this.InvokeAsync("UlkeSil", new object[] {
+                        ulkeId}, this.UlkeSilOperationCompleted, userState);
+        }
+        
+        private void OnUlkeSilOperationCompleted(object arg) {
+            if ((this.UlkeSilCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UlkeSilCompleted(this, new UlkeSilCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GenelUrunLilstesi", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfListOfUrun GenelUrunLilstesi(string urunad) {
+            object[] results = this.Invoke("GenelUrunLilstesi", new object[] {
+                        urunad});
+            return ((MobServiceResultOfListOfUrun)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GenelUrunLilstesiAsync(string urunad) {
+            this.GenelUrunLilstesiAsync(urunad, null);
+        }
+        
+        /// <remarks/>
+        public void GenelUrunLilstesiAsync(string urunad, object userState) {
+            if ((this.GenelUrunLilstesiOperationCompleted == null)) {
+                this.GenelUrunLilstesiOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenelUrunLilstesiOperationCompleted);
+            }
+            this.InvokeAsync("GenelUrunLilstesi", new object[] {
+                        urunad}, this.GenelUrunLilstesiOperationCompleted, userState);
+        }
+        
+        private void OnGenelUrunLilstesiOperationCompleted(object arg) {
+            if ((this.GenelUrunLilstesiCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GenelUrunLilstesiCompleted(this, new GenelUrunLilstesiCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/UrunSil", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfBoolean UrunSil(int urunId) {
+            object[] results = this.Invoke("UrunSil", new object[] {
+                        urunId});
+            return ((MobServiceResultOfBoolean)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void UrunSilAsync(int urunId) {
+            this.UrunSilAsync(urunId, null);
+        }
+        
+        /// <remarks/>
+        public void UrunSilAsync(int urunId, object userState) {
+            if ((this.UrunSilOperationCompleted == null)) {
+                this.UrunSilOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUrunSilOperationCompleted);
+            }
+            this.InvokeAsync("UrunSil", new object[] {
+                        urunId}, this.UrunSilOperationCompleted, userState);
+        }
+        
+        private void OnUrunSilOperationCompleted(object arg) {
+            if ((this.UrunSilCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UrunSilCompleted(this, new UrunSilCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/UrunKaydet", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfBoolean UrunKaydet(Urun urun) {
+            object[] results = this.Invoke("UrunKaydet", new object[] {
+                        urun});
+            return ((MobServiceResultOfBoolean)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void UrunKaydetAsync(Urun urun) {
+            this.UrunKaydetAsync(urun, null);
+        }
+        
+        /// <remarks/>
+        public void UrunKaydetAsync(Urun urun, object userState) {
+            if ((this.UrunKaydetOperationCompleted == null)) {
+                this.UrunKaydetOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUrunKaydetOperationCompleted);
+            }
+            this.InvokeAsync("UrunKaydet", new object[] {
+                        urun}, this.UrunKaydetOperationCompleted, userState);
+        }
+        
+        private void OnUrunKaydetOperationCompleted(object arg) {
+            if ((this.UrunKaydetCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UrunKaydetCompleted(this, new UrunKaydetCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ParametrikAlanListesi", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfListOfKbParam ParametrikAlanListesi(string kok, string paramkod) {
+            object[] results = this.Invoke("ParametrikAlanListesi", new object[] {
+                        kok,
+                        paramkod});
+            return ((MobServiceResultOfListOfKbParam)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void ParametrikAlanListesiAsync(string kok, string paramkod) {
+            this.ParametrikAlanListesiAsync(kok, paramkod, null);
+        }
+        
+        /// <remarks/>
+        public void ParametrikAlanListesiAsync(string kok, string paramkod, object userState) {
+            if ((this.ParametrikAlanListesiOperationCompleted == null)) {
+                this.ParametrikAlanListesiOperationCompleted = new System.Threading.SendOrPostCallback(this.OnParametrikAlanListesiOperationCompleted);
+            }
+            this.InvokeAsync("ParametrikAlanListesi", new object[] {
+                        kok,
+                        paramkod}, this.ParametrikAlanListesiOperationCompleted, userState);
+        }
+        
+        private void OnParametrikAlanListesiOperationCompleted(object arg) {
+            if ((this.ParametrikAlanListesiCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ParametrikAlanListesiCompleted(this, new ParametrikAlanListesiCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ParametrikAlanKaydet", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfBoolean ParametrikAlanKaydet(KbParam param) {
+            object[] results = this.Invoke("ParametrikAlanKaydet", new object[] {
+                        param});
+            return ((MobServiceResultOfBoolean)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void ParametrikAlanKaydetAsync(KbParam param) {
+            this.ParametrikAlanKaydetAsync(param, null);
+        }
+        
+        /// <remarks/>
+        public void ParametrikAlanKaydetAsync(KbParam param, object userState) {
+            if ((this.ParametrikAlanKaydetOperationCompleted == null)) {
+                this.ParametrikAlanKaydetOperationCompleted = new System.Threading.SendOrPostCallback(this.OnParametrikAlanKaydetOperationCompleted);
+            }
+            this.InvokeAsync("ParametrikAlanKaydet", new object[] {
+                        param}, this.ParametrikAlanKaydetOperationCompleted, userState);
+        }
+        
+        private void OnParametrikAlanKaydetOperationCompleted(object arg) {
+            if ((this.ParametrikAlanKaydetCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ParametrikAlanKaydetCompleted(this, new ParametrikAlanKaydetCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ParametrikAlanSil", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfBoolean ParametrikAlanSil(int paramId) {
+            object[] results = this.Invoke("ParametrikAlanSil", new object[] {
+                        paramId});
+            return ((MobServiceResultOfBoolean)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void ParametrikAlanSilAsync(int paramId) {
+            this.ParametrikAlanSilAsync(paramId, null);
+        }
+        
+        /// <remarks/>
+        public void ParametrikAlanSilAsync(int paramId, object userState) {
+            if ((this.ParametrikAlanSilOperationCompleted == null)) {
+                this.ParametrikAlanSilOperationCompleted = new System.Threading.SendOrPostCallback(this.OnParametrikAlanSilOperationCompleted);
+            }
+            this.InvokeAsync("ParametrikAlanSil", new object[] {
+                        paramId}, this.ParametrikAlanSilOperationCompleted, userState);
+        }
+        
+        private void OnParametrikAlanSilOperationCompleted(object arg) {
+            if ((this.ParametrikAlanSilCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ParametrikAlanSilCompleted(this, new ParametrikAlanSilCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GenelRakipListesi", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfListOfRakip GenelRakipListesi(string rakipad) {
+            object[] results = this.Invoke("GenelRakipListesi", new object[] {
+                        rakipad});
+            return ((MobServiceResultOfListOfRakip)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GenelRakipListesiAsync(string rakipad) {
+            this.GenelRakipListesiAsync(rakipad, null);
+        }
+        
+        /// <remarks/>
+        public void GenelRakipListesiAsync(string rakipad, object userState) {
+            if ((this.GenelRakipListesiOperationCompleted == null)) {
+                this.GenelRakipListesiOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGenelRakipListesiOperationCompleted);
+            }
+            this.InvokeAsync("GenelRakipListesi", new object[] {
+                        rakipad}, this.GenelRakipListesiOperationCompleted, userState);
+        }
+        
+        private void OnGenelRakipListesiOperationCompleted(object arg) {
+            if ((this.GenelRakipListesiCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GenelRakipListesiCompleted(this, new GenelRakipListesiCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/RakipKaydet", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfBoolean RakipKaydet(Rakip rakip) {
+            object[] results = this.Invoke("RakipKaydet", new object[] {
+                        rakip});
+            return ((MobServiceResultOfBoolean)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void RakipKaydetAsync(Rakip rakip) {
+            this.RakipKaydetAsync(rakip, null);
+        }
+        
+        /// <remarks/>
+        public void RakipKaydetAsync(Rakip rakip, object userState) {
+            if ((this.RakipKaydetOperationCompleted == null)) {
+                this.RakipKaydetOperationCompleted = new System.Threading.SendOrPostCallback(this.OnRakipKaydetOperationCompleted);
+            }
+            this.InvokeAsync("RakipKaydet", new object[] {
+                        rakip}, this.RakipKaydetOperationCompleted, userState);
+        }
+        
+        private void OnRakipKaydetOperationCompleted(object arg) {
+            if ((this.RakipKaydetCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.RakipKaydetCompleted(this, new RakipKaydetCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/RakipSil", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public MobServiceResultOfBoolean RakipSil(int rakipId) {
+            object[] results = this.Invoke("RakipSil", new object[] {
+                        rakipId});
+            return ((MobServiceResultOfBoolean)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void RakipSilAsync(int rakipId) {
+            this.RakipSilAsync(rakipId, null);
+        }
+        
+        /// <remarks/>
+        public void RakipSilAsync(int rakipId, object userState) {
+            if ((this.RakipSilOperationCompleted == null)) {
+                this.RakipSilOperationCompleted = new System.Threading.SendOrPostCallback(this.OnRakipSilOperationCompleted);
+            }
+            this.InvokeAsync("RakipSil", new object[] {
+                        rakipId}, this.RakipSilOperationCompleted, userState);
+        }
+        
+        private void OnRakipSilOperationCompleted(object arg) {
+            if ((this.RakipSilCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.RakipSilCompleted(this, new RakipSilCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -3277,13 +3891,13 @@ namespace UyumSosyal.WebReference {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/CrmFormListesi", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public MobServiceResultOfListOfCrmForm CrmFormListesi(System.DateTime startdate, System.DateTime enddate, int start, int limit) {
+        public MobServiceResultOfFormListesiRet CrmFormListesi(System.DateTime startdate, System.DateTime enddate, int start, int limit) {
             object[] results = this.Invoke("CrmFormListesi", new object[] {
                         startdate,
                         enddate,
                         start,
                         limit});
-            return ((MobServiceResultOfListOfCrmForm)(results[0]));
+            return ((MobServiceResultOfFormListesiRet)(results[0]));
         }
         
         /// <remarks/>
@@ -19710,65 +20324,29 @@ namespace UyumSosyal.WebReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
-    public partial class MobServiceResultOfListOfCrmForm {
+    public partial class FormListesiRet {
         
-        private string vField;
+        private int kayitsayisiField;
         
-        private string messageField;
-        
-        private bool needLoginField;
-        
-        private bool resultField;
-        
-        private CrmForm[] valueField;
+        private CrmForm[] formListesiField;
         
         /// <remarks/>
-        public string V {
+        public int kayitsayisi {
             get {
-                return this.vField;
+                return this.kayitsayisiField;
             }
             set {
-                this.vField = value;
+                this.kayitsayisiField = value;
             }
         }
         
         /// <remarks/>
-        public string Message {
+        public CrmForm[] FormListesi {
             get {
-                return this.messageField;
+                return this.formListesiField;
             }
             set {
-                this.messageField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public bool NeedLogin {
-            get {
-                return this.needLoginField;
-            }
-            set {
-                this.needLoginField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public bool Result {
-            get {
-                return this.resultField;
-            }
-            set {
-                this.resultField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public CrmForm[] Value {
-            get {
-                return this.valueField;
-            }
-            set {
-                this.valueField = value;
+                this.formListesiField = value;
             }
         }
     }
@@ -20402,6 +20980,75 @@ namespace UyumSosyal.WebReference {
             }
             set {
                 this.create_dateField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class MobServiceResultOfFormListesiRet {
+        
+        private string vField;
+        
+        private string messageField;
+        
+        private bool needLoginField;
+        
+        private bool resultField;
+        
+        private FormListesiRet valueField;
+        
+        /// <remarks/>
+        public string V {
+            get {
+                return this.vField;
+            }
+            set {
+                this.vField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Message {
+            get {
+                return this.messageField;
+            }
+            set {
+                this.messageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool NeedLogin {
+            get {
+                return this.needLoginField;
+            }
+            set {
+                this.needLoginField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                return this.resultField;
+            }
+            set {
+                this.resultField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public FormListesiRet Value {
+            get {
+                return this.valueField;
+            }
+            set {
+                this.valueField = value;
             }
         }
     }
@@ -25873,6 +26520,978 @@ namespace UyumSosyal.WebReference {
     }
     
     /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Rakip {
+        
+        private string rakip_kodField;
+        
+        private string rakip_adField;
+        
+        private string adres1Field;
+        
+        private string adres2Field;
+        
+        private string adres3Field;
+        
+        private string sehir_adField;
+        
+        private string ilce_adField;
+        
+        private string ulke_kodField;
+        
+        private string web_siteField;
+        
+        private int rakipIdField;
+        
+        /// <remarks/>
+        public string rakip_kod {
+            get {
+                return this.rakip_kodField;
+            }
+            set {
+                this.rakip_kodField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string rakip_ad {
+            get {
+                return this.rakip_adField;
+            }
+            set {
+                this.rakip_adField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string adres1 {
+            get {
+                return this.adres1Field;
+            }
+            set {
+                this.adres1Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string adres2 {
+            get {
+                return this.adres2Field;
+            }
+            set {
+                this.adres2Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string adres3 {
+            get {
+                return this.adres3Field;
+            }
+            set {
+                this.adres3Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string sehir_ad {
+            get {
+                return this.sehir_adField;
+            }
+            set {
+                this.sehir_adField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ilce_ad {
+            get {
+                return this.ilce_adField;
+            }
+            set {
+                this.ilce_adField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ulke_kod {
+            get {
+                return this.ulke_kodField;
+            }
+            set {
+                this.ulke_kodField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string web_site {
+            get {
+                return this.web_siteField;
+            }
+            set {
+                this.web_siteField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int rakipId {
+            get {
+                return this.rakipIdField;
+            }
+            set {
+                this.rakipIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class MobServiceResultOfListOfRakip {
+        
+        private string vField;
+        
+        private string messageField;
+        
+        private bool needLoginField;
+        
+        private bool resultField;
+        
+        private Rakip[] valueField;
+        
+        /// <remarks/>
+        public string V {
+            get {
+                return this.vField;
+            }
+            set {
+                this.vField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Message {
+            get {
+                return this.messageField;
+            }
+            set {
+                this.messageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool NeedLogin {
+            get {
+                return this.needLoginField;
+            }
+            set {
+                this.needLoginField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                return this.resultField;
+            }
+            set {
+                this.resultField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public Rakip[] Value {
+            get {
+                return this.valueField;
+            }
+            set {
+                this.valueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class KbParam {
+        
+        private string kokField;
+        
+        private string param_kodField;
+        
+        private string param_adField;
+        
+        private string siralama_kodField;
+        
+        private decimal iskonto_yuzdesiField;
+        
+        private bool pasifField;
+        
+        private bool faaliyet_olusturField;
+        
+        private int paramIdField;
+        
+        /// <remarks/>
+        public string kok {
+            get {
+                return this.kokField;
+            }
+            set {
+                this.kokField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string param_kod {
+            get {
+                return this.param_kodField;
+            }
+            set {
+                this.param_kodField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string param_ad {
+            get {
+                return this.param_adField;
+            }
+            set {
+                this.param_adField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string siralama_kod {
+            get {
+                return this.siralama_kodField;
+            }
+            set {
+                this.siralama_kodField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public decimal iskonto_yuzdesi {
+            get {
+                return this.iskonto_yuzdesiField;
+            }
+            set {
+                this.iskonto_yuzdesiField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool pasif {
+            get {
+                return this.pasifField;
+            }
+            set {
+                this.pasifField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool faaliyet_olustur {
+            get {
+                return this.faaliyet_olusturField;
+            }
+            set {
+                this.faaliyet_olusturField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int paramId {
+            get {
+                return this.paramIdField;
+            }
+            set {
+                this.paramIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class MobServiceResultOfListOfKbParam {
+        
+        private string vField;
+        
+        private string messageField;
+        
+        private bool needLoginField;
+        
+        private bool resultField;
+        
+        private KbParam[] valueField;
+        
+        /// <remarks/>
+        public string V {
+            get {
+                return this.vField;
+            }
+            set {
+                this.vField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Message {
+            get {
+                return this.messageField;
+            }
+            set {
+                this.messageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool NeedLogin {
+            get {
+                return this.needLoginField;
+            }
+            set {
+                this.needLoginField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                return this.resultField;
+            }
+            set {
+                this.resultField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public KbParam[] Value {
+            get {
+                return this.valueField;
+            }
+            set {
+                this.valueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Urun {
+        
+        private string urun_kodField;
+        
+        private string urun_adField;
+        
+        private string grup_kodField;
+        
+        private int ilk_faaliyet_sureField;
+        
+        private int arama_sikligiField;
+        
+        private int ziyaret_sikligiField;
+        
+        private int urunIdField;
+        
+        /// <remarks/>
+        public string urun_kod {
+            get {
+                return this.urun_kodField;
+            }
+            set {
+                this.urun_kodField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string urun_ad {
+            get {
+                return this.urun_adField;
+            }
+            set {
+                this.urun_adField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string grup_kod {
+            get {
+                return this.grup_kodField;
+            }
+            set {
+                this.grup_kodField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int ilk_faaliyet_sure {
+            get {
+                return this.ilk_faaliyet_sureField;
+            }
+            set {
+                this.ilk_faaliyet_sureField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int arama_sikligi {
+            get {
+                return this.arama_sikligiField;
+            }
+            set {
+                this.arama_sikligiField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int ziyaret_sikligi {
+            get {
+                return this.ziyaret_sikligiField;
+            }
+            set {
+                this.ziyaret_sikligiField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int urunId {
+            get {
+                return this.urunIdField;
+            }
+            set {
+                this.urunIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class MobServiceResultOfListOfUrun {
+        
+        private string vField;
+        
+        private string messageField;
+        
+        private bool needLoginField;
+        
+        private bool resultField;
+        
+        private Urun[] valueField;
+        
+        /// <remarks/>
+        public string V {
+            get {
+                return this.vField;
+            }
+            set {
+                this.vField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Message {
+            get {
+                return this.messageField;
+            }
+            set {
+                this.messageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool NeedLogin {
+            get {
+                return this.needLoginField;
+            }
+            set {
+                this.needLoginField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                return this.resultField;
+            }
+            set {
+                this.resultField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public Urun[] Value {
+            get {
+                return this.valueField;
+            }
+            set {
+                this.valueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Ulke {
+        
+        private string ulke_kodField;
+        
+        private string telefon_kodField;
+        
+        private string trafik_kodField;
+        
+        private string grup_kodField;
+        
+        private string ulke_adField;
+        
+        private int ulkeIdField;
+        
+        /// <remarks/>
+        public string ulke_kod {
+            get {
+                return this.ulke_kodField;
+            }
+            set {
+                this.ulke_kodField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string telefon_kod {
+            get {
+                return this.telefon_kodField;
+            }
+            set {
+                this.telefon_kodField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string trafik_kod {
+            get {
+                return this.trafik_kodField;
+            }
+            set {
+                this.trafik_kodField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string grup_kod {
+            get {
+                return this.grup_kodField;
+            }
+            set {
+                this.grup_kodField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ulke_ad {
+            get {
+                return this.ulke_adField;
+            }
+            set {
+                this.ulke_adField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int ulkeId {
+            get {
+                return this.ulkeIdField;
+            }
+            set {
+                this.ulkeIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class MobServiceResultOfListOfUlke {
+        
+        private string vField;
+        
+        private string messageField;
+        
+        private bool needLoginField;
+        
+        private bool resultField;
+        
+        private Ulke[] valueField;
+        
+        /// <remarks/>
+        public string V {
+            get {
+                return this.vField;
+            }
+            set {
+                this.vField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Message {
+            get {
+                return this.messageField;
+            }
+            set {
+                this.messageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool NeedLogin {
+            get {
+                return this.needLoginField;
+            }
+            set {
+                this.needLoginField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                return this.resultField;
+            }
+            set {
+                this.resultField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public Ulke[] Value {
+            get {
+                return this.valueField;
+            }
+            set {
+                this.valueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Ilce {
+        
+        private string sehir_adField;
+        
+        private string ilce_adField;
+        
+        private string okod1Field;
+        
+        private string okod2Field;
+        
+        private int ilceIdField;
+        
+        /// <remarks/>
+        public string sehir_ad {
+            get {
+                return this.sehir_adField;
+            }
+            set {
+                this.sehir_adField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ilce_ad {
+            get {
+                return this.ilce_adField;
+            }
+            set {
+                this.ilce_adField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string okod1 {
+            get {
+                return this.okod1Field;
+            }
+            set {
+                this.okod1Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string okod2 {
+            get {
+                return this.okod2Field;
+            }
+            set {
+                this.okod2Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int ilceId {
+            get {
+                return this.ilceIdField;
+            }
+            set {
+                this.ilceIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class MobServiceResultOfListOfIlce {
+        
+        private string vField;
+        
+        private string messageField;
+        
+        private bool needLoginField;
+        
+        private bool resultField;
+        
+        private Ilce[] valueField;
+        
+        /// <remarks/>
+        public string V {
+            get {
+                return this.vField;
+            }
+            set {
+                this.vField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Message {
+            get {
+                return this.messageField;
+            }
+            set {
+                this.messageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool NeedLogin {
+            get {
+                return this.needLoginField;
+            }
+            set {
+                this.needLoginField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                return this.resultField;
+            }
+            set {
+                this.resultField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public Ilce[] Value {
+            get {
+                return this.valueField;
+            }
+            set {
+                this.valueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Sehir {
+        
+        private string sehir_adField;
+        
+        private string plaka_kodField;
+        
+        private string ulke_kodField;
+        
+        private string telefon_kodField;
+        
+        private string bolge_kodField;
+        
+        private int sehirIdField;
+        
+        /// <remarks/>
+        public string sehir_ad {
+            get {
+                return this.sehir_adField;
+            }
+            set {
+                this.sehir_adField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string plaka_kod {
+            get {
+                return this.plaka_kodField;
+            }
+            set {
+                this.plaka_kodField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ulke_kod {
+            get {
+                return this.ulke_kodField;
+            }
+            set {
+                this.ulke_kodField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string telefon_kod {
+            get {
+                return this.telefon_kodField;
+            }
+            set {
+                this.telefon_kodField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string bolge_kod {
+            get {
+                return this.bolge_kodField;
+            }
+            set {
+                this.bolge_kodField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int sehirId {
+            get {
+                return this.sehirIdField;
+            }
+            set {
+                this.sehirIdField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class MobServiceResultOfListOfSehir {
+        
+        private string vField;
+        
+        private string messageField;
+        
+        private bool needLoginField;
+        
+        private bool resultField;
+        
+        private Sehir[] valueField;
+        
+        /// <remarks/>
+        public string V {
+            get {
+                return this.vField;
+            }
+            set {
+                this.vField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Message {
+            get {
+                return this.messageField;
+            }
+            set {
+                this.messageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool NeedLogin {
+            get {
+                return this.needLoginField;
+            }
+            set {
+                this.needLoginField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                return this.resultField;
+            }
+            set {
+                this.resultField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public Sehir[] Value {
+            get {
+                return this.valueField;
+            }
+            set {
+                this.valueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
     public delegate void CKategoriSilCompletedEventHandler(object sender, CKategoriSilCompletedEventArgs e);
     
@@ -25885,6 +27504,474 @@ namespace UyumSosyal.WebReference {
         private object[] results;
         
         internal CKategoriSilCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfBoolean Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfBoolean)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void GenelSehirListesiCompletedEventHandler(object sender, GenelSehirListesiCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GenelSehirListesiCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GenelSehirListesiCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfListOfSehir Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfListOfSehir)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void SehirKaydetCompletedEventHandler(object sender, SehirKaydetCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class SehirKaydetCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal SehirKaydetCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfBoolean Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfBoolean)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void SehirSilCompletedEventHandler(object sender, SehirSilCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class SehirSilCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal SehirSilCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfBoolean Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfBoolean)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void GenelIlceListesiCompletedEventHandler(object sender, GenelIlceListesiCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GenelIlceListesiCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GenelIlceListesiCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfListOfIlce Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfListOfIlce)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void IlceKaydetCompletedEventHandler(object sender, IlceKaydetCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class IlceKaydetCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal IlceKaydetCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfBoolean Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfBoolean)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void IlceSilCompletedEventHandler(object sender, IlceSilCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class IlceSilCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal IlceSilCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfBoolean Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfBoolean)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void UlkeListesiCompletedEventHandler(object sender, UlkeListesiCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class UlkeListesiCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal UlkeListesiCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfListOfUlke Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfListOfUlke)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void UlkeKaydetCompletedEventHandler(object sender, UlkeKaydetCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class UlkeKaydetCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal UlkeKaydetCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfBoolean Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfBoolean)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void UlkeSilCompletedEventHandler(object sender, UlkeSilCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class UlkeSilCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal UlkeSilCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfBoolean Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfBoolean)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void GenelUrunLilstesiCompletedEventHandler(object sender, GenelUrunLilstesiCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GenelUrunLilstesiCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GenelUrunLilstesiCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfListOfUrun Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfListOfUrun)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void UrunSilCompletedEventHandler(object sender, UrunSilCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class UrunSilCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal UrunSilCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfBoolean Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfBoolean)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void UrunKaydetCompletedEventHandler(object sender, UrunKaydetCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class UrunKaydetCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal UrunKaydetCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfBoolean Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfBoolean)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void ParametrikAlanListesiCompletedEventHandler(object sender, ParametrikAlanListesiCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ParametrikAlanListesiCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ParametrikAlanListesiCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfListOfKbParam Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfListOfKbParam)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void ParametrikAlanKaydetCompletedEventHandler(object sender, ParametrikAlanKaydetCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ParametrikAlanKaydetCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ParametrikAlanKaydetCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfBoolean Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfBoolean)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void ParametrikAlanSilCompletedEventHandler(object sender, ParametrikAlanSilCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ParametrikAlanSilCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ParametrikAlanSilCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfBoolean Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfBoolean)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void GenelRakipListesiCompletedEventHandler(object sender, GenelRakipListesiCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GenelRakipListesiCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GenelRakipListesiCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfListOfRakip Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfListOfRakip)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void RakipKaydetCompletedEventHandler(object sender, RakipKaydetCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class RakipKaydetCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal RakipKaydetCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public MobServiceResultOfBoolean Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((MobServiceResultOfBoolean)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    public delegate void RakipSilCompletedEventHandler(object sender, RakipSilCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2558.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class RakipSilCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal RakipSilCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -27736,10 +29823,10 @@ namespace UyumSosyal.WebReference {
         }
         
         /// <remarks/>
-        public MobServiceResultOfListOfCrmForm Result {
+        public MobServiceResultOfFormListesiRet Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((MobServiceResultOfListOfCrmForm)(this.results[0]));
+                return ((MobServiceResultOfFormListesiRet)(this.results[0]));
             }
         }
     }

@@ -75,7 +75,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
                 }
             }
 
-            var dynamicPropFromStr = typeof(UserRolRes).GetProperty(orderBy);
+            var dynamicPropFromStr = typeof(Dto.UserRolRes).GetProperty(orderBy);
 
             if (sort.Direction == SortDirection.ASC)
             {

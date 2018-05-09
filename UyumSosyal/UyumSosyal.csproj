@@ -570,6 +570,21 @@
     <Content Include="Web References\WebReference\MobServiceResultOfListOfUnvanGrup.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
+    <Content Include="Web References\WebReference\MobServiceResultOfListOfIlce.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebReference\MobServiceResultOfListOfKbParam.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebReference\MobServiceResultOfListOfSehir.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebReference\MobServiceResultOfListOfUlke.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebReference\MobServiceResultOfListOfUrun.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
     <None Include="Web References\WebReference\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -635,6 +650,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="HighLighter\HighLighterUtils.cs" />
+    <Compile Include="Moduls\Sosyal_Medya_Islemleri\Shared\Dto\CagriRes.cs" />
     <Compile Include="Moduls\Sosyal_Medya_Islemleri\Shared\FirsatFaaliyetRes.cs" />
     <Compile Include="Moduls\Sosyal_Medya_Islemleri\Shared\FormFirsatRes.cs" />
     <Compile Include="Moduls\Sosyal_Medya_Islemleri\Shared\FormCagriRes.cs" />

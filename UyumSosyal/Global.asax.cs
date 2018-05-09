@@ -1,4 +1,6 @@
-﻿using System;
+﻿//#define WST
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,6 +9,8 @@ using System.Web.SessionState;
 using System.Threading;
 using System.Globalization;
 using Ext.Net;
+using UyumSosyal.WebReference;
+
 
 namespace UyumSosyal
 {
@@ -22,11 +26,62 @@ namespace UyumSosyal
         public static string Full = Version.ToString();
     }
 
+    public class WebServiceTest
+    {
+        public static void Sehir()
+        {
+            var ret = Helper.GetWebService().GenelSehirListesi("");
+
+        }
+
+        public static void Ilce()
+        {
+            var ret = Helper.GetWebService().GenelIlceListesi("");
+
+        }
+
+        public static void Ulke()
+        {
+            var ret = Helper.GetWebService().UlkeListesi("");
+
+        }
+        public static void UnvanGrup()
+        {
+            var ret = Helper.GetWebService().UnvanGrupListesi("", "");
+
+        }
+
+        public static void Unvan()
+        {
+            var ret = Helper.GetWebService().UnvanListesi2("", "");
+
+        }
+
+        public static void Cagri()
+        {
+            var ret = Helper.GetWebService().CagriListesi("", DateTime.Parse("2018-04-01"), DateTime.Parse("2018-05-09"), "");
+
+            Helper.GetWebService().CagriKaydet(new Cagri()
+            {
+
+            });
+        }
+    }
+
     public class Global : System.Web.HttpApplication
     {
 
         protected void Application_Start(object sender, EventArgs e)
         {
+#if WST
+            WebServiceTest.Sehir();
+            WebServiceTest.Ilce();
+            WebServiceTest.Ulke();
+            WebServiceTest.UnvanGrup();
+            WebServiceTest.Unvan();
+            WebServiceTest.Cagri();
+#endif
+
             if (!Ext.Net.ResourceManager.HasFactory("mybutton"))
             {
                 Ext.Net.ResourceManager.AddFactory(delegate
