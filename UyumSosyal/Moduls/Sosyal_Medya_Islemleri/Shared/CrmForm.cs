@@ -26,10 +26,10 @@ namespace UyumSosyal.Moduls.Sosyal_Medya_Islemleri.Shared
             }
 
             var id = 0;
-            count = liste.Value.Length;
-            var tmpCount = liste.Value.Length;
+            count = liste.Value.FormListesi.Length;
+            var tmpCount = liste.Value.FormListesi.Length;
             var ret = new List<CrmFormRes>(tmpCount);
-            ret.AddRange(liste.Value.Select(l => new CrmFormRes()
+            ret.AddRange(liste.Value.FormListesi.Select(l => new CrmFormRes()
             {
                 id = (id++),
                 _count = tmpCount,
@@ -43,10 +43,10 @@ namespace UyumSosyal.Moduls.Sosyal_Medya_Islemleri.Shared
                 cari_kod = l.cari_kod,
                 cari_ad = l.cari_ad,
                 geldigi_kanal = l.geldigi_kanal,
-                kapali = l.kapali ? "Kapalı" : "Açık",
+                kapali = l.kapali != false ? "Kapali" : "Acik",
                 master_no = l.master_no,
                 faaliyet_yili = l.faaliyet_yili,
-                create_date = l.create_date
+                create_date = l.create_date.ToString("dd.MM.yyyy")
 
             }));//.Where(x=> !string.IsNullOrEmpty(x.form_ad) && !string.IsNullOrEmpty(x.tip)));
 

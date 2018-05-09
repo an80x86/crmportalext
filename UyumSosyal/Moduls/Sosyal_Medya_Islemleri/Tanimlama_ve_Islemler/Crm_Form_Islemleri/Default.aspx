@@ -314,7 +314,9 @@
             <TopBar>
                 <ext:Toolbar ID="Toolbar3" runat="server">
                     <Items>
-                                        
+                        <ext:Label Text="0 adet" ID="kaysay" runat="server"></ext:Label>    
+                        <ext:ToolbarSeparator />
+
                         <ext:TextField 
                             ID="TextFieldArama" 
                             runat="server"
@@ -403,6 +405,7 @@
                                 <ext:ModelField Name="master_no" />
                                 <ext:ModelField Name="faaliyet_yili" />
                                 <ext:ModelField Name="create_date" />
+                                <ext:ModelField Name="_count" />
                             </Fields>
                         </ext:Model>
                     </Model>
@@ -413,7 +416,7 @@
             </Store>
             <ColumnModel ID="ColumnModel1" runat="server">
                 <Columns>
-                    <ext:Column ID="Kod" runat="server" Text="Faaliyet Yılı" DataIndex="faaliyet_yili" Sortable="true" Width="130" />
+                    <ext:Column ID="Kod" runat="server" Text="Faaliyet Yılı" DataIndex="faaliyet_yili" Sortable="false" Width="130" />
                     <ext:Column ID="Column23" runat="server" Text="Oluşturma Tarihi" DataIndex="create_date" Sortable="false" Width="130" />
                     <ext:Column ID="Column22" runat="server" Text="Form Ad" DataIndex="form_ad" Sortable="true" Width="130" />
                     <ext:Column ID="Column3" runat="server" Text="Tip" DataIndex="tip" Width="200" />

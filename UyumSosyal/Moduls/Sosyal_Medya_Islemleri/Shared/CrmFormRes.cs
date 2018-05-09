@@ -107,7 +107,7 @@ namespace UyumSosyal.Moduls.Sosyal_Medya_Islemleri.Shared
 
         public int master_no {get;set;}
 
-        public DateTime create_date { get; set; }
+        public string create_date { get; set; }
 
         public string kapali { get; set; }
 
