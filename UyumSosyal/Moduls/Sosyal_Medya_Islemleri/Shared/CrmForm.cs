@@ -46,7 +46,9 @@ namespace UyumSosyal.Moduls.Sosyal_Medya_Islemleri.Shared
                 kapali = l.kapali != false ? "Kapali" : "Acik",
                 master_no = l.master_no,
                 faaliyet_yili = l.faaliyet_yili,
-                create_date = l.create_date.ToString("dd.MM.yyyy")
+                faaliyet_yili2 = l.faaliyet_yili.JaponDate(),
+                create_date = l.create_date.ToString("dd.MM.yyyy"),
+                create_date2 = l.create_date.ToString("yyyy-MM-dd")
 
             }));//.Where(x=> !string.IsNullOrEmpty(x.form_ad) && !string.IsNullOrEmpty(x.tip)));
 
@@ -57,8 +59,12 @@ namespace UyumSosyal.Moduls.Sosyal_Medya_Islemleri.Shared
             {
                 switch (orderBy)
                 {
+                    case "create_date":
+                        ret = ret.Where(x => x.create_date2.ToLower().Contains(arax.ToLower())).ToList();
+                        count = ret.Count;
+                        break;
                     case "faaliyet_yili":
-                        ret = ret.Where(x => x.faaliyet_yili.ToLower().Contains(arax.ToLower())).ToList();
+                        ret = ret.Where(x => x.faaliyet_yili2.ToLower().Contains(arax.ToLower())).ToList();
                         count = ret.Count;
                         break;
                     case "kapali":

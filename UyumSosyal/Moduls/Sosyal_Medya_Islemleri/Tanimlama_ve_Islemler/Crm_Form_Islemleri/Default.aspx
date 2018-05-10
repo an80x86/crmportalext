@@ -144,7 +144,7 @@
     <link href="/resources/css/examples.css" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript">
-        var keyHandler = function (k, e) {
+      var keyHandler = function (k, e) {
             if (e.getKey() == 13) {
                 Ext.getCmp('GridPanel1').getStore().load();
             }
@@ -158,6 +158,10 @@
             var fk = record.data.firsat_kod;
             CompanyX.FirsatEkrani(fk);
         };
+      var onCommandAciklama = function (column, command, record, recordIndex, cellIndex) {
+          var fk = record.data.aciklama;
+          Ext.Msg.alert("Açıklama",fk);
+      };
     </script> 
 
     <style type="text/css">
@@ -380,6 +384,16 @@
                     RemoteSort="true"
                     OnReadData="Store1_RefreshData"
                     PageSize="23">
+                    <Listeners>
+                        <Load Delay="1000" Handler="
+                                var cnt = Ext.getCmp('GridPanel1').getStore();
+                                if (cnt.getCount()>0) {
+                                    #{kaysay}.setText(cnt.getAt(0).data._count + ' adet');
+                                } else {
+                                    #{kaysay}.setText('Kayıt yok.');
+                                }
+                            "/>
+                    </Listeners>
                     <AutoLoadParams>
                         <ext:Parameter Name="start" Value="0" Mode="Raw" />
                         <ext:Parameter Name="limit" Value="99999" Mode="Raw" />
@@ -416,14 +430,21 @@
             </Store>
             <ColumnModel ID="ColumnModel1" runat="server">
                 <Columns>
-                    <ext:Column ID="Kod" runat="server" Text="Faaliyet Yılı" DataIndex="faaliyet_yili" Sortable="false" Width="130" />
-                    <ext:Column ID="Column23" runat="server" Text="Oluşturma Tarihi" DataIndex="create_date" Sortable="false" Width="130" />
+                    <ext:Column ID="Kod" runat="server" Text="Faaliyet Yılı" DataIndex="faaliyet_yili" Width="100" />
+                    <ext:Column ID="Column23" runat="server" Text="Oluş.Tarihi" DataIndex="create_date" Width="100" />
                     <ext:Column ID="Column22" runat="server" Text="Form Ad" DataIndex="form_ad" Sortable="true" Width="130" />
                     <ext:Column ID="Column3" runat="server" Text="Tip" DataIndex="tip" Width="200" />
                     <ext:Column ID="Column4" runat="server" Text="Yetkili Kişi" DataIndex="yetkili_kisi" Width="130" />
-                    <ext:Column ID="Column1" runat="server" Text="Firma Tel" DataIndex="firma_tel" Width="130" />
-                    <ext:Column ID="Column2" runat="server" Text="Firma Mail" DataIndex="firma_email" Width="200" />
-                    <ext:Column ID="Column5" runat="server" Text="Açıklama" DataIndex="aciklama" Width="400" />
+                    <ext:Column ID="Column1" runat="server" Text="Firma Tel" DataIndex="firma_tel" Width="100" />
+                    <ext:Column ID="Column2" runat="server" Text="Firma Mail" DataIndex="firma_email" Width="180" />
+                    <ext:Column ID="Column5" runat="server" Text="Açıklama" DataIndex="aciklama" Width="400">
+                        <Commands>
+                            <ext:ImageCommand CommandName="AciklamaAra" Icon="ApplicationCascade"  />
+                        </Commands>
+                        <Listeners>
+                            <Command Fn="onCommandAciklama" />
+                        </Listeners>
+                    </ext:Column>
                     <ext:Column ID="Column6" runat="server" Text="Firma Web" DataIndex="firma_web" Width="200" />
                     <ext:Column ID="Column7" runat="server" Text="Cari Kod" DataIndex="cari_kod" Width="200" />
                     <ext:Column ID="Column8" runat="server" Text="Cari Ad" DataIndex="cari_ad" Width="400" />

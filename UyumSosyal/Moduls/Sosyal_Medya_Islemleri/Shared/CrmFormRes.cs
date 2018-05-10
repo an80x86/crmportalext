@@ -42,7 +42,7 @@ namespace UyumSosyal.Moduls.Sosyal_Medya_Islemleri.Shared
         public string bayi_yazilim {get;set;}
 
         public string faaliyet_yili {get;set;}
-
+        public string faaliyet_yili2 { get; set; }
         public int calisan_sayisi {get;set;}
 
         public string ref_cari_ad {get;set;}
@@ -108,6 +108,7 @@ namespace UyumSosyal.Moduls.Sosyal_Medya_Islemleri.Shared
         public int master_no {get;set;}
 
         public string create_date { get; set; }
+        public string create_date2 { get; set; }
 
         public string kapali { get; set; }
 
