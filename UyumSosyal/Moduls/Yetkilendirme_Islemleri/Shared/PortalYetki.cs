@@ -55,10 +55,10 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
                 id = l.id,
                 aspnet_rol_id = l.aspnet_rol_id,
                 aspnet_modul_id = l.aspnet_modul_id,
-                is_yazma = l.is_yazma,
-                is_silme = l.is_silme,
-                is_okuma = l.is_okuma,
-                is_olusturma = l.is_olusturma,
+                is_yazma = l.is_yazma ? "evet" : "hayır",
+                is_silme = l.is_silme ? "evet" : "hayır",
+                is_okuma = l.is_okuma ? "evet" : "hayır",
+                is_olusturma = l.is_olusturma ? "evet" : "hayır",
                 _count = liste.Value.totalcount
             }));
 
@@ -86,7 +86,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
                 */
             }
 
-            var dynamicPropFromStr = typeof(ModulRes).GetProperty(orderBy);
+            var dynamicPropFromStr = typeof(PortalYetkiRes).GetProperty(orderBy);
 
             if (sort.Direction == SortDirection.ASC)
             {

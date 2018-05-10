@@ -354,7 +354,7 @@
                             </Store>
                             <ColumnModel ID="ColumnModel1" runat="server">
                                 <Columns>
-                                    <ext:Column ID="Kod" runat="server" Text="Kullanıcı Kod" DataIndex="user_kod" Sortable="true" Flex="1" />
+                                    <ext:Column ID="Kod" runat="server" Text="Kullanıcı Kod" DataIndex="user_kod" Width="230" />
                                     <ext:Column ID="Column3" runat="server" Text="Ad" DataIndex="user_ad" Width="230" />
                                     <ext:Column ID="Column4" runat="server" Text="Soyad" DataIndex="user_soyad" Width="130" />
                                     <ext:Column ID="Column5" runat="server" DataIndex="durum" Text="Durum"  Width="130"/>

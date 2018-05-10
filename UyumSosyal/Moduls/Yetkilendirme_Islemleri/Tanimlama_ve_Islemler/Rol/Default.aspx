@@ -312,7 +312,7 @@
                             </Store>
                             <ColumnModel ID="ColumnModel1" runat="server">
                                 <Columns>
-                                    <ext:Column ID="Kod" runat="server" Text="Rol Id" DataIndex="aspnet_rol_id" Sortable="true" Flex="1" />
+                                    <ext:Column ID="Kod" runat="server" Text="Rol Id" DataIndex="aspnet_rol_id" Width="230"  />
                                     <ext:Column ID="Column3" runat="server" Text="Kullanıcı Id" DataIndex="aspnet_kullanici_id" Width="230" />
                                 </Columns>
                             </ColumnModel>

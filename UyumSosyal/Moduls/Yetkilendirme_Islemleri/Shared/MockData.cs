@@ -139,10 +139,10 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
                 ret.Add(new PortalYetkiRes()
                 {
                     id = 1,
-                    is_okuma = true,
-                    is_olusturma = true,
-                    is_silme = true,
-                    is_yazma = true,
+                    is_okuma = "evet",
+                    is_olusturma = "evet",
+                    is_silme = "evet",
+                    is_yazma = "evet",
                     aspnet_modul_id = 1,
                     aspnet_rol_id = 0
                 });

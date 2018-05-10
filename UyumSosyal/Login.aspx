@@ -2,15 +2,18 @@
 <%@ Import Namespace="UyumSosyal" %>
 
 <script runat="server">
+    static string ErrMsg = "";
+
     public static bool UserCheck(string userName, string userPass)
     {
+        ErrMsg = "";
         var ret = false;
         try
         {
             var liste = Helper.GetWebService().PortalUserList(userName, Helper.MIN, Helper.MAX);
             if (!string.IsNullOrEmpty(liste.Message))
             {
-                Helper.Error("Login işleminde hata : " + liste.Message);
+                ErrMsg = "Login işleminde hata : " + liste.Message;
                 return false;
             }
 
@@ -22,10 +25,12 @@
                     break;
                 }
             }
+
+            ErrMsg = "Kullanıcı veya şifre hatalı!";
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            Helper.Error("PortalUserList'de web service hatası : " + ex.Message);
+            ErrMsg = "PortalUserList'de web service hatası : " + ex.Message;
         }
 
         return ret;
@@ -42,15 +47,10 @@
         }
 
         this.txtPassword.Text = "";
-        X.Msg.Show(new MessageBoxConfig
-        {
-            Title = "Dikkat",
-            Message = "Kullanıcı veya Şifre hatalı!",
-            Buttons = MessageBox.Button.OK,
-            Icon = MessageBox.Icon.ERROR,
-            AnimEl = this.btnLogin.ClientID
-        });
+        Helper.Error(ErrMsg);
     }
+
+
 </script>
 
 <!DOCTYPE html>
@@ -78,7 +78,7 @@
     </script>
 </head>
 <body>
-    <ext:ResourceManager ID="ResourceManager1" runat="server" />
+    <ext:ResourceManager ID="ResourceManager1" ShowWarningOnAjaxFailure="false" runat="server" />
     
     <ext:Viewport runat="server">
         <LayoutConfig>

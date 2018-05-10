@@ -140,6 +140,8 @@
     <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Hedef_Kitle\Urun.ascx" />
     <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Hedef_Kitle\Sektor.ascx" />
     <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Hedef_Kitle\Default.aspx" />
+    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\Tanim_\config.xml" />
+    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\Tanim_\Default.aspx" />
     <Content Include="UpdatePassword.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
