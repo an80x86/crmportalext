@@ -46,14 +46,22 @@ namespace UyumSosyal
 
         public static WsdlUyumCrm GetWebService()
         {
-            var serv = new WsdlUyumCrm {CookieContainer = new CookieContainer(1000)};
-            serv.UyumUserLogin(
-                ConfigurationManager.AppSettings["val1"],
-                ConfigurationManager.AppSettings["val2"],
-                ConfigurationManager.AppSettings["val3"]
-            );
+            try
+            {
+                var serv = new WsdlUyumCrm {CookieContainer = new CookieContainer(1000)};
+                serv.UyumUserLogin(
+                    ConfigurationManager.AppSettings["val1"],
+                    ConfigurationManager.AppSettings["val2"],
+                    ConfigurationManager.AppSettings["val3"]
+                );
 
-            return serv;
+                return serv;
+            }
+            catch (Exception ex)
+            {
+                Error("Web service problemi var : " + ex.Message);
+                return null;
+            }
         }
 
         public static void Error(string msg)
