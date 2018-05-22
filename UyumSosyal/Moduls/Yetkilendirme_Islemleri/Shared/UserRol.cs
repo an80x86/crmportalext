@@ -13,6 +13,28 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
 {
     public class UserRol
     {
+        public static RolRes[] GetRols()
+        {
+            var rol = Helper.GetWebService().PortalRolList("", Helper.MIN, Helper.MAX);
+            if (!string.IsNullOrEmpty(rol.Message))
+            {
+                throw new Exception(rol.Message);
+            }
+
+            return rol.Value.RolListesi;
+        }
+
+        public static UserRes[] GetUsers()
+        {
+            var liste = Helper.GetWebService().PortalUserList("", Helper.MIN, Helper.MAX);
+            if (!string.IsNullOrEmpty(liste.Message))
+            {
+                throw new Exception(liste.Message);
+            }
+
+            return liste.Value.KullaniciListesi;
+        }
+
         public static string Remove(int id)
         {
             var z0 = Helper.GetWebService().PortalKullaniciRolSil(id);
@@ -41,8 +63,11 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
 
         public static List<Dto.UserRolRes> GetFilter(int start, int limit, DataSorter sort, out int count, string arax)
         {
+            var rols = GetRols().ToArray();
+            var users = GetUsers().ToArray();
+
             //var liste = Helper.GetWebService().PortalUSerRolList(0, start, limit); // sifir gelince problem cikiyor
-            var liste = Helper.GetWebService().PortalUSerRolList(1, start, limit);
+            var liste = Helper.GetWebService().PortalUSerRolList(0, start, limit);
             if (!string.IsNullOrEmpty(liste.Message))
             {
                 throw new Exception(liste.Message);
@@ -52,8 +77,11 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
             var ret = new List<Dto.UserRolRes>(liste.Value.totalcount);
             ret.AddRange(liste.Value.KullaniciRolListesi.Select(l => new Dto.UserRolRes()
             {
+                id = l.id,
                 aspnet_rol_id = l.rol_id,
+                rol = rols.FirstOrDefault(x => x.id == l.rol_id)?.rol_kod,
                 aspnet_kullanici_id = l.aspnet_kullanici_id,
+                kullanici = users.FirstOrDefault(x => x.id == l.aspnet_kullanici_id)?.user_kod,
                 _count = liste.Value.totalcount
             }));
 

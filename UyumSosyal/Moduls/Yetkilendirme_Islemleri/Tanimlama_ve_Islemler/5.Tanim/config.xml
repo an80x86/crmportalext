@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<example title="Yetki Tanimlari">
+<example title="Rol Tanimlari">
   <description>
-    <![CDATA[Kullanıcı bilgilerini getirir.]]>
+    <![CDATA[]]>
   </description>
   <tags></tags>
   <include>
     <file url="../../Shared/User.cs" />
+    <file url="../../Shared/UserRes.cs" />
     <file url="../../Shared/UserRes.cs" />
   </include>
 </example>

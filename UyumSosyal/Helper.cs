@@ -59,7 +59,7 @@ namespace UyumSosyal
             }
             catch (Exception ex)
             {
-                Error("Web service problemi var : " + ex.Message);
+                Error("Uyum web service problemi var : " + ex.Message);
                 return null;
             }
         }

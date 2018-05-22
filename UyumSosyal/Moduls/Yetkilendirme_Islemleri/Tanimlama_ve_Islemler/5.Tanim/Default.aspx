@@ -37,22 +37,22 @@
 
     protected void ButtonSave(object sender, DirectEventArgs e)
     {
-        if (TextFieldRolId.Text.Trim().Length < 1)
+        if (TextFieldRolKod.Text.Trim().Length < 1)
         {
-            X.Msg.Alert("Dikkat", "Rol Id boş bırakılamaz!").Show();
+            X.Msg.Alert("Dikkat", "Rol kod boş bırakılamaz!").Show();
             return;
         }
 
-        if (TextFieldUserId.Text.Trim().Length < 1)
+        if (TextFieldRolAciklama.Text.Trim().Length < 1)
         {
-            X.Msg.Alert("Dikkat", "User Id boş bırakılamaz!").Show();
+            X.Msg.Alert("Dikkat", "Açıklama boş bırakılamaz!").Show();
             return;
-        }
+        } 
 
-        var err = UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.UserRol.Save(
+        var err = UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.Rol.Save(
             gizli.Value, // ekle ise boş düzelt ise dolu gelir
-            TextFieldRolId.Text.Trim(),
-            TextFieldUserId.Text.Trim());
+            TextFieldRolKod.Text.Trim(),
+            TextFieldRolAciklama.Text.Trim());
         if (err != "ok")
         {
             X.Msg.Alert("Dikkat", err).Show();
@@ -62,8 +62,8 @@
         // tazele
         Store1.Reload();
         gizli.Value = "";
-        TextFieldRolId.Text = "";
-        TextFieldUserId.Text = "";
+        TextFieldRolKod.Text = "";
+        TextFieldRolAciklama.Text = "";
         PickWindowRolAdd.Hide();
     }
 
@@ -72,7 +72,7 @@
     {
         try
         {
-            var don = UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.UserRol.Remove(kkod.ToInt());
+            var don = UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.Rol.Remove(kkod.ToInt());
             X.MessageBox.Hide();
             if (don != "ok")
             {
@@ -83,7 +83,7 @@
                 // tazele
                 Store1.Reload();
                 gizli.Value = "";
-                lbUser.Text = "Seçilen Modül : Yok!";
+                lbUser.Text = "Seçim yapılmamış!";
             }
         }
         finally
@@ -97,7 +97,7 @@
 
 <html>
 <head id="Head1" runat="server">
-    <title>Yetki Tanimlari</title>
+    <title></title>
     <link href="/resources/css/examples.css" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript">
@@ -157,7 +157,7 @@
             OnSelecting="ObjectSelecting"
             OnSelected="ObjectDataSource1_Selected"
             SelectMethod="GetFilter"
-            TypeName="UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.PortalYetki">
+            TypeName="UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.Rol">
             <SelectParameters>
                 <asp:Parameter Name="start" Type="Int32" />
                 <asp:Parameter Name="limit" Type="Int32" />
@@ -169,21 +169,21 @@
 
         <asp:HiddenField ID="gizli" runat="server" Value="" />
 
-        <ext:Window ID="PickWindowRolAdd" runat="server" Width="300" Height="210" AutoHeight="true" Title="Modül Ekle"
+        <ext:Window ID="PickWindowRolAdd" runat="server" Width="300" Height="210" AutoHeight="true" Title="Ekle"
             Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
             LabelWidth="125" Layout="Form">
             <Items>
                 
-                <ext:TextField ID="TextFieldRolId" runat="server" ReadOnly="false" InputType="Text"
-                    FieldLabel="Rol Id" LabelWidth="50" Width="120" AllowBlank="false" BlankText="Rol Id boş geçilemez!" MaxLengthText="50"
+                <ext:TextField ID="TextFieldRolKod" runat="server" ReadOnly="false" InputType="Text"
+                    FieldLabel="Rol Kod" LabelWidth="50" Width="120" AllowBlank="false" BlankText="Rol Kod boş geçilemez!" MaxLengthText="50"
                     Text="" EnableKeyEvents="true">
                     <Listeners>
-                        <KeyPress Handler="if(e.getKey() == e.ENTER || e.getKey() == e.RETURN) { #{TextFieldUserId}.focus(); }" />
+                        <KeyPress Handler="if(e.getKey() == e.ENTER || e.getKey() == e.RETURN) { #{TextFieldRolAciklama}.focus(); }" />
                     </Listeners>
                 </ext:TextField>
                 
-                <ext:TextField ID="TextFieldUserId" runat="server" ReadOnly="false" InputType="Text"
-                               FieldLabel="Modul Id" LabelWidth="50" Width="120" AllowBlank="false" BlankText="Kullanici Id boş geçilemez!" MaxLengthText="50"
+                <ext:TextField ID="TextFieldRolAciklama" runat="server" ReadOnly="false" InputType="Text"
+                               FieldLabel="Açıklama" LabelWidth="50" Width="120" AllowBlank="false" BlankText="Açıklama boş geçilemez!" MaxLengthText="50"
                                Text="" EnableKeyEvents="true">
                     <Listeners>
                         <KeyPress Handler="if(e.getKey() == e.ENTER || e.getKey() == e.RETURN) { #{ButtonTamam}.focus(); }" />
@@ -235,7 +235,11 @@
 
                                 <ext:Button ID="BntSave" runat="server" Enabled="true" Text="Ekle" Icon="ApplicationAdd">
                                     <Listeners>
-                                        <Click Handler="#{gizli}.setValue(''); #{lbUser}.setText('Seçilen Rol : Yok!');#{PickWindowRolAdd}.setTitle('Ekle');#{PickWindowRolAdd}.show();" />
+                                        <Click Handler="
+                                                #{gizli}.setValue(''); 
+                                                #{lbUser}.setText('Seçim yapılmamış!');
+                                                #{PickWindowRolAdd}.setTitle('Ekle');
+                                                #{PickWindowRolAdd}.show();" />
                                     </Listeners>
                                 </ext:Button>
 
@@ -248,8 +252,8 @@
                                         if (v.length==0) return;
 
                                         #{PickWindowRolAdd}.setTitle('Düzelt');
-                                        #{TextFieldRolId}.setValue(v[0].data.aspnet_rol_id);
-                                        #{TextFieldUserId}.setValue(v[0].data.aspnet_kullanici_id);                                     
+                                        #{TextFieldRolKod}.setValue(v[0].data.rol_kod);
+                                        #{TextFieldRolAciklama}.setValue(v[0].data.aciklama);                                     
                                         #{PickWindowRolAdd}.show();" />
                                     </Listeners>   
                                 </ext:Button>
@@ -261,13 +265,13 @@
                                         <Click Handler="
                                                         var v= #{GridPanel1}.getSelectionModel().getSelection();
                                                         if (v.length==0) return;
-                                                        Ext.MessageBox.confirm('Dikkat', 'Silmek istiyor musunız?\n('+v[0].data.aspnet_rol_id + ')', showResult );" Delay="1"/>
+                                                        Ext.MessageBox.confirm('Dikkat', 'Silmek istiyor musunız?\n('+v[0].data.rol_kod + ')', showResult );" Delay="1"/>
                                     </Listeners>
                                 </ext:Button>                                
 
                                 <ext:ToolbarSeparator/>
 
-                                <ext:Label ID="lbUser" runat="server" Text="Seçilen Rol : Yok!"></ext:Label>                                
+                                <ext:Label ID="lbUser" runat="server" Text="Seçim yapılmamış!"></ext:Label>                                
                             </Items>
                         </ext:Toolbar>
                         
@@ -296,33 +300,25 @@
                                         <ext:PageProxy />
                                     </Proxy>
                                     <Model>
-                                        <ext:Model ID="Model1" runat="server" IDProperty="aspnet_rol_ids">
+                                        <ext:Model ID="Model1" runat="server" IDProperty="ids">
                                             <Fields>
                                                 <ext:ModelField Name="id" />
-                                                <ext:ModelField Name="aspnet_rol_id" />
-                                                <ext:ModelField Name="aspnet_modul_id" />
-                                                <ext:ModelField Name="is_yazma" />
-                                                <ext:ModelField Name="is_silme" />
-                                                <ext:ModelField Name="is_okuma" />
-                                                <ext:ModelField Name="is_olusturma" />
+                                                <ext:ModelField Name="rol_kod" />
+                                                <ext:ModelField Name="aciklama" />
                                                 <ext:ModelField Name="_count" />
                                             </Fields>
                                         </ext:Model>
                                     </Model>
                                     <Sorters>
-                                        <ext:DataSorter Property="aspnet_rol_id" Direction="ASC" />
+                                        <ext:DataSorter Property="rol_kod" Direction="ASC" />
                                     </Sorters>
                                 </ext:Store>
 
                             </Store>
                             <ColumnModel ID="ColumnModel1" runat="server">
                                 <Columns>
-                                    <ext:Column ID="Column3" runat="server" Text="aspnet_rol_id" DataIndex="aspnet_rol_id" Width="200" />
-                                    <ext:Column ID="Column1" runat="server" Text="aspnet_modul_id" DataIndex="aspnet_modul_id" Width="200" />
-                                    <ext:Column ID="Column2" runat="server" Text="is_yazma" DataIndex="is_yazma" Width="100" />
-                                    <ext:Column ID="Column4" runat="server" Text="is_silme" DataIndex="is_silme" Width="100" />
-                                    <ext:Column ID="Column5" runat="server" Text="is_okuma" DataIndex="is_okuma" Width="100" />
-                                    <ext:Column ID="Column6" runat="server" Text="is_olusturma" DataIndex="is_olusturma" Width="100" />
+                                    <ext:Column ID="Column3" runat="server" Text="Kod" DataIndex="rol_kod" Width="200" />
+                                    <ext:Column ID="Column1" runat="server" Text="Açıklama" DataIndex="aciklama" Width="200" />
                                 </Columns>
                             </ColumnModel>
                             <View>
@@ -338,8 +334,8 @@
                             <Listeners>
                                 <Select Handler="
                                     var v= #{GridPanel1}.getSelectionModel().getSelection();
-                                    if (v.length>0) { #{gizli}.setValue(v[0].data.id); #{lbUser}.setText('Seçilen Modül : ' + v[0].data.modul_kod);}
-                                    else {#{gizli}.setValue(''); #{lbUser}.setText('Seçilen Modül : Yok!');} "/>
+                                    if (v.length>0) { #{gizli}.setValue(v[0].data.id); #{lbUser}.setText('Seçilen : ' + v[0].data.rol_kod);}
+                                    else {#{gizli}.setValue(''); #{lbUser}.setText('Seçin yapılmamış!');} "/>
                             </Listeners>
 
                             <BottomBar>
@@ -362,7 +358,6 @@
                 </ext:Panel>
             </Items>
         </ext:Viewport>  
-
     </form>
 </body>
 </html>

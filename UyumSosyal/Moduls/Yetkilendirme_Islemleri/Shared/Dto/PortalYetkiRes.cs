@@ -17,7 +17,9 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.Dto
         public string is_olusturma {get;set;}
 
         public int aspnet_modul_id {get;set;}
+        public string modul_kod { get; set; }
 
         public int aspnet_rol_id {get;set;}
+        public string rol_kod { get; set; }
     }
 }

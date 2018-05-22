@@ -132,6 +132,8 @@
     <Content Include="Code\SharpZipLib\ICSharpCode.SharpZipLib.dll" />
     <Content Include="Code\SharpZipLib\ReadMe.txt" />
     <Content Include="Code\UI\CommentsWindow.ascx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Crm_Cagri_Islemleri\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Crm_Cagri_Islemleri\Default.aspx" />
     <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Crm_Form_Islemleri\config.xml" />
     <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Crm_Form_Islemleri\Default.aspx" />
     <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Hedef_Kitle\config.xml" />
@@ -140,8 +142,8 @@
     <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Hedef_Kitle\Urun.ascx" />
     <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Hedef_Kitle\Sektor.ascx" />
     <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Hedef_Kitle\Default.aspx" />
-    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\Tanim_\config.xml" />
-    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\Tanim_\Default.aspx" />
+    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\5.Tanim\config.xml" />
+    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\5.Tanim\Default.aspx" />
     <Content Include="UpdatePassword.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -153,14 +155,14 @@
     <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Form_Islemleri\Default.aspx" />
     <Content Include="Moduls\Yetkilendirme_Islemleri\config.xml" />
     <Content Include="Moduls\config.xml" />
-    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\Kullanici\config.xml" />
-    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\Kullanici\Default.aspx" />
-    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\Modul\config.xml" />
-    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\Modul\Default.aspx" />
-    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\Rol\config.xml" />
-    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\Rol\Default.aspx" />
-    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\Yetki\config.xml" />
-    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\Yetki\Default.aspx" />
+    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\1.Kullanici\config.xml" />
+    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\1.Kullanici\Default.aspx" />
+    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\2.Modul\config.xml" />
+    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\2.Modul\Default.aspx" />
+    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\3.Rol\config.xml" />
+    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\3.Rol\Default.aspx" />
+    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\4.Yetki\config.xml" />
+    <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\4.Yetki\Default.aspx" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

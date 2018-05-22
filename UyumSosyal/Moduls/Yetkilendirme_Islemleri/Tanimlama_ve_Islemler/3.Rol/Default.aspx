@@ -33,26 +33,32 @@
             Response.End();
             return;
         }
+
+        var rols = UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.UserRol.GetRols();
+        this.SelectBoxRol.GetStore().DataSource = rols; 
+
+        var users = UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.UserRol.GetUsers();
+        this.SelectBoxUser.GetStore().DataSource = users; 
     }
 
     protected void ButtonSave(object sender, DirectEventArgs e)
     {
-        if (TextFieldRolId.Text.Trim().Length < 1)
+        if (string.IsNullOrEmpty(SelectBoxRol.SelectedItem.Value))
         {
-            X.Msg.Alert("Dikkat", "Rol Id boş bırakılamaz!").Show();
+            X.Msg.Alert("Dikkat", "Lütfen Rol seçiniz!").Show();
             return;
         }
 
-        if (TextFieldUserId.Text.Trim().Length < 1)
+        if (string.IsNullOrEmpty(SelectBoxUser.SelectedItem.Value))
         {
-            X.Msg.Alert("Dikkat", "User Id boş bırakılamaz!").Show();
+            X.Msg.Alert("Dikkat", "Lütfen Kullanıcı seçiniz!").Show();
             return;
         }
 
         var err = UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.UserRol.Save(
             gizli.Value, // ekle ise boş düzelt ise dolu gelir
-            TextFieldRolId.Text.Trim(),
-            TextFieldUserId.Text.Trim());
+            SelectBoxRol.SelectedItem.Value,
+            SelectBoxUser.SelectedItem.Value);
         if (err != "ok")
         {
             X.Msg.Alert("Dikkat", err).Show();
@@ -62,8 +68,8 @@
         // tazele
         Store1.Reload();
         gizli.Value = "";
-        TextFieldRolId.Text = "";
-        TextFieldUserId.Text = "";
+        SelectBoxRol.SelectedItem.Value = "";
+        SelectBoxUser.SelectedItem.Value = "";
         PickWindowRolAdd.Hide();
     }
 
@@ -83,7 +89,7 @@
                 // tazele
                 Store1.Reload();
                 gizli.Value = "";
-                lbUser.Text = "Seçilen Modül : Yok!";
+                lbUser.Text = "Seçilen Rol : Yok!";
             }
         }
         finally
@@ -173,22 +179,55 @@
             Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
             LabelWidth="125" Layout="Form">
             <Items>
-                
-                <ext:TextField ID="TextFieldRolId" runat="server" ReadOnly="false" InputType="Text"
-                    FieldLabel="Rol Id" LabelWidth="50" Width="120" AllowBlank="false" BlankText="Rol Id boş geçilemez!" MaxLengthText="50"
-                    Text="" EnableKeyEvents="true">
-                    <Listeners>
-                        <KeyPress Handler="if(e.getKey() == e.ENTER || e.getKey() == e.RETURN) { #{TextFieldUserId}.focus(); }" />
-                    </Listeners>
-                </ext:TextField>
-                
-                <ext:TextField ID="TextFieldUserId" runat="server" ReadOnly="false" InputType="Text"
-                               FieldLabel="Modul Id" LabelWidth="50" Width="120" AllowBlank="false" BlankText="Kullanici Id boş geçilemez!" MaxLengthText="50"
-                               Text="" EnableKeyEvents="true">
-                    <Listeners>
-                        <KeyPress Handler="if(e.getKey() == e.ENTER || e.getKey() == e.RETURN) { #{ButtonTamam}.focus(); }" />
-                    </Listeners>
-                </ext:TextField>
+
+                <ext:SelectBox
+                    ID="SelectBoxUser"
+                    runat="server"
+                    FieldLabel="Kullınıcı"
+                    DisplayField="user_kod"
+                    ValueField="id"
+                    Editable="false"
+                    EmptyText="Kullanıcı seçiniz...">
+                    <Store>
+                        <ext:Store runat="server">
+                            <Model>
+                                <ext:Model runat="server">
+                                    <Fields>
+                                        <ext:ModelField Name="id" />
+                                        <ext:ModelField Name="user_kod" />
+                                        <ext:ModelField Name="user_ad" />
+                                        <ext:ModelField Name="user_soyad" />
+                                        <ext:ModelField Name="user_sifre" />                                        
+                                        <ext:ModelField Name="durum" />
+                                    </Fields>
+                                </ext:Model>
+                            </Model>
+                        </ext:Store>
+                    </Store>
+                </ext:SelectBox>                
+
+                <ext:SelectBox
+                    ID="SelectBoxRol"
+                    runat="server"
+                    FieldLabel="Rol"
+                    DisplayField="rol_kod"
+                    ValueField="id"
+                    Editable="false"
+                    EmptyText="Rol seçiniz...">
+                    <Store>
+                        <ext:Store runat="server">
+                            <Model>
+                                <ext:Model runat="server">
+                                    <Fields>
+                                        <ext:ModelField Name="id" />
+                                        <ext:ModelField Name="rol_kod" />
+                                        <ext:ModelField Name="aciklama" />
+                                    </Fields>
+                                </ext:Model>
+                            </Model>
+                        </ext:Store>
+                    </Store>
+                </ext:SelectBox>
 
             </Items>
             <Buttons>
@@ -235,7 +274,13 @@
 
                                 <ext:Button ID="BntSave" runat="server" Enabled="true" Text="Ekle" Icon="ApplicationAdd">
                                     <Listeners>
-                                        <Click Handler="#{gizli}.setValue(''); #{lbUser}.setText('Seçilen Rol : Yok!');#{PickWindowRolAdd}.setTitle('Ekle');#{PickWindowRolAdd}.show();" />
+                                        <Click Handler="
+                                                #{gizli}.setValue(''); 
+                                                #{SelectBoxUser}.setValue(''); 
+                                                #{SelectBoxRol}.setValue(''); 
+                                                #{lbUser}.setText('Seçilen Rol : Yok!');
+                                                #{PickWindowRolAdd}.setTitle('Ekle');
+                                                #{PickWindowRolAdd}.show();" />
                                     </Listeners>
                                 </ext:Button>
 
@@ -248,8 +293,8 @@
                                         if (v.length==0) return;
 
                                         #{PickWindowRolAdd}.setTitle('Düzelt');
-                                        #{TextFieldRolId}.setValue(v[0].data.aspnet_rol_id);
-                                        #{TextFieldUserId}.setValue(v[0].data.aspnet_kullanici_id);                                     
+                                        #{SelectBoxRol}.setValue(v[0].data.aspnet_rol_id);
+                                        #{SelectBoxUser}.setValue(v[0].data.aspnet_kullanici_id);                                     
                                         #{PickWindowRolAdd}.show();" />
                                     </Listeners>   
                                 </ext:Button>
@@ -261,7 +306,7 @@
                                         <Click Handler="
                                                         var v= #{GridPanel1}.getSelectionModel().getSelection();
                                                         if (v.length==0) return;
-                                                        Ext.MessageBox.confirm('Dikkat', 'Silmek istiyor musunız?\n('+v[0].data.aspnet_rol_id + ')', showResult );" Delay="1"/>
+                                                        Ext.MessageBox.confirm('Dikkat', 'Silmek istiyor musunız?\n('+v[0].data.kullanici + ')', showResult );" Delay="1"/>
                                     </Listeners>
                                 </ext:Button>                                
 
@@ -300,7 +345,9 @@
                                             <Fields>
                                                 <ext:ModelField Name="id" />
                                                 <ext:ModelField Name="aspnet_rol_id" />
+                                                <ext:ModelField Name="rol" />
                                                 <ext:ModelField Name="aspnet_kullanici_id" />
+                                                <ext:ModelField Name="kullanici" />
                                             </Fields>
                                         </ext:Model>
                                     </Model>
@@ -312,8 +359,8 @@
                             </Store>
                             <ColumnModel ID="ColumnModel1" runat="server">
                                 <Columns>
-                                    <ext:Column ID="Kod" runat="server" Text="Rol Id" DataIndex="aspnet_rol_id" Width="230"  />
-                                    <ext:Column ID="Column3" runat="server" Text="Kullanıcı Id" DataIndex="aspnet_kullanici_id" Width="230" />
+                                    <ext:Column ID="Column3" runat="server" Text="Kullanıcı" DataIndex="kullanici" Width="230" />
+                                    <ext:Column ID="Kod" runat="server" Text="Rol" DataIndex="rol" Width="230"  />
                                 </Columns>
                             </ColumnModel>
                             <View>
@@ -329,8 +376,13 @@
                             <Listeners>
                                 <Select Handler="
                                     var v= #{GridPanel1}.getSelectionModel().getSelection();
-                                    if (v.length>0) { #{gizli}.setValue(v[0].data.id); #{lbUser}.setText('Seçilen Modül : ' + v[0].data.modul_kod);}
-                                    else {#{gizli}.setValue(''); #{lbUser}.setText('Seçilen Modül : Yok!');} "/>
+                                    if (v.length>0) { 
+                                        #{gizli}.setValue(v[0].data.id); 
+                                        #{lbUser}.setText('Seçilen Rol : ' + v[0].data.rol);}
+                                    else {
+                                        #{gizli}.setValue(''); 
+                                        #{lbUser}.setText('Seçilen Rol : Yok!');} 
+                                    "/>
                             </Listeners>
 
                             <BottomBar>

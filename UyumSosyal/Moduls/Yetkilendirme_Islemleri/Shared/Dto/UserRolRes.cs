@@ -9,7 +9,9 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared.Dto
     public class UserRolRes : BaseRes
     {
         public int aspnet_rol_id { get; set; }
+        public string rol { get; set; }
 
         public int aspnet_kullanici_id { get; set; }
+        public string kullanici { get; set; }
     }
 }

@@ -53,6 +53,7 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
             var ret = new List<Dto.RolRes>(liste.Value.totalcount);
             ret.AddRange(liste.Value.RolListesi.Select(l => new Dto.RolRes()
             {
+                id = l.id,
                 aciklama = l.aciklama,
                 rol_kod = l.rol_kod,
                 _count = liste.Value.totalcount
@@ -63,20 +64,14 @@ namespace UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared
             // filtreleme
             if (!string.IsNullOrEmpty(orderBy) && arax.Trim() != "")
             {
-                switch (orderBy)
-                {
-                    case "rol_kod":
-                        ret = ret.Where(x => x.rol_kod.ToLower().Contains(arax.ToLower())).ToList();
-                        count = ret.Count;
-                        break;
-                    case "aciklama":
-                        ret = ret.Where(x => x.aciklama.ToLower().Contains(arax.ToLower())).ToList();
-                        count = ret.Count;
-                        break;
-                }
+                ret = ret = ret.Where(
+                    x => x.rol_kod.ToLower().Contains(arax.ToLower()) ||
+                         x.aciklama.ToLower().Contains(arax.ToLower())
+                    ).ToList();
+                count = ret.Count;
             }
 
-            var dynamicPropFromStr = typeof(Dto.ModulRes).GetProperty(orderBy);
+            var dynamicPropFromStr = typeof(Dto.RolRes).GetProperty(orderBy);
 
             if (sort.Direction == SortDirection.ASC)
             {
