@@ -1,6 +1,8 @@
 ﻿<%@ Page Language="C#" %>
 
 <%@ Import Namespace="System.Collections.Generic" %>
+<%@ Import Namespace="UyumSosyal" %>
+<%@ Import Namespace="UyumSosyal.WebReference" %>
 
 <script runat="server">
     protected void Page_Load(object sender, EventArgs e)
@@ -8,6 +10,21 @@
         if (!X.IsAjaxRequest)
         {
             this.Store1.DataSource = this.Data;
+
+            ulke_kod.SetText("TÜRKİYE");
+
+            HttpRuntime.Cache["Ulke"] = (Ulke[])HttpRuntime.Cache["Ulke"] == null ? Helper.GetWebService().UlkeListesi("").Value : (Ulke[])HttpRuntime.Cache["Ulke"];
+            HttpRuntime.Cache["Il"] = (Sehir[])HttpRuntime.Cache["Il"] == null ? Helper.GetWebService().GenelSehirListesi("").Value : (Sehir[])HttpRuntime.Cache["Il"];
+            HttpRuntime.Cache["Ilce"] = (Ilce[])HttpRuntime.Cache["Ilce"] == null ? Helper.GetWebService().GenelIlceListesi("").Value : (Ilce[])HttpRuntime.Cache["Ilce"];
+
+            HttpRuntime.Cache["CariKategori"] = (CariKategori[]) HttpRuntime.Cache["CariKategori"] == null ? Helper.GetWebService().GetCKategoriListesi("").Value.CariKategori : (CariKategori[]) HttpRuntime.Cache["CariKategori"];
+            HttpRuntime.Cache["Unvan"] = (Unvan[])HttpRuntime.Cache["Unvan"] == null ? Helper.GetWebService().UnvanListesi2("","").Value : (Unvan[])HttpRuntime.Cache["Unvan"];
+
+            this.StoreUlke.DataSource = HttpRuntime.Cache["Ulke"];
+            this.StoreIl.DataSource = HttpRuntime.Cache["Il"];
+            this.StoreIlce.DataSource = HttpRuntime.Cache["Ilce"];
+            this.StoreCariKategori.DataSource = HttpRuntime.Cache["CariKategori"];
+            this.StoreUnvan.DataSource = HttpRuntime.Cache["Unvan"];
         }
     }
 
@@ -94,10 +111,11 @@
     <title>Crm Cagri Bilgileri</title>
     <link href="/resources/css/examples.css" rel="stylesheet" />
     <style>
-        #liste_kod .x-form-text {
-            background-image: none;
-            background-color: yellow;
-        }
+         
+         #liste_kod .x-form-text {
+             background-image: none;
+             background-color: yellow;
+         }
 
         #cari_kod .x-form-text {
             background-image: none;
@@ -192,6 +210,7 @@
         }
     </style>
     <script>
+        var kodSira = 1;
         var template = '<span style="color:{0};">{1}</span>';
 
         var change = function (value) {
@@ -201,6 +220,52 @@
         var pctChange = function (value) {
             return Ext.String.format(template, (value > 0) ? "green" : "red", value + "%");
         };
+
+        Ext.net.FilterHeader.behaviour.addBehaviour("string", {
+            name: "any",
+
+            is: function (value) {
+                return Ext.net.StringUtils.startsWith(value, "any ");
+            },
+
+            getValue: function (value) {
+                var values = Ext.net.FilterHeader.behaviour.getStrValue(value).substring(4).split(" "),
+                    tmp = [];
+
+                Ext.each(values, function (v) {
+                    v = v.trim();
+                    if (!Ext.isEmpty(v)) {
+                        tmp.push(v);
+                    }
+                });
+
+                values = tmp;
+
+                return { value: values, valid: values.length > 0 };
+            },
+
+            match: function (recordValue, matchValue) {
+                for (var i = 0; i < matchValue.length; i++) {
+                    if (recordValue === matchValue[i]) {
+                        return true;
+                    }
+                }
+
+                return false;
+            },
+
+            isValid: function (value) {
+                return this.getValue(value, field).valid;
+            },
+
+            serialize: function (value) {
+                return {
+                    type: "string",
+                    op: "any",
+                    value: value
+                };
+            }
+        });
     </script>
 </head>
 <body>
@@ -208,6 +273,7 @@
 
     <ext:FormPanel
         runat="server"
+        ID="FormPanel1"
         Height="1200"
         Width="1200"
         BodyPadding="5"
@@ -233,7 +299,7 @@
                         </SelectedItems>
                     </ext:ComboBox>
                     <ext:DisplayField runat="server" Flex="1" Html="&nbsp;" />
-                    <ext:DateField ID="mulk_olma_tarih" FieldLabel="E-Fatura Mük.Olma Tarihi" Editable="false" ReadOnly="True" runat="server" Width="250" />
+                    <ext:DateField ID="mulk_olma_tarih" FieldLabel="E-Fatura Mük.Olma Tarihi" Editable="false" runat="server" Width="250" />
                 </Items>
             </ext:FieldContainer>
 
@@ -252,7 +318,11 @@
                         AllowBlank="true" />
                     
                     <ext:DisplayField runat="server" Width="135" Html="&nbsp;" />
-                    <ext:TextField runat="server" Width="225" ID="liste_kod" FieldLabel="Liste Kodu" AllowBlank="true" />
+                    <ext:TextField runat="server" Width="225" ID="liste_kod" FieldLabel="Liste Kodu" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                        <RightButtons>
+                            <ext:Button runat="server" Icon="Add" />
+                        </RightButtons>
+                    </ext:TextField>
                     
                     <ext:DisplayField runat="server" Width="50" Html="&nbsp;" />
                     <ext:DateField ID="ilk_randevu_tarih" FieldLabel="İlk Randevu Tarih" Editable="false" runat="server" Width="250"/>
@@ -269,7 +339,11 @@
                 Layout="HBoxLayout">
                 <Items>
 
-                    <ext:TextField runat="server" Width="255" ID="cari_kod" FieldLabel="Müşteri Kodu" MarginSpec="0 3 0 0" AllowBlank="true" />
+                    <ext:TextField runat="server" Width="255" ID="cari_kod" FieldLabel="Müşteri Kodu" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                        <RightButtons>
+                            <ext:Button runat="server" Icon="Add" />
+                        </RightButtons>    
+                    </ext:TextField>
                     
                     <ext:DisplayField runat="server" Width="10" Html="&nbsp;" />
                     <ext:TextField runat="server" Width="425" ID="cari_ad" ReadOnly="True" AllowBlank="true" />
@@ -285,7 +359,11 @@
                 AnchorHorizontal="100%"
                 Layout="HBoxLayout">
                 <Items>
-                    <ext:TextField runat="server" Width="355" ID="yetkili_kisi" FieldLabel="Görüşülen Kişi" MarginSpec="0 3 0 0" AllowBlank="true" />
+                    <ext:TextField runat="server" Width="355" ID="yetkili_kisi" FieldLabel="Görüşülen Kişi" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                        <RightButtons>
+                            <ext:Button runat="server" Icon="Add" />
+                        </RightButtons>
+                    </ext:TextField>
                     <ext:ComboBox ID="cinsiyet"
                                   runat="server"
                                   Width="80"
@@ -308,7 +386,15 @@
                 AnchorHorizontal="100%"
                 Layout="HBoxLayout">
                 <Items>
-                    <ext:TextField runat="server" Width="355" ID="unvan" FieldLabel="Ünvan" MarginSpec="0 3 0 0" AllowBlank="true" />
+                    <ext:TextField runat="server" Width="355" ID="unvan" FieldLabel="Ünvan" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                        <RightButtons>
+                            <ext:Button runat="server" Icon="Add">
+                                <Listeners>
+                                    <Click Handler="#{WindowUnvan}.show();" />
+                                </Listeners>
+                            </ext:Button>
+                        </RightButtons>
+                    </ext:TextField>
                     <ext:DisplayField runat="server" Flex="1" Html="&nbsp;" />
                     <ext:TextField runat="server" Width="700" ID="adres2" FieldLabel="Adres-2" MarginSpec="0 3 0 0" AllowBlank="true" />
                 </Items>
@@ -332,11 +418,55 @@
                 Layout="HBoxLayout">
                 <Items>
                     <ext:TextField runat="server" Width="304" ID="email" FieldLabel="EMail/Ür-Hiz." MarginSpec="0 3 0 0" AllowBlank="true" />
-                    <ext:TextField runat="server" Width="146" ID="urun_hizmet" MarginSpec="0 3 0 0" AllowBlank="true" />
+                    <ext:ComboBox ID="urun_hizmet"
+                                  runat="server"
+                                  Width="146"
+                                  Editable="false">
+                        <Items>
+                            <ext:ListItem Text="Ürün" Value="Ürün" />
+                            <ext:ListItem Text="Hizmet" Value="Hizmet" />
+                        </Items>
+                        <SelectedItems>
+                            <ext:ListItem Value="Ürün" />
+                        </SelectedItems>
+                    </ext:ComboBox>
+
                     <ext:DisplayField runat="server" Flex="1" Html="&nbsp;" />
-                    <ext:TextField runat="server" FieldLabel="İlçe/İl/Ülke" Width="294" ID="ilce_ad" MarginSpec="0 3 0 0" AllowBlank="true" />
-                    <ext:TextField runat="server" Width="200" ID="sehir_ad" MarginSpec="0 3 0 0" AllowBlank="true" />
-                    <ext:TextField runat="server" Width="200" ID="ulke_kod" MarginSpec="0 3 0 0" AllowBlank="true" />
+                    <ext:TextField runat="server" FieldLabel="Ülke/İl/İlçe" Width="234" ID="ulke_kod" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                        <RightButtons>
+                            <ext:Button runat="server" Icon="Add">
+                                <Listeners>
+                                    <Click Handler="#{PickWindowUlke}.show();" />
+                                </Listeners>
+                            </ext:Button>
+                        </RightButtons>
+                    </ext:TextField>
+                    <ext:TextField runat="server" Width="230" ID="sehir_ad" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                        <RightButtons>
+                            <ext:Button runat="server" Icon="Add">
+                                <Listeners>
+                                    <Click Handler="#{PickWindowIl}.show();" />
+                                </Listeners>
+                            </ext:Button>
+                        </RightButtons>
+                    </ext:TextField>
+                    <ext:TextField runat="server" Width="230" ID="ilce_ad" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                        <RightButtons>
+                            <ext:Button runat="server" Icon="Add">
+                                <Listeners>
+                                    <Click Handler="
+                                        if (#{sehir_ad}.getValue() == '') {
+                                            Ext.Msg.alert('Dikkat','Lütfen önce il seçiniz!');
+                                            return;
+                                        }
+                                        var filter = #{sehir_ad}.getValue() + '';
+                                        Ext.getStore('StoreIlce').filter('sehir_ad',filter);
+                                        #{PickWindowIlce}.show();
+                                    " />
+                                </Listeners>
+                            </ext:Button>
+                        </RightButtons>
+                    </ext:TextField>
                 </Items>
             </ext:FieldContainer>
             
@@ -351,7 +481,11 @@
                                 AnchorHorizontal="100%"
                                 Layout="HBoxLayout">
                                 <Items>
-                                    <ext:TextField runat="server" Width="304" ID="cagri_cevap" FieldLabel="Çağrı Cevap" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                    <ext:TextField runat="server" Width="304" ID="cagri_cevap" FieldLabel="Çağrı Cevap" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                        <RightButtons>
+                                            <ext:Button runat="server" Icon="Add" />
+                                        </RightButtons>
+                                    </ext:TextField>
                                     <ext:TextField runat="server" Width="146" ID="cagri_cevap2" MarginSpec="0 3 0 0" AllowBlank="true" />
                                 </Items>
                             </ext:FieldContainer>
@@ -361,7 +495,11 @@
                                 AnchorHorizontal="100%"
                                 Layout="HBoxLayout">
                                 <Items>
-                                    <ext:TextField runat="server" Width="304" ID="onem_derece" FieldLabel="Önem Derece" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                    <ext:TextField runat="server" Width="304" ID="onem_derece" FieldLabel="Önem Derece" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                        <RightButtons>
+                                            <ext:Button runat="server" Icon="Add" />
+                                        </RightButtons>
+                                    </ext:TextField>
                                     <ext:TextField runat="server" Width="146" ID="onem_derece2" MarginSpec="0 3 0 0" AllowBlank="true" />
                                 </Items>
                             </ext:FieldContainer>
@@ -371,7 +509,18 @@
                                 AnchorHorizontal="100%"
                                 Layout="HBoxLayout">
                                 <Items>
-                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod1" FieldLabel="Cari Kat.Kod-1" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod1" FieldLabel="Cari Kat.Kod-1" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                        <RightButtons>
+                                            <ext:Button runat="server" Icon="Add">
+                                                <Listeners>
+                                                    <Click Handler="
+                                                        kodSira=1;
+                                                        #{WindowCariKategori}.show();
+                                                    " />
+                                                </Listeners>
+                                            </ext:Button>
+                                        </RightButtons>
+                                    </ext:TextField>
                                     <ext:TextField runat="server" Width="146" ID="ckategori_ad1" MarginSpec="0 3 0 0" AllowBlank="true" />
                                 </Items>
                             </ext:FieldContainer>
@@ -381,7 +530,18 @@
                                 AnchorHorizontal="100%"
                                 Layout="HBoxLayout">
                                 <Items>
-                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod2" FieldLabel="Cari Kat.Kod-2" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod2" FieldLabel="Cari Kat.Kod-2" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                        <RightButtons>
+                                            <ext:Button runat="server" Icon="Add">
+                                                <Listeners>
+                                                    <Click Handler="
+                                                        kodSira=2;
+                                                        #{WindowCariKategori}.show();
+                                                    " />
+                                                </Listeners>
+                                            </ext:Button>
+                                        </RightButtons>   
+                                    </ext:TextField>
                                     <ext:TextField runat="server" Width="146" ID="ckategori_ad2" MarginSpec="0 3 0 0" AllowBlank="true" />
                                 </Items>
                             </ext:FieldContainer>
@@ -391,7 +551,18 @@
                                 AnchorHorizontal="100%"
                                 Layout="HBoxLayout">
                                 <Items>
-                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod3" FieldLabel="Cari Kat.Kod-3" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod3" FieldLabel="Cari Kat.Kod-3" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                        <RightButtons>
+                                            <ext:Button runat="server" Icon="Add">
+                                                <Listeners>
+                                                    <Click Handler="
+                                                        kodSira=3;
+                                                        #{WindowCariKategori}.show();
+                                                    " />
+                                                </Listeners>
+                                            </ext:Button>
+                                        </RightButtons>
+                                    </ext:TextField>
                                     <ext:TextField runat="server" Width="146" ID="ckategori_ad3" MarginSpec="0 3 0 0" AllowBlank="true" />
                                 </Items>
                             </ext:FieldContainer>
@@ -401,7 +572,18 @@
                                 AnchorHorizontal="100%"
                                 Layout="HBoxLayout">
                                 <Items>
-                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod4" FieldLabel="Cari Kat.Kod-4" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod4" FieldLabel="Cari Kat.Kod-4" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                        <RightButtons>
+                                            <ext:Button runat="server" Icon="Add">
+                                                <Listeners>
+                                                    <Click Handler="
+                                                        kodSira=4;
+                                                        #{WindowCariKategori}.show();
+                                                    " />
+                                                </Listeners>
+                                            </ext:Button>
+                                        </RightButtons>
+                                    </ext:TextField>
                                     <ext:TextField runat="server" Width="146" ID="ckategori_ad4" MarginSpec="0 3 0 0" AllowBlank="true" />
                                 </Items>
                             </ext:FieldContainer>
@@ -411,7 +593,18 @@
                                 AnchorHorizontal="100%"
                                 Layout="HBoxLayout">
                                 <Items>
-                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod5" FieldLabel="Cari Kat.Kod-5" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod5" FieldLabel="Cari Kat.Kod-5" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                        <RightButtons>
+                                            <ext:Button runat="server" Icon="Add">
+                                                <Listeners>
+                                                    <Click Handler="
+                                                        kodSira=5;      
+                                                        #{WindowCariKategori}.show();
+                                                    " />
+                                                </Listeners>
+                                            </ext:Button>
+                                        </RightButtons>
+                                    </ext:TextField>
                                     <ext:TextField runat="server" Width="146" ID="ckategori_ad5" MarginSpec="0 3 0 0" AllowBlank="true" />
                                 </Items>
                             </ext:FieldContainer>
@@ -514,7 +707,11 @@
                             AnchorHorizontal="100%"
                             Layout="HBoxLayout">
                             <Items>
-                                <ext:TextField runat="server" Width="304" ID="cagri_nedeni" FieldLabel="Çağri Nedeni" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                <ext:TextField runat="server" Width="304" ID="cagri_nedeni" FieldLabel="Çağri Nedeni" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                    <RightButtons>
+                                        <ext:Button runat="server" Icon="Add" />
+                                    </RightButtons>
+                                </ext:TextField>
                                 <ext:TextField runat="server" Width="264" ID="cagri_nedeni2" MarginSpec="0 3 0 0" AllowBlank="true" />
                             </Items>
                         </ext:FieldContainer>
@@ -524,7 +721,11 @@
                             AnchorHorizontal="100%"
                             Layout="HBoxLayout">
                             <Items>
-                                <ext:TextField runat="server" Width="304" ID="cagri_konusu" FieldLabel="Çağri Konusu" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                <ext:TextField runat="server" Width="304" ID="cagri_konusu" FieldLabel="Çağri Konusu" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                    <RightButtons>
+                                        <ext:Button runat="server" Icon="Add" />
+                                    </RightButtons>
+                                </ext:TextField>
                                 <ext:TextField runat="server" Width="266" ID="cagri_konusu2" MarginSpec="0 3 0 0" AllowBlank="true" />
                             </Items>
                         </ext:FieldContainer>
@@ -556,6 +757,286 @@
         </Items>
     </ext:FormPanel>
 
+    <ext:Window ID="PickWindowIl" runat="server" Width="400" Height="410" AutoHeight="true" Title="İl"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
+            LabelWidth="125" Layout="Fit">
+        <Items>
+            <ext:GridPanel
+                ID="GridPanelIl"
+                runat="server">
+                 <Store>
+                     <ext:Store ID="StoreIl" runat="server">
+                         <Model>
+                             <ext:Model runat="server">
+                                 <Fields>
+                                     <ext:ModelField Name="sehir_ad" />
+                                     <ext:ModelField Name="ilce_ad" />
+                                     <ext:ModelField Name="okod1" />
+                                     <ext:ModelField Name="okod2" />
+                                     <ext:ModelField Name="ilceId" Type="Int" />
+                                 </Fields>
+                             </ext:Model>
+                         </Model>
+                     </ext:Store>
+                 </Store>
+                 <ColumnModel>
+                     <Columns>
+                         <ext:Column runat="server" Text="Şehir" DataIndex="sehir_ad" Width="230"/>
+                     </Columns>
+                 </ColumnModel>
+                 <Plugins>
+                    <ext:FilterHeader runat="server" />
+                 </Plugins>
+                 <SelectionModel>
+                     <ext:RowSelectionModel runat="server" />
+                 </SelectionModel>
+                <BottomBar>
+                    <ext:Toolbar runat="server">
+                        <Items>
+                            <ext:Button runat="server" Text="Seç" Icon="Add" Handler="
+                                var v= #{GridPanelIl}.getSelectionModel().getSelection();
+                                if (v.length==0) return;
+                                #{sehir_ad}.setValue(v[0].data.sehir_ad);
+                                #{ilce_ad}.setValue('');
+                                #{PickWindowIl}.hide();
+                             " />
+                            <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowIl}.hide();" />
+                        </Items>
+                    </ext:Toolbar>
+                </BottomBar>
+            </ext:GridPanel>
+        </Items>
+    </ext:Window>
     
+    <ext:Window ID="PickWindowIlce" runat="server" Width="400" Height="410" AutoHeight="true" Title="İlçe"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
+            LabelWidth="125" Layout="Fit">
+        <Items>
+            <ext:GridPanel
+                ID="GridPanelIlce"
+                runat="server">
+                 <Store>
+                     <ext:Store ID="StoreIlce" runat="server">
+                         <Model>
+                             <ext:Model runat="server">
+                                 <Fields>
+                                     <ext:ModelField Name="sehir_ad" />
+                                     <ext:ModelField Name="ilce_ad" />
+                                     <ext:ModelField Name="okod1" />
+                                     <ext:ModelField Name="okod2" />
+                                     <ext:ModelField Name="bolge_kod" />
+                                     <ext:ModelField Name="ilceId" Type="Int" />
+                                 </Fields>
+                             </ext:Model>
+                         </Model>
+                     </ext:Store>
+                 </Store>
+                 <ColumnModel>
+                     <Columns>
+                         <ext:Column runat="server" Text="İlçe" DataIndex="ilce_ad" Width="230"/>
+                     </Columns>
+                 </ColumnModel>
+                 <Plugins>
+                    <ext:FilterHeader runat="server" />
+                 </Plugins>
+                 <SelectionModel>
+                     <ext:RowSelectionModel runat="server" />
+                 </SelectionModel>
+                <BottomBar>
+                    <ext:Toolbar runat="server">
+                        <Items>
+                            <ext:Button runat="server" Text="Seç" Icon="Add" Handler="
+                                var v= #{GridPanelIlce}.getSelectionModel().getSelection();
+                                if (v.length==0) return;
+                                #{ilce_ad}.setValue(v[0].data.ilce_ad);
+                                #{PickWindowIlce}.hide();
+                            " />
+                            <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowIlce}.hide();" />
+                        </Items>
+                    </ext:Toolbar>
+                </BottomBar>
+            </ext:GridPanel>
+        </Items>
+    </ext:Window>
+    
+    <ext:Window ID="PickWindowUlke" runat="server" Width="400" Height="410" AutoHeight="true" Title="Ülke"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
+            LabelWidth="125" Layout="Fit">
+        <Items>
+            <ext:GridPanel
+                ID="GridPanelUlke"
+                runat="server">
+                 <Store>
+                     <ext:Store ID="StoreUlke" runat="server">
+                         <Model>
+                             <ext:Model runat="server">
+                                 <Fields>
+                                     <ext:ModelField Name="ulke_kod" />
+                                     <ext:ModelField Name="telefon_kod" />
+                                     <ext:ModelField Name="trafik_kod" />
+                                     <ext:ModelField Name="grup_kod" />
+                                     <ext:ModelField Name="ulke_ad" />
+                                     <ext:ModelField Name="ulkeId" Type="Int" />
+                                 </Fields>
+                             </ext:Model>
+                         </Model>
+                     </ext:Store>
+                 </Store>
+                 <ColumnModel>
+                     <Columns>
+                         <ext:Column runat="server" Text="Ülke" DataIndex="ulke_ad" Width="230"/>
+                     </Columns>
+                 </ColumnModel>
+                 <Plugins>
+                    <ext:FilterHeader runat="server" />
+                 </Plugins>
+                 <SelectionModel>
+                     <ext:RowSelectionModel runat="server" />
+                 </SelectionModel>
+                <BottomBar>
+                    <ext:Toolbar runat="server">
+                        <Items>
+                            <ext:Button runat="server" Text="Seç" Icon="Add" Handler="
+                                var v= #{GridPanelUlke}.getSelectionModel().getSelection();
+                                if (v.length==0) return;
+                                #{ulke_kod}.setValue(v[0].data.ulke_kod);
+                                #{PickWindowUlke}.hide();
+                            " />
+                            <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowUlke}.hide();" />
+                        </Items>
+                    </ext:Toolbar>
+                </BottomBar>
+            </ext:GridPanel>
+        </Items>
+    </ext:Window>
+
+    <ext:Window ID="WindowCariKategori" runat="server" Width="400" Height="410" AutoHeight="true" Title="Cari Kategori"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
+            LabelWidth="125" Layout="Fit">
+        <Items>
+            <ext:GridPanel
+                ID="GridPanelCariKategori"
+                runat="server">
+                 <Store>
+                     <ext:Store ID="StoreCariKategori" runat="server">
+                         <Model>
+                             <ext:Model runat="server">
+                                 <Fields>
+                                     <ext:ModelField Name="kategori_kod" />
+                                     <ext:ModelField Name="kategori_ad" />
+                                     <ext:ModelField Name="grup" Type="Boolean"/>
+                                     <ext:ModelField Name="ckat_grup_kod" />
+                                     <ext:ModelField Name="cagri_gorunmesin" Type="Boolean"/>
+                                     <ext:ModelField Name="mobilcrm_gorunmesin" Type="Boolean" />
+                                     <ext:ModelField Name="ckarta_eklenemez" Type="Boolean" />
+                                     <ext:ModelField Name="ckatId" Type="Int" />
+                                 </Fields>
+                             </ext:Model>
+                         </Model>
+                     </ext:Store>
+                 </Store>
+                 <ColumnModel>
+                     <Columns>
+                         <ext:Column runat="server" Text="Kod" DataIndex="kategori_kod" Width="130"/>
+                         <ext:Column runat="server" Text="Ad" DataIndex="kategori_ad" Width="230"/>
+                     </Columns>
+                 </ColumnModel>
+                 <Plugins>
+                    <ext:FilterHeader runat="server" />
+                 </Plugins>
+                 <SelectionModel>
+                     <ext:RowSelectionModel runat="server" />
+                 </SelectionModel>
+                <BottomBar>
+                    <ext:Toolbar runat="server">
+                        <Items>
+                            <ext:Button runat="server" Text="Seç" Icon="Add" Handler="
+                                console.log(kodSira);
+                                var v= #{GridPanelCariKategori}.getSelectionModel().getSelection();
+                                console.log(v.length);
+                                if (v.length==0) return;
+                                switch(kodSira) {
+                                    case 1:
+                                        #{ckategori_kod1}.setValue(v[0].data.kategori_kod);
+                                        #{ckategori_ad1}.setValue(v[0].data.kategori_ad);
+                                        break;
+                                    case 2:
+                                        #{ckategori_kod2}.setValue(v[0].data.kategori_kod);
+                                        #{ckategori_ad2}.setValue(v[0].data.kategori_ad);
+                                        break;
+                                    case 3:
+                                        #{ckategori_kod3}.setValue(v[0].data.kategori_kod);
+                                        #{ckategori_ad3}.setValue(v[0].data.kategori_ad);
+                                        break;
+                                    case 4:
+                                        #{ckategori_kod4}.setValue(v[0].data.kategori_kod);
+                                        #{ckategori_ad4}.setValue(v[0].data.kategori_ad);
+                                        break;
+                                    case 5:
+                                        #{ckategori_kod5}.setValue(v[0].data.kategori_kod);
+                                        #{ckategori_ad5}.setValue(v[0].data.kategori_ad);
+                                        break;
+                                }
+                               
+                                #{WindowCariKategori}.hide();
+                            " />
+                            <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{WindowCariKategori}.hide();" />
+                        </Items>
+                    </ext:Toolbar>
+                </BottomBar>
+            </ext:GridPanel>
+        </Items>
+    </ext:Window>
+
+    <ext:Window ID="WindowUnvan" runat="server" Width="400" Height="410" AutoHeight="true" Title="Ünvan"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
+            LabelWidth="125" Layout="Fit">
+        <Items>
+            <ext:GridPanel
+                ID="GridPanelUnvan"
+                runat="server">
+                 <Store>
+                     <ext:Store ID="StoreUnvan" runat="server">
+                         <Model>
+                             <ext:Model runat="server">
+                                 <Fields>
+                                     <ext:ModelField Name="grup_kod" />
+                                     <ext:ModelField Name="unvan_kod" />
+                                     <ext:ModelField Name="unvan_ad" />
+                                     <ext:ModelField Name="unvanId" Type="Int" />
+                                 </Fields>
+                             </ext:Model>
+                         </Model>
+                     </ext:Store>
+                 </Store>
+                 <ColumnModel>
+                     <Columns>
+                         <ext:Column runat="server" Text="Kod" DataIndex="unvan_kod" Width="120"/>
+                         <ext:Column runat="server" Text="Ad" DataIndex="unvan_ad" Width="240"/>
+                     </Columns>
+                 </ColumnModel>
+                 <Plugins>
+                    <ext:FilterHeader runat="server" />
+                 </Plugins>
+                 <SelectionModel>
+                     <ext:RowSelectionModel runat="server" />
+                 </SelectionModel>
+                <BottomBar>
+                    <ext:Toolbar runat="server">
+                        <Items>
+                            <ext:Button runat="server" Text="Seç" Icon="Add" Handler="
+                                var v= #{GridPanelUnvan}.getSelectionModel().getSelection();
+                                if (v.length==0) return;
+                                #{unvan}.setValue(v[0].data.unvan_kod);
+                                #{WindowUnvan}.hide();
+                            " />
+                            <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{WindowUnvan}.hide();" />
+                        </Items>
+                    </ext:Toolbar>
+                </BottomBar>
+            </ext:GridPanel>
+        </Items>
+    </ext:Window>
+
 </body>
 </html>
