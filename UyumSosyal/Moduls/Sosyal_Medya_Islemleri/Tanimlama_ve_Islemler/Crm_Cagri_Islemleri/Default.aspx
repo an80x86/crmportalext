@@ -116,6 +116,42 @@
         }
         catch (Exception ex)
         {
+            X.MessageBox.Hide();
+            X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
+        }
+
+        PickWindowIlEkle.Hide();
+    }
+
+    protected void IlceKaydet(object sender, DirectEventArgs e)
+    {
+        var deger = e.ExtraParams[0];
+        dynamic d = JObject.Parse(deger.Value.ToString());
+        try
+        {
+            var sonuc = Helper.GetWebService().IlceKaydet(new Ilce()
+            {
+                sehir_ad =d.pilce_sehir_ad2.Value,
+                ilce_ad = d.pilce_ilce_kodu.Value,
+                okod1 = "",
+                okod2 = "",
+                ilceId = int.Parse(d.pilce_ilce_id.Value.ToString())
+            });
+            X.MessageBox.Hide();
+
+            if (!sonuc.Result)
+            {
+                X.MessageBox.Alert("Hata Oluştu", sonuc.Message).Show();
+                return;
+            }
+
+            HttpRuntime.Cache["Ilce"] = Helper.GetWebService().GenelIlceListesi("").Value;
+            StoreIlce.DataSource = HttpRuntime.Cache["Ilce"];
+            StoreIlce.DataBind();
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Hide();
             X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
         }
 
@@ -137,6 +173,28 @@
             HttpRuntime.Cache["Il"] = Helper.GetWebService().GenelSehirListesi("").Value;
             StoreIl.DataSource = HttpRuntime.Cache["Il"];
             StoreIl.DataBind();
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
+        }
+    }
+
+    [DirectMethod]
+    public void IlceSil(string id)
+    {
+        try
+        {
+            var sonuc = Helper.GetWebService().IlceSil(id.ToInt());
+            X.MessageBox.Hide();
+            if (!sonuc.Result)
+            {
+                X.MessageBox.Alert("Hata Oluştu", sonuc.Message).Show();
+            }
+
+            HttpRuntime.Cache["Ilce"] = Helper.GetWebService().GenelIlceListesi("").Value;
+            StoreIlce.DataSource = HttpRuntime.Cache["Ilce"];
+            StoreIlce.DataBind();
         }
         catch (Exception ex)
         {
@@ -489,7 +547,7 @@
                     </ext:ComboBox>
 
                     <ext:DisplayField runat="server" Flex="1" Html="&nbsp;" />
-                    <ext:TextField runat="server" FieldLabel="Ülke/İl/İlçe" Width="234" ID="ulke_kod" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                    <ext:TextField runat="server" FieldLabel="Ülke/İl/İlçe" Width="234" ID="ulke_kod" MarginSpec="0 3 0 0" AllowBlank="true" ReadOnly="True" RightButtonsShowMode="MouseOver">
                         <RightButtons>
                             <ext:Button runat="server" Icon="Add">
                                 <Listeners>
@@ -498,7 +556,7 @@
                             </ext:Button>
                         </RightButtons>
                     </ext:TextField>
-                    <ext:TextField runat="server" Width="230" ID="sehir_ad" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                    <ext:TextField runat="server" Width="230" ID="sehir_ad" MarginSpec="0 3 0 0" AllowBlank="False" ReadOnly="True" RightButtonsShowMode="MouseOver">
                         <RightButtons>
                             <ext:Button runat="server" Icon="Add">
                                 <Listeners>
@@ -507,7 +565,7 @@
                             </ext:Button>
                         </RightButtons>
                     </ext:TextField>
-                    <ext:TextField runat="server" Width="230" ID="ilce_ad" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                    <ext:TextField runat="server" Width="230" ID="ilce_ad" MarginSpec="0 3 0 0" AllowBlank="true" ReadOnly="True" RightButtonsShowMode="MouseOver">
                         <RightButtons>
                             <ext:Button runat="server" Icon="Add">
                                 <Listeners>
@@ -517,6 +575,8 @@
                                             return;
                                         }
                                         var filter = #{sehir_ad}.getValue() + '';
+                                        console.log(filter);
+                                        #{pilce_sehir_ad2}.setValue(filter);
                                         Ext.getStore('StoreIlce').filter('sehir_ad',filter);
                                         #{PickWindowIlce}.show();
                                     " />
@@ -898,7 +958,7 @@
                                     buttons: Ext.MessageBox.OKCANCEL,
                                     icon: Ext.MessageBox.WARNING,
                                     fn: function(btn){
-                                        if(btn == 'ok'){
+                                        if(btn === 'ok'){
                                             Ext.MessageBox.show({
                                                                  msg: 'Islem yapilirken lutfen bekleyiniz.',
 	                                                             waitConfig: {interval:200}
@@ -1005,6 +1065,8 @@
     </ext:Window>
     
     <!-- il işlemleri end -->
+    
+    <!-- ilçe işlemleri -->
 
     <ext:Window ID="PickWindowIlce" runat="server" Width="400" Height="410" AutoHeight="true" Title="İlçe"
             Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
@@ -1049,6 +1111,40 @@
                                 #{ilce_ad}.setValue(v[0].data.ilce_ad);
                                 #{PickWindowIlce}.hide();
                             " />
+                            <ext:Button runat="server" Text="Ekle" Icon="CarAdd"  Handler="
+                                #{pilce_ilce_id}.setValue('0');
+                                #{pilce_ilce_kodu}.setValue('');
+                                #{PickWindowIlceEkle}.show();
+                            ">
+                            </ext:Button>
+                            <ext:Button runat="server" Text="Düzelt" Icon="CartEdit" Handler="
+                                var v= #{GridPanelIlce}.getSelectionModel().getSelection();
+                                console.log(v);console.log(v.length);
+                                if (v.length==0) return;
+                                #{pilce_ilce_id}.setValue(v[0].data.ilceId);
+                                #{pilce_ilce_kodu}.setValue(v[0].data.ilce_ad);
+                                #{PickWindowIlceEkle}.show();
+                                " />
+                            <ext:Button runat="server" Text="Sil" Icon="CarDelete" Handler="
+                                var v= #{GridPanelIlce}.getSelectionModel().getSelection();
+                                if (v.length==0) return;
+                                Ext.MessageBox.show({
+                                    title: 'Dikkat',
+                                    msg: 'Silmek ister misiniz? ('+v[0].data.ilce_ad+')',
+                                    buttons: Ext.MessageBox.OKCANCEL,
+                                    icon: Ext.MessageBox.WARNING,
+                                    fn: function(btn){
+                                        if(btn === 'ok'){
+                                            Ext.MessageBox.show({
+                                                                 msg: 'Islem yapilirken lutfen bekleyiniz.',
+	                                                             waitConfig: {interval:200}
+	                                                            });                                            
+                                        
+                                            CompanyX.IlceSil(v[0].data.ilceId);
+                                        }
+                                    }
+                                });
+                                " />
                             <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowIlce}.hide();" />
                         </Items>
                     </ext:Toolbar>
@@ -1057,6 +1153,69 @@
         </Items>
     </ext:Window>
     
+    <ext:Window ID="PickWindowIlceEkle" runat="server" Width="350" Height="160" AutoHeight="true" Title="İlçe Ekle/Düzelt"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
+            LabelWidth="125" Layout="Fit">
+        <Items>
+            <ext:FormPanel
+                ID="PickIlceEkle"
+                runat="server"
+                Layout="Fit"
+                AutoScroll="true">
+                    <Items>
+                        <ext:FieldSet runat="server" DefaultWidth="310" Padding="5">
+                    <Items>
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            InputType="Number"
+                            AllowBlank="False"
+                            FieldLabel="İlçe Id"
+                            ID="pilce_ilce_id"
+                            Hidden="true"
+                            EmptyText="İlçe Id" />
+
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            InputType="Text"
+                            AllowBlank="True"
+                            FieldLabel="Şehir Ad"
+                            ID="pilce_sehir_ad2"
+                            Hidden="true"
+                            EmptyText="Şehir Ad" />
+
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            AllowBlank="false"
+                            FieldLabel="İlçe Adı"
+                            ID="pilce_ilce_kodu"
+                            EmptyText="İlçe Adı" />
+                    </Items>
+                </ext:FieldSet>
+                    </Items>
+                    <Buttons>
+                        <ext:Button runat="server" Text="Tamam" Icon="Accept" Disabled="True" FormBind="True"  Handler="#{PickWindowIlceEkle}.show();">
+                            <DirectEvents>
+                                <Click OnEvent="IlceKaydet" Before="Ext.MessageBox.show({
+	                                                                      msg: 'Islem yapilirken lutfen bekleyiniz.',
+	                                                                      waitConfig: {interval:200}
+	                                                                    });" Delay="1">
+                                    <ExtraParams>
+                                        <ext:Parameter Name="Values" Value="#{PickIlceEkle}.getValues(false)" Mode="Raw" />
+                                    </ExtraParams>
+                                </Click>
+                            </DirectEvents>
+                        </ext:Button>
+                        <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowIlceEkle}.hide();" />
+                    </Buttons>
+                </ext:FormPanel>
+        </Items>
+    </ext:Window>
+
+    <!-- ilçe işlemleri end -->
+
     <ext:Window ID="PickWindowUlke" runat="server" Width="400" Height="410" AutoHeight="true" Title="Ülke"
             Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
             LabelWidth="125" Layout="Fit">
