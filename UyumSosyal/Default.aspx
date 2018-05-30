@@ -7,6 +7,7 @@
 
 <script runat="server">
     protected string mobileVersion = "4.1";
+    public const string Template = "Kulanıcı Menüsü";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -175,12 +176,13 @@
     Header="false"
     Region="North"
     Border="false"
-    Height="70">
+    Height="40">
     <Content>
         <header class="site-header" role="banner">
             <nav class="top-navigation">
                 <div class="logo-container">
-                    <img src="https://www.uyumsoft.com/wp/wp-content/uploads/2017/12/logo-v2@2x.png" alt="Uyumsoft" style="width: 100px;height: 50px;margin-top: -10px;">
+                    <img src="resources/images/logo-v2@2x.png" alt="Uyumsoft" style="width: 100px;height: 50px;margin-top: -24px;">
+                    <a href="Login.aspx"><img src="resources/images/exit.png" alt="Uyumsoft" style="width: 35px;height: 35px;margin-top: -18px;position: absolute; right: 5px;"></a>
                 </div>
                 
             </nav>
@@ -227,7 +229,10 @@
                             </Listeners>
                         </ext:TextField>
 
-                        <ext:Button runat="server" id="OptionsButton" IconCls="fa fa-cog" ToolTip="Options" ArrowVisible="false">
+                        <ext:Button runat="server" id="OptionsButton" IconCls="fa fa-cog" ToolTip="Kullanıcı Menüsü" ArrowVisible="false">
+                            <Callouts>
+                                <ext:Callout runat="server" Html="<%# Template %>" Width="150" Trigger="Hover" />
+                            </Callouts>
                             <Menu>
                                 <ext:Menu runat="server" MinWidth="200">
                                     <Items>
