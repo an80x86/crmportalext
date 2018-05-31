@@ -28,6 +28,97 @@ namespace UyumSosyal
 
     public class WebServiceTest
     {
+        public static void Rakip()
+        {
+            var ret = Helper.GetWebService().RakipListesi(new MobServiceRequestOfMobBaseTop()
+            {
+                Top = 10000,
+            });
+
+            var ret2 = Helper.GetWebService().RakipKaydet(new Rakip()
+            {
+
+            });
+
+            var ret3 = Helper.GetWebService().RakipSil(-99);
+        }
+
+        public static void Satici()
+        {
+            var ret = Helper.GetWebService().SaticiListesi("", "");
+
+            var ret2 = Helper.GetWebService().SaticiKaydet(new Satici()
+            {
+
+            });
+
+            var ret3 = Helper.GetWebService().SaticiSil(-99);
+        }
+
+        public static void AltSektor()
+        {
+            var ret = Helper.GetWebService().AltSektorListesi("");
+
+            var ret2 = Helper.GetWebService().AltSektorKaydet(new AltSektor()
+            {
+                alt_sektor_kod = "test",
+                alt_sektor_ad = "test"
+            });
+
+            var ret3 = Helper.GetWebService().AltSektorSil(-99);
+        }
+
+        public static void Belge()
+        {
+            var ret = Helper.GetWebService().BelgeTipListesi("");
+
+            var ret2 = Helper.GetWebService().BelgeTipKaydet(new BelgeTip()
+            {
+                tip_kod = "sil",
+                aciklama = "sil"
+            });
+
+            var ret3 = Helper.GetWebService().BelgeTipSil(-99);
+        }
+
+        public static void Sektor()
+        {
+            var ret = Helper.GetWebService().SektorMasterListe("", 0, 100000);
+
+            var ret1 = Helper.GetWebService().SektorDetayListe(9531541, 0, 10000);
+
+            var ret2 = Helper.GetWebService().SektorMasterKaydet(new SektorM()
+            {
+                sektor_ad = "sil",
+                sektor_kod = "sil"
+            });
+
+            var ret3 = Helper.GetWebService().SektorDetayKaydet(new SektorD()
+            {
+                master_no = 9531541,
+                alt_sektor_ad = "sil",
+                alt_sektor_kod = "sil",
+                sira_no = 99
+            });
+
+            var ret4 = Helper.GetWebService().SektorSil(-10);
+            var ret5 = Helper.GetWebService().SektorDetaySil(-10);
+        }
+        public static void Statu()
+        {
+            //Listesi StatuKaydet StatuSil
+            var ret = Helper.GetWebService().StatuListesi("", "");
+
+            var sonuc = Helper.GetWebService().StatuKaydet(new Statu()
+            {
+                aciklama = "test",
+                statu_kod = "test kod",
+                statu_tip = true
+            });
+
+            var sonuc2 = Helper.GetWebService().StatuSil(-100);
+        }
+
         public static void Sehir()
         {
             var ret = Helper.GetWebService().GenelSehirListesi("");
@@ -37,13 +128,22 @@ namespace UyumSosyal
         public static void Ilce()
         {
             var ret = Helper.GetWebService().GenelIlceListesi("");
-
+            var ret2 = Helper.GetWebService().IlceKaydet(new Ilce()
+            {
+                ilce_ad = "sil",
+                sehir_ad = "Bursa"
+            });
         }
 
         public static void Ulke()
         {
             var ret = Helper.GetWebService().UlkeListesi("");
 
+            var ret2 = Helper.GetWebService().UlkeKaydet(new Ulke()
+            {
+                ulke_ad = "sil",
+                ulke_kod = "sil"
+            });
         }
         public static void UnvanGrup()
         {
@@ -74,6 +174,12 @@ namespace UyumSosyal
         protected void Application_Start(object sender, EventArgs e)
         {
 #if WST
+            WebServiceTest.Rakip();
+            WebServiceTest.Satici();
+            WebServiceTest.AltSektor();
+            WebServiceTest.Belge();
+            WebServiceTest.Sektor();
+            WebServiceTest.Statu();
             WebServiceTest.Sehir();
             WebServiceTest.Ilce();
             WebServiceTest.Ulke();
