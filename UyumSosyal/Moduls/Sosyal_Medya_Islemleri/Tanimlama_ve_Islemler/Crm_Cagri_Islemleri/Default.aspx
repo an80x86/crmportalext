@@ -102,7 +102,7 @@
             X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
         }
 
-        PickWindowIlEkle.Hide();
+        PickWindowUlkeEkle.Hide();
     }
 
     protected void IlKaydet(object sender, DirectEventArgs e)
@@ -139,7 +139,7 @@
             X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
         }
 
-        PickWindowIlEkle.Hide();
+        PickWindowIlceEkle.Hide();
     }
 
     protected void IlceKaydet(object sender, DirectEventArgs e)
@@ -174,7 +174,7 @@
             X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
         }
 
-        PickWindowIlEkle.Hide();
+        PickWindowIlceEkle.Hide();
     }
 
     [DirectMethod]

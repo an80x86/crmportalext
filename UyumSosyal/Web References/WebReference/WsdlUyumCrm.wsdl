@@ -2,6 +2,141 @@
 <wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="UnvanGrupKaydet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="unvangrup" type="tns:UnvanGrup" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="UnvanGrup">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="grupId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="grup_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="grup_ad" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UnvanGrupKaydetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UnvanGrupKaydetResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MobServiceResultOfBoolean">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UnvanGrupSil">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="grupId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UnvanGrupSilResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UnvanGrupSilResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UnvanListesi2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="unvankod" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="unvanad" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UnvanListesi2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UnvanListesi2Result" type="tns:MobServiceResultOfListOfUnvan" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MobServiceResultOfListOfUnvan">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:ArrayOfUnvan" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfUnvan">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Unvan" nillable="true" type="tns:Unvan" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Unvan">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="UnvanId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="grup_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="unvan_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="unvan_ad" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UnvanSil">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="unvanId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UnvanSilResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UnvanSilResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UnvanKaydet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="unvan" type="tns:Unvan" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UnvanKaydetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UnvanKaydetResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CkategoriKaydet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="kategori" type="tns:CariKategori" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CariKategori">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="kategori_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="kategori_ad" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="grup" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="ckat_grup_kod" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="cagri_gorunmesin" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="mobilcrm_gorunmesin" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ckarta_eklenemez" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="CkatId" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CkategoriKaydetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CkategoriKaydetResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="CKategoriSil">
         <s:complexType>
           <s:sequence>
@@ -16,15 +151,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="MobServiceResultOfBoolean">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:boolean" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="GenelSehirListesi">
         <s:complexType>
           <s:sequence>
@@ -1108,6 +1234,69 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="CKategoriGrupKaydet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="grup" type="tns:CKatGrup" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CKatGrup">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="grupId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ckat_grup_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ckat_grup_ad" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CKategoriGrupKaydetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CKategoriGrupKaydetResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CKategoriGrupListesi">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="grupkod" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CKategoriGrupListesiResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CKategoriGrupListesiResult" type="tns:MobServiceResultOfListOfCKatGrup" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MobServiceResultOfListOfCKatGrup">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:ArrayOfCKatGrup" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCKatGrup">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CKatGrup" nillable="true" type="tns:CKatGrup" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CKategoriGrupSil">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="grupId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CKategoriGrupSilResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CKategoriGrupSilResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="KategoriOncelikKaydet">
         <s:complexType>
           <s:sequence>
@@ -1168,6 +1357,70 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="KategoriOncelikSilResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CKategoriOncelikKaydet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="oncelik" type="tns:CkategoriOncelik" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CkategoriOncelik">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ckatoncelikId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ckategori_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="oncelik_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="oncelik_ad" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CKategoriOncelikKaydetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CKategoriOncelikKaydetResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CKategoriOncelikListesi">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="oncelikad" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CKategoriOncelikListesiResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CKategoriOncelikListesiResult" type="tns:MobServiceResultOfListOfCkategoriOncelik" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MobServiceResultOfListOfCkategoriOncelik">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:ArrayOfCkategoriOncelik" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCkategoriOncelik">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CkategoriOncelik" nillable="true" type="tns:CkategoriOncelik" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CKategoriOncelikSil">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="oncelikId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CKategoriOncelikSilResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CKategoriOncelikSilResult" type="tns:MobServiceResultOfBoolean" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -1793,6 +2046,135 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="UyumluYazilimKonnektorListesi">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="aramakriter" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sehirad" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UyumluYazilimKonnektorListesiResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UyumluYazilimKonnektorListesiResult" type="tns:MobServiceResultOfUyumluYazilimKonnektorRet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MobServiceResultOfUyumluYazilimKonnektorRet">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:UyumluYazilimKonnektorRet" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UyumluYazilimKonnektorRet">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Sonuc" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="UyumluYazilimKonnektor" type="tns:ArrayOfUyumluYazilimKonnektor" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfUyumluYazilimKonnektor">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="UyumluYazilimKonnektor" nillable="true" type="tns:UyumluYazilimKonnektor" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UyumluYazilimKonnektor">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ana_uretici" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="konnektor_ad" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="destek_versiyon" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="yetkili_kisi" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="efatura" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="edefter_saklama" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="edefter" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="earsiv" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="tel" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="tutaraciklama" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetHizmetUrunListesi">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetHizmetUrunListesiResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetHizmetUrunListesiResult" type="tns:MobServiceResultOfGetHizmetUrunListesiRet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MobServiceResultOfGetHizmetUrunListesiRet">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:GetHizmetUrunListesiRet" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="GetHizmetUrunListesiRet">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Sonuc" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="HizmetUrun" type="tns:ArrayOfHizmetUrun" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfHizmetUrun">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="HizmetUrun" nillable="true" type="tns:HizmetUrun" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="HizmetUrun">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="hizmet_urun_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="hizmet_urun_ad" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CariYetkiliKaydet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="yetkili" type="tns:CariYetkili" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CariYetkili">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="cari_kod" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="cariYetkiliID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="yetkili_kisi" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="cep_tel" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="cinsiyet" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="unvan" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="isten_ayrildi" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="silinsin" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="silme_sebebi" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CariYetkiliKaydetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CariYetkiliKaydetResult" type="tns:MobServiceResultOfCariYetkiliRet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MobServiceResultOfCariYetkiliRet">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:CariYetkiliRet" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CariYetkiliRet">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Sonuc" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="yetkiliId" type="s:int" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="CariYetkiliListesi">
         <s:complexType>
           <s:sequence>
@@ -1820,20 +2202,6 @@
       <s:complexType name="ArrayOfCariYetkili">
         <s:sequence>
           <s:element minOccurs="0" maxOccurs="unbounded" name="CariYetkili" nillable="true" type="tns:CariYetkili" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="CariYetkili">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="cari_kod" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="cariYetkiliID" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="yetkili_kisi" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="cep_tel" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="cinsiyet" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="unvan" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="isten_ayrildi" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="silinsin" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="silme_sebebi" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="CariYetkiliSil">
@@ -1913,18 +2281,6 @@
           <s:element minOccurs="0" maxOccurs="unbounded" name="CariKategori" nillable="true" type="tns:CariKategori" />
         </s:sequence>
       </s:complexType>
-      <s:complexType name="CariKategori">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="kategori_kod" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="kategori_ad" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="grup" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="ckat_grup_kod" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="cagri_gorunmesin" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="mobilcrm_gorunmesin" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="ckarta_eklenemez" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="CkatId" type="s:int" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="GetFirsatParam">
         <s:complexType />
       </s:element>
@@ -1960,17 +2316,6 @@
         <s:sequence>
           <s:element minOccurs="0" maxOccurs="1" name="firsat_kaynak_kod" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="firsat_kaynak_ad" type="s:string" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="ArrayOfHizmetUrun">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="HizmetUrun" nillable="true" type="tns:HizmetUrun" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="HizmetUrun">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="hizmet_urun_kod" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="hizmet_urun_ad" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="GetUrunList">
@@ -4135,6 +4480,70 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="UlkeGrupListesi">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="grupkod" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UlkeGrupListesiResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UlkeGrupListesiResult" type="tns:MobServiceResultOfListOfUlkeGrup" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MobServiceResultOfListOfUlkeGrup">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:ArrayOfUlkeGrup" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfUlkeGrup">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="UlkeGrup" nillable="true" type="tns:UlkeGrup" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UlkeGrup">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="grupId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="grup_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="grup_ad" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="aciklama" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UlkeGrupSil">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="grupId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UlkeGrupSilResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UlkeGrupSilResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UlkeGrupKaydet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ulkegrup" type="tns:UlkeGrup" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UlkeGrupKaydetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UlkeGrupKaydetResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="UnvanGrupListesi">
         <s:complexType>
           <s:sequence>
@@ -4164,120 +4573,6 @@
           <s:element minOccurs="0" maxOccurs="unbounded" name="UnvanGrup" nillable="true" type="tns:UnvanGrup" />
         </s:sequence>
       </s:complexType>
-      <s:complexType name="UnvanGrup">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="grupId" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="grup_kod" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="grup_ad" type="s:string" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="UnvanGrupKaydet">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="unvangrup" type="tns:UnvanGrup" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="UnvanGrupKaydetResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="UnvanGrupKaydetResult" type="tns:MobServiceResultOfBoolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="UnvanGrupSil">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="grupId" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="UnvanGrupSilResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="UnvanGrupSilResult" type="tns:MobServiceResultOfBoolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="UnvanListesi2">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="unvankod" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="unvanad" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="UnvanListesi2Response">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="UnvanListesi2Result" type="tns:MobServiceResultOfListOfUnvan" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="MobServiceResultOfListOfUnvan">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:ArrayOfUnvan" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="ArrayOfUnvan">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="Unvan" nillable="true" type="tns:Unvan" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="Unvan">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="UnvanId" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="grup_kod" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="unvan_kod" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="unvan_ad" type="s:string" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="UnvanSil">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="unvanId" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="UnvanSilResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="UnvanSilResult" type="tns:MobServiceResultOfBoolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="UnvanKaydet">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="unvan" type="tns:Unvan" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="UnvanKaydetResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="UnvanKaydetResult" type="tns:MobServiceResultOfBoolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="CkategoriKaydet">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="kategori" type="tns:CariKategori" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="CkategoriKaydetResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="CkategoriKaydetResult" type="tns:MobServiceResultOfBoolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
       <s:element name="CariFaaliyetPeriyod">
         <s:complexType />
       </s:element>
@@ -5691,6 +5986,69 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="BolgeListesi">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="bolgead" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BolgeListesiResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BolgeListesiResult" type="tns:MobServiceResultOfListOfBolge" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MobServiceResultOfListOfBolge">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:ArrayOfBolge" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfBolge">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Bolge" nillable="true" type="tns:Bolge" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Bolge">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="bolgeId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="bolge_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="bolge_ad" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="BolgeKaydet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="bolge" type="tns:Bolge" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BolgeKaydetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BolgeKaydetResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BolgeSil">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="BolgeId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BolgeSilResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BolgeSilResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="GrupTanimListesi">
         <s:complexType>
           <s:sequence>
@@ -6898,112 +7256,44 @@
           <s:element minOccurs="0" maxOccurs="1" name="tel" type="s:string" />
         </s:sequence>
       </s:complexType>
-      <s:element name="UyumluYazilimKonnektorListesi">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="aramakriter" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="sehirad" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="UyumluYazilimKonnektorListesiResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="UyumluYazilimKonnektorListesiResult" type="tns:MobServiceResultOfUyumluYazilimKonnektorRet" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="MobServiceResultOfUyumluYazilimKonnektorRet">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:UyumluYazilimKonnektorRet" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="UyumluYazilimKonnektorRet">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="Sonuc" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="UyumluYazilimKonnektor" type="tns:ArrayOfUyumluYazilimKonnektor" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="ArrayOfUyumluYazilimKonnektor">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="UyumluYazilimKonnektor" nillable="true" type="tns:UyumluYazilimKonnektor" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="UyumluYazilimKonnektor">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="ana_uretici" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="konnektor_ad" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="destek_versiyon" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="yetkili_kisi" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="efatura" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="edefter_saklama" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="edefter" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="earsiv" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="tel" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="tutaraciklama" type="s:string" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="GetHizmetUrunListesi">
-        <s:complexType />
-      </s:element>
-      <s:element name="GetHizmetUrunListesiResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetHizmetUrunListesiResult" type="tns:MobServiceResultOfGetHizmetUrunListesiRet" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="MobServiceResultOfGetHizmetUrunListesiRet">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:GetHizmetUrunListesiRet" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="GetHizmetUrunListesiRet">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="Sonuc" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="HizmetUrun" type="tns:ArrayOfHizmetUrun" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="CariYetkiliKaydet">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="yetkili" type="tns:CariYetkili" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="CariYetkiliKaydetResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="CariYetkiliKaydetResult" type="tns:MobServiceResultOfCariYetkiliRet" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="MobServiceResultOfCariYetkiliRet">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:CariYetkiliRet" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="CariYetkiliRet">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="Sonuc" type="s:boolean" />
-          <s:element minOccurs="1" maxOccurs="1" name="yetkiliId" type="s:int" />
-        </s:sequence>
-      </s:complexType>
     </s:schema>
   </wsdl:types>
+  <wsdl:message name="UnvanGrupKaydetSoapIn">
+    <wsdl:part name="parameters" element="tns:UnvanGrupKaydet" />
+  </wsdl:message>
+  <wsdl:message name="UnvanGrupKaydetSoapOut">
+    <wsdl:part name="parameters" element="tns:UnvanGrupKaydetResponse" />
+  </wsdl:message>
+  <wsdl:message name="UnvanGrupSilSoapIn">
+    <wsdl:part name="parameters" element="tns:UnvanGrupSil" />
+  </wsdl:message>
+  <wsdl:message name="UnvanGrupSilSoapOut">
+    <wsdl:part name="parameters" element="tns:UnvanGrupSilResponse" />
+  </wsdl:message>
+  <wsdl:message name="UnvanListesi2SoapIn">
+    <wsdl:part name="parameters" element="tns:UnvanListesi2" />
+  </wsdl:message>
+  <wsdl:message name="UnvanListesi2SoapOut">
+    <wsdl:part name="parameters" element="tns:UnvanListesi2Response" />
+  </wsdl:message>
+  <wsdl:message name="UnvanSilSoapIn">
+    <wsdl:part name="parameters" element="tns:UnvanSil" />
+  </wsdl:message>
+  <wsdl:message name="UnvanSilSoapOut">
+    <wsdl:part name="parameters" element="tns:UnvanSilResponse" />
+  </wsdl:message>
+  <wsdl:message name="UnvanKaydetSoapIn">
+    <wsdl:part name="parameters" element="tns:UnvanKaydet" />
+  </wsdl:message>
+  <wsdl:message name="UnvanKaydetSoapOut">
+    <wsdl:part name="parameters" element="tns:UnvanKaydetResponse" />
+  </wsdl:message>
+  <wsdl:message name="CkategoriKaydetSoapIn">
+    <wsdl:part name="parameters" element="tns:CkategoriKaydet" />
+  </wsdl:message>
+  <wsdl:message name="CkategoriKaydetSoapOut">
+    <wsdl:part name="parameters" element="tns:CkategoriKaydetResponse" />
+  </wsdl:message>
   <wsdl:message name="CKategoriSilSoapIn">
     <wsdl:part name="parameters" element="tns:CKategoriSil" />
   </wsdl:message>
@@ -7280,6 +7570,24 @@
   <wsdl:message name="BelgeTipSilSoapOut">
     <wsdl:part name="parameters" element="tns:BelgeTipSilResponse" />
   </wsdl:message>
+  <wsdl:message name="CKategoriGrupKaydetSoapIn">
+    <wsdl:part name="parameters" element="tns:CKategoriGrupKaydet" />
+  </wsdl:message>
+  <wsdl:message name="CKategoriGrupKaydetSoapOut">
+    <wsdl:part name="parameters" element="tns:CKategoriGrupKaydetResponse" />
+  </wsdl:message>
+  <wsdl:message name="CKategoriGrupListesiSoapIn">
+    <wsdl:part name="parameters" element="tns:CKategoriGrupListesi" />
+  </wsdl:message>
+  <wsdl:message name="CKategoriGrupListesiSoapOut">
+    <wsdl:part name="parameters" element="tns:CKategoriGrupListesiResponse" />
+  </wsdl:message>
+  <wsdl:message name="CKategoriGrupSilSoapIn">
+    <wsdl:part name="parameters" element="tns:CKategoriGrupSil" />
+  </wsdl:message>
+  <wsdl:message name="CKategoriGrupSilSoapOut">
+    <wsdl:part name="parameters" element="tns:CKategoriGrupSilResponse" />
+  </wsdl:message>
   <wsdl:message name="KategoriOncelikKaydetSoapIn">
     <wsdl:part name="parameters" element="tns:KategoriOncelikKaydet" />
   </wsdl:message>
@@ -7297,6 +7605,24 @@
   </wsdl:message>
   <wsdl:message name="KategoriOncelikSilSoapOut">
     <wsdl:part name="parameters" element="tns:KategoriOncelikSilResponse" />
+  </wsdl:message>
+  <wsdl:message name="CKategoriOncelikKaydetSoapIn">
+    <wsdl:part name="parameters" element="tns:CKategoriOncelikKaydet" />
+  </wsdl:message>
+  <wsdl:message name="CKategoriOncelikKaydetSoapOut">
+    <wsdl:part name="parameters" element="tns:CKategoriOncelikKaydetResponse" />
+  </wsdl:message>
+  <wsdl:message name="CKategoriOncelikListesiSoapIn">
+    <wsdl:part name="parameters" element="tns:CKategoriOncelikListesi" />
+  </wsdl:message>
+  <wsdl:message name="CKategoriOncelikListesiSoapOut">
+    <wsdl:part name="parameters" element="tns:CKategoriOncelikListesiResponse" />
+  </wsdl:message>
+  <wsdl:message name="CKategoriOncelikSilSoapIn">
+    <wsdl:part name="parameters" element="tns:CKategoriOncelikSil" />
+  </wsdl:message>
+  <wsdl:message name="CKategoriOncelikSilSoapOut">
+    <wsdl:part name="parameters" element="tns:CKategoriOncelikSilResponse" />
   </wsdl:message>
   <wsdl:message name="MarkaKaydetSoapIn">
     <wsdl:part name="parameters" element="tns:MarkaKaydet" />
@@ -7435,6 +7761,24 @@
   </wsdl:message>
   <wsdl:message name="GarantiStatuSilSoapOut">
     <wsdl:part name="parameters" element="tns:GarantiStatuSilResponse" />
+  </wsdl:message>
+  <wsdl:message name="UyumluYazilimKonnektorListesiSoapIn">
+    <wsdl:part name="parameters" element="tns:UyumluYazilimKonnektorListesi" />
+  </wsdl:message>
+  <wsdl:message name="UyumluYazilimKonnektorListesiSoapOut">
+    <wsdl:part name="parameters" element="tns:UyumluYazilimKonnektorListesiResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHizmetUrunListesiSoapIn">
+    <wsdl:part name="parameters" element="tns:GetHizmetUrunListesi" />
+  </wsdl:message>
+  <wsdl:message name="GetHizmetUrunListesiSoapOut">
+    <wsdl:part name="parameters" element="tns:GetHizmetUrunListesiResponse" />
+  </wsdl:message>
+  <wsdl:message name="CariYetkiliKaydetSoapIn">
+    <wsdl:part name="parameters" element="tns:CariYetkiliKaydet" />
+  </wsdl:message>
+  <wsdl:message name="CariYetkiliKaydetSoapOut">
+    <wsdl:part name="parameters" element="tns:CariYetkiliKaydetResponse" />
   </wsdl:message>
   <wsdl:message name="CariYetkiliListesiSoapIn">
     <wsdl:part name="parameters" element="tns:CariYetkiliListesi" />
@@ -7904,47 +8248,29 @@
   <wsdl:message name="CagriSilSoapOut">
     <wsdl:part name="parameters" element="tns:CagriSilResponse" />
   </wsdl:message>
+  <wsdl:message name="UlkeGrupListesiSoapIn">
+    <wsdl:part name="parameters" element="tns:UlkeGrupListesi" />
+  </wsdl:message>
+  <wsdl:message name="UlkeGrupListesiSoapOut">
+    <wsdl:part name="parameters" element="tns:UlkeGrupListesiResponse" />
+  </wsdl:message>
+  <wsdl:message name="UlkeGrupSilSoapIn">
+    <wsdl:part name="parameters" element="tns:UlkeGrupSil" />
+  </wsdl:message>
+  <wsdl:message name="UlkeGrupSilSoapOut">
+    <wsdl:part name="parameters" element="tns:UlkeGrupSilResponse" />
+  </wsdl:message>
+  <wsdl:message name="UlkeGrupKaydetSoapIn">
+    <wsdl:part name="parameters" element="tns:UlkeGrupKaydet" />
+  </wsdl:message>
+  <wsdl:message name="UlkeGrupKaydetSoapOut">
+    <wsdl:part name="parameters" element="tns:UlkeGrupKaydetResponse" />
+  </wsdl:message>
   <wsdl:message name="UnvanGrupListesiSoapIn">
     <wsdl:part name="parameters" element="tns:UnvanGrupListesi" />
   </wsdl:message>
   <wsdl:message name="UnvanGrupListesiSoapOut">
     <wsdl:part name="parameters" element="tns:UnvanGrupListesiResponse" />
-  </wsdl:message>
-  <wsdl:message name="UnvanGrupKaydetSoapIn">
-    <wsdl:part name="parameters" element="tns:UnvanGrupKaydet" />
-  </wsdl:message>
-  <wsdl:message name="UnvanGrupKaydetSoapOut">
-    <wsdl:part name="parameters" element="tns:UnvanGrupKaydetResponse" />
-  </wsdl:message>
-  <wsdl:message name="UnvanGrupSilSoapIn">
-    <wsdl:part name="parameters" element="tns:UnvanGrupSil" />
-  </wsdl:message>
-  <wsdl:message name="UnvanGrupSilSoapOut">
-    <wsdl:part name="parameters" element="tns:UnvanGrupSilResponse" />
-  </wsdl:message>
-  <wsdl:message name="UnvanListesi2SoapIn">
-    <wsdl:part name="parameters" element="tns:UnvanListesi2" />
-  </wsdl:message>
-  <wsdl:message name="UnvanListesi2SoapOut">
-    <wsdl:part name="parameters" element="tns:UnvanListesi2Response" />
-  </wsdl:message>
-  <wsdl:message name="UnvanSilSoapIn">
-    <wsdl:part name="parameters" element="tns:UnvanSil" />
-  </wsdl:message>
-  <wsdl:message name="UnvanSilSoapOut">
-    <wsdl:part name="parameters" element="tns:UnvanSilResponse" />
-  </wsdl:message>
-  <wsdl:message name="UnvanKaydetSoapIn">
-    <wsdl:part name="parameters" element="tns:UnvanKaydet" />
-  </wsdl:message>
-  <wsdl:message name="UnvanKaydetSoapOut">
-    <wsdl:part name="parameters" element="tns:UnvanKaydetResponse" />
-  </wsdl:message>
-  <wsdl:message name="CkategoriKaydetSoapIn">
-    <wsdl:part name="parameters" element="tns:CkategoriKaydet" />
-  </wsdl:message>
-  <wsdl:message name="CkategoriKaydetSoapOut">
-    <wsdl:part name="parameters" element="tns:CkategoriKaydetResponse" />
   </wsdl:message>
   <wsdl:message name="CariFaaliyetPeriyodSoapIn">
     <wsdl:part name="parameters" element="tns:CariFaaliyetPeriyod" />
@@ -8204,6 +8530,24 @@
   <wsdl:message name="DizaynTalebiKaydetSoapOut">
     <wsdl:part name="parameters" element="tns:DizaynTalebiKaydetResponse" />
   </wsdl:message>
+  <wsdl:message name="BolgeListesiSoapIn">
+    <wsdl:part name="parameters" element="tns:BolgeListesi" />
+  </wsdl:message>
+  <wsdl:message name="BolgeListesiSoapOut">
+    <wsdl:part name="parameters" element="tns:BolgeListesiResponse" />
+  </wsdl:message>
+  <wsdl:message name="BolgeKaydetSoapIn">
+    <wsdl:part name="parameters" element="tns:BolgeKaydet" />
+  </wsdl:message>
+  <wsdl:message name="BolgeKaydetSoapOut">
+    <wsdl:part name="parameters" element="tns:BolgeKaydetResponse" />
+  </wsdl:message>
+  <wsdl:message name="BolgeSilSoapIn">
+    <wsdl:part name="parameters" element="tns:BolgeSil" />
+  </wsdl:message>
+  <wsdl:message name="BolgeSilSoapOut">
+    <wsdl:part name="parameters" element="tns:BolgeSilResponse" />
+  </wsdl:message>
   <wsdl:message name="GrupTanimListesiSoapIn">
     <wsdl:part name="parameters" element="tns:GrupTanimListesi" />
   </wsdl:message>
@@ -8408,25 +8752,31 @@
   <wsdl:message name="UyumluYazilimListesiSoapOut">
     <wsdl:part name="parameters" element="tns:UyumluYazilimListesiResponse" />
   </wsdl:message>
-  <wsdl:message name="UyumluYazilimKonnektorListesiSoapIn">
-    <wsdl:part name="parameters" element="tns:UyumluYazilimKonnektorListesi" />
-  </wsdl:message>
-  <wsdl:message name="UyumluYazilimKonnektorListesiSoapOut">
-    <wsdl:part name="parameters" element="tns:UyumluYazilimKonnektorListesiResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetHizmetUrunListesiSoapIn">
-    <wsdl:part name="parameters" element="tns:GetHizmetUrunListesi" />
-  </wsdl:message>
-  <wsdl:message name="GetHizmetUrunListesiSoapOut">
-    <wsdl:part name="parameters" element="tns:GetHizmetUrunListesiResponse" />
-  </wsdl:message>
-  <wsdl:message name="CariYetkiliKaydetSoapIn">
-    <wsdl:part name="parameters" element="tns:CariYetkiliKaydet" />
-  </wsdl:message>
-  <wsdl:message name="CariYetkiliKaydetSoapOut">
-    <wsdl:part name="parameters" element="tns:CariYetkiliKaydetResponse" />
-  </wsdl:message>
   <wsdl:portType name="WsdlUyumCrmSoap">
+    <wsdl:operation name="UnvanGrupKaydet">
+      <wsdl:input message="tns:UnvanGrupKaydetSoapIn" />
+      <wsdl:output message="tns:UnvanGrupKaydetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UnvanGrupSil">
+      <wsdl:input message="tns:UnvanGrupSilSoapIn" />
+      <wsdl:output message="tns:UnvanGrupSilSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UnvanListesi2">
+      <wsdl:input message="tns:UnvanListesi2SoapIn" />
+      <wsdl:output message="tns:UnvanListesi2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UnvanSil">
+      <wsdl:input message="tns:UnvanSilSoapIn" />
+      <wsdl:output message="tns:UnvanSilSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UnvanKaydet">
+      <wsdl:input message="tns:UnvanKaydetSoapIn" />
+      <wsdl:output message="tns:UnvanKaydetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CkategoriKaydet">
+      <wsdl:input message="tns:CkategoriKaydetSoapIn" />
+      <wsdl:output message="tns:CkategoriKaydetSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="CKategoriSil">
       <wsdl:input message="tns:CKategoriSilSoapIn" />
       <wsdl:output message="tns:CKategoriSilSoapOut" />
@@ -8611,6 +8961,18 @@
       <wsdl:input message="tns:BelgeTipSilSoapIn" />
       <wsdl:output message="tns:BelgeTipSilSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="CKategoriGrupKaydet">
+      <wsdl:input message="tns:CKategoriGrupKaydetSoapIn" />
+      <wsdl:output message="tns:CKategoriGrupKaydetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CKategoriGrupListesi">
+      <wsdl:input message="tns:CKategoriGrupListesiSoapIn" />
+      <wsdl:output message="tns:CKategoriGrupListesiSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CKategoriGrupSil">
+      <wsdl:input message="tns:CKategoriGrupSilSoapIn" />
+      <wsdl:output message="tns:CKategoriGrupSilSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="KategoriOncelikKaydet">
       <wsdl:input message="tns:KategoriOncelikKaydetSoapIn" />
       <wsdl:output message="tns:KategoriOncelikKaydetSoapOut" />
@@ -8622,6 +8984,18 @@
     <wsdl:operation name="KategoriOncelikSil">
       <wsdl:input message="tns:KategoriOncelikSilSoapIn" />
       <wsdl:output message="tns:KategoriOncelikSilSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CKategoriOncelikKaydet">
+      <wsdl:input message="tns:CKategoriOncelikKaydetSoapIn" />
+      <wsdl:output message="tns:CKategoriOncelikKaydetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CKategoriOncelikListesi">
+      <wsdl:input message="tns:CKategoriOncelikListesiSoapIn" />
+      <wsdl:output message="tns:CKategoriOncelikListesiSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CKategoriOncelikSil">
+      <wsdl:input message="tns:CKategoriOncelikSilSoapIn" />
+      <wsdl:output message="tns:CKategoriOncelikSilSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="MarkaKaydet">
       <wsdl:input message="tns:MarkaKaydetSoapIn" />
@@ -8714,6 +9088,18 @@
     <wsdl:operation name="GarantiStatuSil">
       <wsdl:input message="tns:GarantiStatuSilSoapIn" />
       <wsdl:output message="tns:GarantiStatuSilSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UyumluYazilimKonnektorListesi">
+      <wsdl:input message="tns:UyumluYazilimKonnektorListesiSoapIn" />
+      <wsdl:output message="tns:UyumluYazilimKonnektorListesiSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHizmetUrunListesi">
+      <wsdl:input message="tns:GetHizmetUrunListesiSoapIn" />
+      <wsdl:output message="tns:GetHizmetUrunListesiSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CariYetkiliKaydet">
+      <wsdl:input message="tns:CariYetkiliKaydetSoapIn" />
+      <wsdl:output message="tns:CariYetkiliKaydetSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="CariYetkiliListesi">
       <wsdl:input message="tns:CariYetkiliListesiSoapIn" />
@@ -9027,33 +9413,21 @@
       <wsdl:input message="tns:CagriSilSoapIn" />
       <wsdl:output message="tns:CagriSilSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="UlkeGrupListesi">
+      <wsdl:input message="tns:UlkeGrupListesiSoapIn" />
+      <wsdl:output message="tns:UlkeGrupListesiSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UlkeGrupSil">
+      <wsdl:input message="tns:UlkeGrupSilSoapIn" />
+      <wsdl:output message="tns:UlkeGrupSilSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UlkeGrupKaydet">
+      <wsdl:input message="tns:UlkeGrupKaydetSoapIn" />
+      <wsdl:output message="tns:UlkeGrupKaydetSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="UnvanGrupListesi">
       <wsdl:input message="tns:UnvanGrupListesiSoapIn" />
       <wsdl:output message="tns:UnvanGrupListesiSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="UnvanGrupKaydet">
-      <wsdl:input message="tns:UnvanGrupKaydetSoapIn" />
-      <wsdl:output message="tns:UnvanGrupKaydetSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="UnvanGrupSil">
-      <wsdl:input message="tns:UnvanGrupSilSoapIn" />
-      <wsdl:output message="tns:UnvanGrupSilSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="UnvanListesi2">
-      <wsdl:input message="tns:UnvanListesi2SoapIn" />
-      <wsdl:output message="tns:UnvanListesi2SoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="UnvanSil">
-      <wsdl:input message="tns:UnvanSilSoapIn" />
-      <wsdl:output message="tns:UnvanSilSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="UnvanKaydet">
-      <wsdl:input message="tns:UnvanKaydetSoapIn" />
-      <wsdl:output message="tns:UnvanKaydetSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="CkategoriKaydet">
-      <wsdl:input message="tns:CkategoriKaydetSoapIn" />
-      <wsdl:output message="tns:CkategoriKaydetSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="CariFaaliyetPeriyod">
       <wsdl:input message="tns:CariFaaliyetPeriyodSoapIn" />
@@ -9227,6 +9601,18 @@
       <wsdl:input message="tns:DizaynTalebiKaydetSoapIn" />
       <wsdl:output message="tns:DizaynTalebiKaydetSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="BolgeListesi">
+      <wsdl:input message="tns:BolgeListesiSoapIn" />
+      <wsdl:output message="tns:BolgeListesiSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BolgeKaydet">
+      <wsdl:input message="tns:BolgeKaydetSoapIn" />
+      <wsdl:output message="tns:BolgeKaydetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BolgeSil">
+      <wsdl:input message="tns:BolgeSilSoapIn" />
+      <wsdl:output message="tns:BolgeSilSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="GrupTanimListesi">
       <wsdl:input message="tns:GrupTanimListesiSoapIn" />
       <wsdl:output message="tns:GrupTanimListesiSoapOut" />
@@ -9363,21 +9749,63 @@
       <wsdl:input message="tns:UyumluYazilimListesiSoapIn" />
       <wsdl:output message="tns:UyumluYazilimListesiSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="UyumluYazilimKonnektorListesi">
-      <wsdl:input message="tns:UyumluYazilimKonnektorListesiSoapIn" />
-      <wsdl:output message="tns:UyumluYazilimKonnektorListesiSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetHizmetUrunListesi">
-      <wsdl:input message="tns:GetHizmetUrunListesiSoapIn" />
-      <wsdl:output message="tns:GetHizmetUrunListesiSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="CariYetkiliKaydet">
-      <wsdl:input message="tns:CariYetkiliKaydetSoapIn" />
-      <wsdl:output message="tns:CariYetkiliKaydetSoapOut" />
-    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WsdlUyumCrmSoap" type="tns:WsdlUyumCrmSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="UnvanGrupKaydet">
+      <soap:operation soapAction="http://tempuri.org/UnvanGrupKaydet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnvanGrupSil">
+      <soap:operation soapAction="http://tempuri.org/UnvanGrupSil" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnvanListesi2">
+      <soap:operation soapAction="http://tempuri.org/UnvanListesi2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnvanSil">
+      <soap:operation soapAction="http://tempuri.org/UnvanSil" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnvanKaydet">
+      <soap:operation soapAction="http://tempuri.org/UnvanKaydet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CkategoriKaydet">
+      <soap:operation soapAction="http://tempuri.org/CkategoriKaydet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="CKategoriSil">
       <soap:operation soapAction="http://tempuri.org/CKategoriSil" style="document" />
       <wsdl:input>
@@ -9792,6 +10220,33 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="CKategoriGrupKaydet">
+      <soap:operation soapAction="http://tempuri.org/CKategoriGrupKaydet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CKategoriGrupListesi">
+      <soap:operation soapAction="http://tempuri.org/CKategoriGrupListesi" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CKategoriGrupSil">
+      <soap:operation soapAction="http://tempuri.org/CKategoriGrupSil" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="KategoriOncelikKaydet">
       <soap:operation soapAction="http://tempuri.org/KategoriOncelikKaydet" style="document" />
       <wsdl:input>
@@ -9812,6 +10267,33 @@
     </wsdl:operation>
     <wsdl:operation name="KategoriOncelikSil">
       <soap:operation soapAction="http://tempuri.org/KategoriOncelikSil" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CKategoriOncelikKaydet">
+      <soap:operation soapAction="http://tempuri.org/CKategoriOncelikKaydet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CKategoriOncelikListesi">
+      <soap:operation soapAction="http://tempuri.org/CKategoriOncelikListesi" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CKategoriOncelikSil">
+      <soap:operation soapAction="http://tempuri.org/CKategoriOncelikSil" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -10019,6 +10501,33 @@
     </wsdl:operation>
     <wsdl:operation name="GarantiStatuSil">
       <soap:operation soapAction="http://tempuri.org/GarantiStatuSil" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UyumluYazilimKonnektorListesi">
+      <soap:operation soapAction="http://tempuri.org/UyumluYazilimKonnektorListesi" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHizmetUrunListesi">
+      <soap:operation soapAction="http://tempuri.org/GetHizmetUrunListesi" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariYetkiliKaydet">
+      <soap:operation soapAction="http://tempuri.org/CariYetkiliKaydet" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -10728,62 +11237,35 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="UlkeGrupListesi">
+      <soap:operation soapAction="http://tempuri.org/UlkeGrupListesi" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UlkeGrupSil">
+      <soap:operation soapAction="http://tempuri.org/UlkeGrupSil" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UlkeGrupKaydet">
+      <soap:operation soapAction="http://tempuri.org/UlkeGrupKaydet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="UnvanGrupListesi">
       <soap:operation soapAction="http://tempuri.org/UnvanGrupListesi" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UnvanGrupKaydet">
-      <soap:operation soapAction="http://tempuri.org/UnvanGrupKaydet" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UnvanGrupSil">
-      <soap:operation soapAction="http://tempuri.org/UnvanGrupSil" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UnvanListesi2">
-      <soap:operation soapAction="http://tempuri.org/UnvanListesi2" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UnvanSil">
-      <soap:operation soapAction="http://tempuri.org/UnvanSil" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UnvanKaydet">
-      <soap:operation soapAction="http://tempuri.org/UnvanKaydet" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="CkategoriKaydet">
-      <soap:operation soapAction="http://tempuri.org/CkategoriKaydet" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -11178,6 +11660,33 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="BolgeListesi">
+      <soap:operation soapAction="http://tempuri.org/BolgeListesi" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BolgeKaydet">
+      <soap:operation soapAction="http://tempuri.org/BolgeKaydet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BolgeSil">
+      <soap:operation soapAction="http://tempuri.org/BolgeSil" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GrupTanimListesi">
       <soap:operation soapAction="http://tempuri.org/GrupTanimListesi" style="document" />
       <wsdl:input>
@@ -11484,36 +11993,63 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="UyumluYazilimKonnektorListesi">
-      <soap:operation soapAction="http://tempuri.org/UyumluYazilimKonnektorListesi" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetHizmetUrunListesi">
-      <soap:operation soapAction="http://tempuri.org/GetHizmetUrunListesi" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="CariYetkiliKaydet">
-      <soap:operation soapAction="http://tempuri.org/CariYetkiliKaydet" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="WsdlUyumCrmSoap12" type="tns:WsdlUyumCrmSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="UnvanGrupKaydet">
+      <soap12:operation soapAction="http://tempuri.org/UnvanGrupKaydet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnvanGrupSil">
+      <soap12:operation soapAction="http://tempuri.org/UnvanGrupSil" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnvanListesi2">
+      <soap12:operation soapAction="http://tempuri.org/UnvanListesi2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnvanSil">
+      <soap12:operation soapAction="http://tempuri.org/UnvanSil" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnvanKaydet">
+      <soap12:operation soapAction="http://tempuri.org/UnvanKaydet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CkategoriKaydet">
+      <soap12:operation soapAction="http://tempuri.org/CkategoriKaydet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="CKategoriSil">
       <soap12:operation soapAction="http://tempuri.org/CKategoriSil" style="document" />
       <wsdl:input>
@@ -11928,6 +12464,33 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="CKategoriGrupKaydet">
+      <soap12:operation soapAction="http://tempuri.org/CKategoriGrupKaydet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CKategoriGrupListesi">
+      <soap12:operation soapAction="http://tempuri.org/CKategoriGrupListesi" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CKategoriGrupSil">
+      <soap12:operation soapAction="http://tempuri.org/CKategoriGrupSil" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="KategoriOncelikKaydet">
       <soap12:operation soapAction="http://tempuri.org/KategoriOncelikKaydet" style="document" />
       <wsdl:input>
@@ -11948,6 +12511,33 @@
     </wsdl:operation>
     <wsdl:operation name="KategoriOncelikSil">
       <soap12:operation soapAction="http://tempuri.org/KategoriOncelikSil" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CKategoriOncelikKaydet">
+      <soap12:operation soapAction="http://tempuri.org/CKategoriOncelikKaydet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CKategoriOncelikListesi">
+      <soap12:operation soapAction="http://tempuri.org/CKategoriOncelikListesi" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CKategoriOncelikSil">
+      <soap12:operation soapAction="http://tempuri.org/CKategoriOncelikSil" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -12155,6 +12745,33 @@
     </wsdl:operation>
     <wsdl:operation name="GarantiStatuSil">
       <soap12:operation soapAction="http://tempuri.org/GarantiStatuSil" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UyumluYazilimKonnektorListesi">
+      <soap12:operation soapAction="http://tempuri.org/UyumluYazilimKonnektorListesi" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHizmetUrunListesi">
+      <soap12:operation soapAction="http://tempuri.org/GetHizmetUrunListesi" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariYetkiliKaydet">
+      <soap12:operation soapAction="http://tempuri.org/CariYetkiliKaydet" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -12864,62 +13481,35 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="UlkeGrupListesi">
+      <soap12:operation soapAction="http://tempuri.org/UlkeGrupListesi" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UlkeGrupSil">
+      <soap12:operation soapAction="http://tempuri.org/UlkeGrupSil" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UlkeGrupKaydet">
+      <soap12:operation soapAction="http://tempuri.org/UlkeGrupKaydet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="UnvanGrupListesi">
       <soap12:operation soapAction="http://tempuri.org/UnvanGrupListesi" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UnvanGrupKaydet">
-      <soap12:operation soapAction="http://tempuri.org/UnvanGrupKaydet" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UnvanGrupSil">
-      <soap12:operation soapAction="http://tempuri.org/UnvanGrupSil" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UnvanListesi2">
-      <soap12:operation soapAction="http://tempuri.org/UnvanListesi2" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UnvanSil">
-      <soap12:operation soapAction="http://tempuri.org/UnvanSil" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UnvanKaydet">
-      <soap12:operation soapAction="http://tempuri.org/UnvanKaydet" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="CkategoriKaydet">
-      <soap12:operation soapAction="http://tempuri.org/CkategoriKaydet" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -13314,6 +13904,33 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="BolgeListesi">
+      <soap12:operation soapAction="http://tempuri.org/BolgeListesi" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BolgeKaydet">
+      <soap12:operation soapAction="http://tempuri.org/BolgeKaydet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BolgeSil">
+      <soap12:operation soapAction="http://tempuri.org/BolgeSil" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GrupTanimListesi">
       <soap12:operation soapAction="http://tempuri.org/GrupTanimListesi" style="document" />
       <wsdl:input>
@@ -13613,33 +14230,6 @@
     </wsdl:operation>
     <wsdl:operation name="UyumluYazilimListesi">
       <soap12:operation soapAction="http://tempuri.org/UyumluYazilimListesi" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UyumluYazilimKonnektorListesi">
-      <soap12:operation soapAction="http://tempuri.org/UyumluYazilimKonnektorListesi" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetHizmetUrunListesi">
-      <soap12:operation soapAction="http://tempuri.org/GetHizmetUrunListesi" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="CariYetkiliKaydet">
-      <soap12:operation soapAction="http://tempuri.org/CariYetkiliKaydet" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

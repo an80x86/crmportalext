@@ -1,4 +1,4 @@
-﻿//#define WST
+﻿#define WST
 
 using System;
 using System.Collections.Generic;
@@ -28,6 +28,99 @@ namespace UyumSosyal
 
     public class WebServiceTest
     {
+        public static void BelgeTip()
+        {
+            var ret = Helper.GetWebService().BelgeTipListesi("");
+
+            var ret2 = Helper.GetWebService().BelgeTipKaydet(new BelgeTip()
+            {
+                tip_kod = "test",
+                aciklama = "test"
+            });
+
+            var ret3 = Helper.GetWebService().BelgeTipSil(-99);
+        }
+
+        public static void ParametrikAlan()
+        {
+            var ret = Helper.GetWebService().ParametrikAlanListesi("", "");
+
+            var ret2 = Helper.GetWebService().ParametrikAlanKaydet(new KbParam()
+            {
+                param_kod = "kok",
+                kok = "kok",
+                param_ad = "kok",
+                siralama_kod = "kok"
+            });
+        }
+
+        public static void CariKategoriGrup()
+        {
+            var ret = Helper.GetWebService().CKategoriGrupListesi("");
+
+            var ret2 = Helper.GetWebService().CKategoriGrupKaydet(new CKatGrup()
+            {
+                ckat_grup_ad = "test",
+                ckat_grup_kod = "test"
+            });
+        }
+
+        public static void Urun()
+        {
+            var ret = Helper.GetWebService().GenelUrunLilstesi("");
+
+            var ret2 = Helper.GetWebService().UrunKaydet(new Urun()
+            {
+                grup_kod = "02",
+                urun_kod = "test",
+                ilk_faaliyet_sure = 2,
+                arama_sikligi = 3
+            });
+
+            var ret3 = Helper.GetWebService().UrunSil(-99);
+        }
+
+        public static void Bolge()
+        {
+            var ret = Helper.GetWebService().BolgeListesi("");
+
+            var ret2 = Helper.GetWebService().BolgeKaydet(new Bolge()
+            {
+                bolge_ad = "test",
+                bolge_kod = "test test"
+            });
+
+            var ret3 = Helper.GetWebService().BolgeSil(9985025);
+        }
+
+        public static void UlkeGrup()
+        {
+            var ret = Helper.GetWebService().UlkeGrupListesi("");
+
+            var ret2 = Helper.GetWebService().UlkeGrupKaydet(new UlkeGrup()
+            {
+                aciklama="test",
+                grup_kod = "test",
+                grup_ad = "test"
+            });
+
+            var ret3 = Helper.GetWebService().UlkeGrupSil(29822404);
+        }
+
+        public static void CariYetki()
+        {
+            var ret = Helper.GetWebService().CariYetkiliListesi("U-00050843", "");
+
+            var ret2 = Helper.GetWebService().CariYetkiliKaydet(new CariYetkili()
+            {
+                cari_kod = "aaa-sil",
+                unvan = "lütfen sil",
+                silinsin = true
+            });
+
+            var ret3 = Helper.GetWebService().CariYetkiliSil(-99);
+        }
+
         public static void Rakip()
         {
             var ret = Helper.GetWebService().RakipListesi(new MobServiceRequestOfMobBaseTop()
@@ -46,10 +139,15 @@ namespace UyumSosyal
         public static void Satici()
         {
             var ret = Helper.GetWebService().SaticiListesi("", "");
+            var cnt = ret.Value.ToArray().FirstOrDefault(x => x.satici_kod == "test2");
+
 
             var ret2 = Helper.GetWebService().SaticiKaydet(new Satici()
             {
-
+                satici_kod = "test2",
+                satici_ad = "test2",
+                aciklama = "test2",
+                bolge_kod = "006-0001"
             });
 
             var ret3 = Helper.GetWebService().SaticiSil(-99);
@@ -78,7 +176,7 @@ namespace UyumSosyal
                 aciklama = "sil"
             });
 
-            var ret3 = Helper.GetWebService().BelgeTipSil(-99);
+            var ret3 = Helper.GetWebService().BelgeTipSil(7016642);
         }
 
         public static void Sektor()
@@ -149,6 +247,13 @@ namespace UyumSosyal
         {
             var ret = Helper.GetWebService().UnvanGrupListesi("", "");
 
+            var ret2 = Helper.GetWebService().UnvanGrupKaydet(new UnvanGrup()
+            {
+                grup_kod = "test",
+                grup_ad = "test"
+            });
+
+            var ret3 = Helper.GetWebService().UnvanGrupSil(-99);
         }
 
         public static void Unvan()
@@ -174,6 +279,17 @@ namespace UyumSosyal
         protected void Application_Start(object sender, EventArgs e)
         {
 #if WST
+            int i = 0;
+            i++;
+
+            WebServiceTest.BelgeTip();
+            WebServiceTest.ParametrikAlan();
+            WebServiceTest.CariKategoriGrup();
+            WebServiceTest.Urun();
+            WebServiceTest.Bolge();
+            WebServiceTest.UlkeGrup();
+
+            WebServiceTest.CariYetki();
             WebServiceTest.Rakip();
             WebServiceTest.Satici();
             WebServiceTest.AltSektor();
