@@ -132,8 +132,11 @@
     <Content Include="Code\SharpZipLib\ICSharpCode.SharpZipLib.dll" />
     <Content Include="Code\SharpZipLib\ReadMe.txt" />
     <Content Include="Code\UI\CommentsWindow.ascx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Crm_Cagri_Islemleri\CKategoriGrupListesi.aspx" />
     <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Crm_Cagri_Islemleri\config.xml" />
     <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Crm_Cagri_Islemleri\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Crm_Cagri_Islemleri\IlceListesi.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Crm_Cagri_Islemleri\IlListesi.aspx" />
     <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Crm_Form_Islemleri\config.xml" />
     <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Crm_Form_Islemleri\Default.aspx" />
     <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Hedef_Kitle\config.xml" />

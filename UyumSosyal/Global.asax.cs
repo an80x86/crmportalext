@@ -1,4 +1,4 @@
-﻿#define WST
+﻿//#define WST
 
 using System;
 using System.Collections.Generic;
