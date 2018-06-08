@@ -6,6 +6,9 @@
 <%@ Import Namespace="Newtonsoft.Json.Linq" %>
 
 <script runat="server">
+
+    #region onload
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!X.IsAjaxRequest)
@@ -13,9 +16,12 @@
             this.Store1.DataSource = this.Data;
             ulke_kod.SetText("TÜRKİYE");
 
-            StoreUnvan.DataSource = Helper.GetWebService().UnvanListesi2("", "").Value;
+            //StoreUnvan.DataSource = Helper.GetWebService().UnvanListesi2("", "").Value;
             StoreUlke.DataSource = Helper.GetWebService().UlkeListesi("").Value;
             StoreIl.DataSource = Helper.GetWebService().GenelSehirListesi("").Value;
+            StoreIlce.DataSource = Helper.GetWebService().GenelIlceListesi("").Value;
+            StoreCariKategori.DataSource = Helper.GetWebService().GetCKategoriListesi("").Value.CariKategori;
+            StoreCariKategoriGrup.DataSource = Helper.GetWebService().CKategoriGrupListesi("").Value;
         }
     }
 
@@ -57,6 +63,8 @@
             };
         }
     }
+
+    #endregion
 
     #region ulke
 
@@ -119,7 +127,7 @@
 
     #endregion
 
-    #region ulke
+    #region il
 
     protected void IlKaydet(object sender, DirectEventArgs e)
     {
@@ -190,7 +198,7 @@
         {
             var sonuc = Helper.GetWebService().IlceKaydet(new Ilce()
             {
-                sehir_ad =d.pilce_sehir_ad2.Value,
+                sehir_ad = d.pilce_sehir_ad2.Value,
                 ilce_ad = d.pilce_ilce_kodu.Value,
                 okod1 = "",
                 okod2 = "",
@@ -204,9 +212,8 @@
                 return;
             }
 
-            //HttpRuntime.Cache["Ilce"] = Helper.GetWebService().GenelIlceListesi("").Value;
-            //StoreIlce.DataSource = HttpRuntime.Cache["Ilce"];
-            //StoreIlce.DataBind();
+            StoreIlce.DataSource = Helper.GetWebService().GenelIlceListesi("").Value;
+            StoreIlce.DataBind();
         }
         catch (Exception ex)
         {
@@ -229,15 +236,136 @@
                 X.MessageBox.Alert("Hata Oluştu", sonuc.Message).Show();
             }
 
-            //HttpRuntime.Cache["Ilce"] = Helper.GetWebService().GenelIlceListesi("").Value;
-            //StoreIlce.DataSource = HttpRuntime.Cache["Ilce"];
-            //StoreIlce.DataBind();
+            StoreIlce.DataSource = Helper.GetWebService().GenelIlceListesi("").Value;
+            StoreIlce.DataBind();
         }
         catch (Exception ex)
         {
             X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
         }
     }
+
+    #endregion
+
+    #region cari-kategori
+
+    protected void CariKategoriKaydet(object sender, DirectEventArgs e)
+    {
+        var deger = e.ExtraParams[0];
+        dynamic d = JObject.Parse(deger.Value.ToString());
+        try
+        {
+            var tmp = new CariKategori()
+            {
+                kategori_kod = pck_kategori_kod.Value.ToString(),
+                kategori_ad = pck_kategori_ad.Value.ToString(),
+                grup = Helper.HasProperty(d, "pck_grup"),
+                ckat_grup_kod = d.pck_ckat_grup_kod.Value,
+                cagri_gorunmesin = Helper.HasProperty(d, "pck_cagri_gorunmesin"),
+                mobilcrm_gorunmesin = Helper.HasProperty(d, "pck_mobilcrm_gorunmesin"),
+                ckarta_eklenemez = Helper.HasProperty(d, "pck_ckarta_eklenemez"),
+                CkatId = int.Parse(d.pck_ckatId.Value.ToString())
+            };
+            var sonuc = Helper.GetWebService().CkategoriKaydet(tmp);
+            X.MessageBox.Hide();
+
+            if (!sonuc.Result)
+            {
+                X.MessageBox.Alert("Hata Oluştu", sonuc.Message).Show();
+                return;
+            }
+
+            StoreCariKategori.DataSource = Helper.GetWebService().GetCKategoriListesi("").Value.CariKategori;
+            StoreCariKategori.DataBind();
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Hide();
+            X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
+        }
+
+        PickWindowCariKategoriEkle.Hide();
+    }
+
+    [DirectMethod]
+    public void CariKategoriSil(string id)
+    {
+        try
+        {
+            var sonuc = Helper.GetWebService().CKategoriSil(id.ToInt());
+            X.MessageBox.Hide();
+            if (!sonuc.Result)
+            {
+                X.MessageBox.Alert("Hata Oluştu", sonuc.Message).Show();
+            }
+
+            StoreCariKategori.DataSource = Helper.GetWebService().GetCKategoriListesi("").Value.CariKategori;
+            StoreCariKategori.DataBind();
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
+        }
+    }
+
+    #endregion
+
+    #region cari-kategori-grup
+
+    protected void CariKategoriGrupKaydet(object sender, DirectEventArgs e)
+    {
+        var deger = e.ExtraParams[0];
+        dynamic d = JObject.Parse(deger.Value.ToString());
+        try
+        {
+            var tmp = new CKatGrup()
+            {
+                grupId = int.Parse(d.pckg_grupId.Value.ToString()),
+                ckat_grup_kod = d.pckg_ckat_grup_kod.Value.ToString(),
+                ckat_grup_ad = d.pckg_ckat_grup_ad.Value.ToString()
+            };
+            var sonuc = Helper.GetWebService().CKategoriGrupKaydet(tmp);
+            X.MessageBox.Hide();
+
+            if (!sonuc.Result)
+            {
+                X.MessageBox.Alert("Hata Oluştu", sonuc.Message).Show();
+                return;
+            }
+
+            StoreCariKategoriGrup.DataSource = Helper.GetWebService().CKategoriGrupListesi("").Value;
+            StoreCariKategoriGrup.DataBind();
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Hide();
+            X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
+        }
+
+        PickWindowCariKategoriGrupEkle.Hide();
+    }
+
+    [DirectMethod]
+    public void CariKategoriGrupSil(string id)
+    {
+        try
+        {
+            // silme de hata oluştu!..
+            var sonuc = Helper.GetWebService().CKategoriSil(id.ToInt());
+            X.MessageBox.Hide();
+            if (!sonuc.Result)
+            {
+                X.MessageBox.Alert("Hata Oluştu", sonuc.Message).Show();
+            }
+
+            StoreCariKategori.DataSource = Helper.GetWebService().GetCKategoriListesi("").Value.CariKategori;
+            StoreCariKategori.DataBind();
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
+        }
+    }    
 
     #endregion
 
@@ -347,6 +475,16 @@
         }
 
         #cagri_konusu .x-form-text {
+            background-image: none;
+            background-color: yellow;
+        }
+
+        #p_ckat_grup_kod .x-form-text {
+            background-image: none;
+            background-color: yellow;
+        }
+
+        #pck_ckat_grup_kod .x-form-text {
             background-image: none;
             background-color: yellow;
         }
@@ -693,7 +831,7 @@
                                 AnchorHorizontal="100%"
                                 Layout="HBoxLayout">
                                 <Items>
-                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod2" FieldLabel="Cari Kat.Kod-2" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod2" FieldLabel="Cari Kat.Kod-2" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver" ReadOnly="True">
                                         <RightButtons>
                                             <ext:Button runat="server" Icon="Add">
                                                 <Listeners>
@@ -705,7 +843,7 @@
                                             </ext:Button>
                                         </RightButtons>   
                                     </ext:TextField>
-                                    <ext:TextField runat="server" Width="146" ID="ckategori_ad2" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                    <ext:TextField runat="server" Width="146" ID="ckategori_ad2" MarginSpec="0 3 0 0" AllowBlank="true"  ReadOnly="True"/>
                                 </Items>
                             </ext:FieldContainer>
 
@@ -714,7 +852,7 @@
                                 AnchorHorizontal="100%"
                                 Layout="HBoxLayout">
                                 <Items>
-                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod3" FieldLabel="Cari Kat.Kod-3" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod3" FieldLabel="Cari Kat.Kod-3" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver"  ReadOnly="True">
                                         <RightButtons>
                                             <ext:Button runat="server" Icon="Add">
                                                 <Listeners>
@@ -726,7 +864,7 @@
                                             </ext:Button>
                                         </RightButtons>
                                     </ext:TextField>
-                                    <ext:TextField runat="server" Width="146" ID="ckategori_ad3" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                    <ext:TextField runat="server" Width="146" ID="ckategori_ad3" MarginSpec="0 3 0 0" AllowBlank="true"  ReadOnly="True"/>
                                 </Items>
                             </ext:FieldContainer>
 
@@ -735,7 +873,7 @@
                                 AnchorHorizontal="100%"
                                 Layout="HBoxLayout">
                                 <Items>
-                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod4" FieldLabel="Cari Kat.Kod-4" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod4" FieldLabel="Cari Kat.Kod-4" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver"  ReadOnly="True">
                                         <RightButtons>
                                             <ext:Button runat="server" Icon="Add">
                                                 <Listeners>
@@ -747,7 +885,7 @@
                                             </ext:Button>
                                         </RightButtons>
                                     </ext:TextField>
-                                    <ext:TextField runat="server" Width="146" ID="ckategori_ad4" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                    <ext:TextField runat="server" Width="146" ID="ckategori_ad4" MarginSpec="0 3 0 0" AllowBlank="true" ReadOnly="True"/>
                                 </Items>
                             </ext:FieldContainer>
 
@@ -756,7 +894,7 @@
                                 AnchorHorizontal="100%"
                                 Layout="HBoxLayout">
                                 <Items>
-                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod5" FieldLabel="Cari Kat.Kod-5" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                    <ext:TextField runat="server" Width="304" ID="ckategori_kod5" FieldLabel="Cari Kat.Kod-5" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver"  ReadOnly="True">
                                         <RightButtons>
                                             <ext:Button runat="server" Icon="Add">
                                                 <Listeners>
@@ -768,7 +906,7 @@
                                             </ext:Button>
                                         </RightButtons>
                                     </ext:TextField>
-                                    <ext:TextField runat="server" Width="146" ID="ckategori_ad5" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                    <ext:TextField runat="server" Width="146" ID="ckategori_ad5" MarginSpec="0 3 0 0" AllowBlank="true" ReadOnly="True"/>
                                 </Items>
                             </ext:FieldContainer>
 
@@ -1151,9 +1289,10 @@
         </Items>
         <Buttons>
             <ext:Button runat="server" Text="Seç" Icon="Add" Handler="
-                    var v= App.GridPanelUlke.getSelectionModel().getSelection();
+                    var v= #{GridPanelIl}.getSelectionModel().getSelection();
                     if (v.length==0) return;
-                    #{ulke_kod}.setValue(v[0].data.ulke_kod);
+                    #{sehir_ad}.setValue(v[0].data.sehir_ad);
+                    #{ilce_ad}.setValue('');
                     #{PickWindowIl}.hide();
                 " />
             <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowIl}.hide();" />
@@ -1165,6 +1304,18 @@
             <ext:MenuItem runat="server" Text="Ekle" Icon="CarAdd">
                 <Listeners>
                     <Click Handler="
+                        #{pil_sehir_id}.setValue('0');
+                        #{pil_sehir_kod}.setValue('');
+                        #{pil_sehir_kod}.setReadOnly(false);
+                        #{pil_ulke_kod}.setValue('');
+                        #{pil_plaka_kod}.setValue('');
+                        #{pil_telefon_kod}.setValue('');
+                        #{pil_bolge_kod}.setValue('');
+                        var filter = #{ulke_kod}.getValue() + '';
+                        Ext.getStore('StoreUlke').filter('ulke_ad',filter);
+                        Ext.getStore('StoreUlke').each(function(record) {
+                            #{pil_ulke_kod}.setValue(record.data.ulke_kod);
+                        });          
                         #{PickWindowIlEkle}.show();
                         " />
                 </Listeners>
@@ -1172,6 +1323,16 @@
             <ext:MenuItem runat="server" Text="Düzelt" Icon="CartEdit">
                 <Listeners>
                     <Click Handler="
+                        var v= #{GridPanelIl}.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        console.log(v[0].data.sehirId);
+                        #{pil_sehir_id}.setValue(v[0].data.sehirId);
+                        #{pil_sehir_kod}.setValue(v[0].data.sehir_ad);
+                        #{pil_sehir_kod}.setReadOnly(true);
+                        #{pil_ulke_kod}.setValue(v[0].data.ulke_kod);
+                        #{pil_plaka_kod}.setValue(v[0].data.plaka_kod);
+                        #{pil_telefon_kod}.setValue(v[0].data.telefon_kod);
+                        #{pil_bolge_kod}.setValue(v[0].data.bolge_kod);        
                         #{PickWindowIlEkle}.show();
                         " />
                 </Listeners>
@@ -1183,7 +1344,7 @@
                         if (v.length==0) return;
                         Ext.MessageBox.show({
                             title: 'Dikkat',
-                            msg: 'Silmek ister misiniz? ('+v[0].data.ulke_ad+')',
+                            msg: 'Silmek ister misiniz? ('+v[0].data.sehir_ad+')',
                             buttons: Ext.MessageBox.OKCANCEL,
                             icon: Ext.MessageBox.WARNING,
                             fn: function(btn){
@@ -1193,7 +1354,7 @@
 	                                                     waitConfig: {interval:200}
 	                                                    });                                            
                         
-                                    CompanyX.UlkeSil(v[0].data.ulkeId);
+                                    CompanyX.SehirSil(v[0].data.sehirId);
                                 }
                             }
                         });
@@ -1296,22 +1457,52 @@
 
     <ext:Window ID="PickWindowIlce" runat="server" Width="400" Height="410" AutoHeight="true" Title="İlçe"
             Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
-            LabelWidth="125">
-        <LayoutConfig>
-            <ext:HBoxLayoutConfig Align="Stretch" />
-        </LayoutConfig>
+            LabelWidth="125" Layout="Fit">
+        <BottomBar>
+            <ext:Toolbar runat="server">
+                <Items>
+                    <ext:Label ID="Label2" runat="server" Text="Sağ tuş ile düzenleme yapabilirsiniz." Width="300" />
+                </Items>
+            </ext:Toolbar>
+        </BottomBar>
         <Items>
-            <ext:Panel
-                ID="Panel3"
-                runat="server"           
-                Flex="1">
-                <Loader
-                    runat="server"
-                    Url="IlceListesi.aspx"
-                    Mode="Frame">
-                    <LoadMask ShowMask="true" />
-                </Loader>
-            </ext:Panel>    
+            <ext:GridPanel
+                ID="GridPanelIlce"
+                runat="server" Height="310">
+                <Store>
+                    <ext:Store ID="StoreIlce" runat="server">
+                        <Model>
+                            <ext:Model runat="server">
+                                <Fields>
+                                    <ext:ModelField Name="sehir_ad" />
+                                    <ext:ModelField Name="ilce_ad" />
+                                    <ext:ModelField Name="okod1" />
+                                    <ext:ModelField Name="okod2" />
+                                    <ext:ModelField Name="bolge_kod" />
+                                    <ext:ModelField Name="ilceId" Type="Int" />
+                                </Fields>
+                            </ext:Model>
+                        </Model>
+                    </ext:Store>
+                </Store>
+                <ColumnModel>
+                    <Columns>
+                        <ext:Column runat="server" Text="İlçe" DataIndex="ilce_ad" Width="230"/>
+                    </Columns>
+                </ColumnModel>
+                <Plugins>
+                    <ext:FilterHeader runat="server" />
+                </Plugins>
+                <SelectionModel>
+                    <ext:RowSelectionModel runat="server" />
+                </SelectionModel>
+                <Listeners>
+                    <RowContextMenu Handler="
+                    e.preventDefault(); 
+                    #{RowContextMenuIlce}.showAt(e.getXY());
+                " />
+                </Listeners>
+            </ext:GridPanel>     
         </Items>
         <Buttons>
             <ext:Button runat="server" Text="Seç" Icon="Add" Handler="
@@ -1320,43 +1511,69 @@
                 #{ilce_ad}.setValue(v[0].data.ilce_ad);
                 #{PickWindowIlce}.hide();
             " />
-            <ext:Button runat="server" Text="Ekle" Icon="CarAdd"  Handler="
-                #{pilce_ilce_id}.setValue('0');
-                #{pilce_ilce_kodu}.setValue('');
-                #{PickWindowIlceEkle}.show();
-            ">
-            </ext:Button>
-            <ext:Button runat="server" Text="Düzelt" Icon="CartEdit" Handler="
-                var v= #{GridPanelIlce}.getSelectionModel().getSelection();
-                console.log(v);console.log(v.length);
-                if (v.length==0) return;
-                #{pilce_ilce_id}.setValue(v[0].data.ilceId);
-                #{pilce_ilce_kodu}.setValue(v[0].data.ilce_ad);
-                #{PickWindowIlceEkle}.show();
-                " />
-            <ext:Button runat="server" Text="Sil" Icon="CarDelete" Handler="
-                var v= #{GridPanelIlce}.getSelectionModel().getSelection();
-                if (v.length==0) return;
-                Ext.MessageBox.show({
-                    title: 'Dikkat',
-                    msg: 'Silmek ister misiniz? ('+v[0].data.ilce_ad+')',
-                    buttons: Ext.MessageBox.OKCANCEL,
-                    icon: Ext.MessageBox.WARNING,
-                    fn: function(btn){
-                        if(btn === 'ok'){
-                            Ext.MessageBox.show({
-                                                 msg: 'Islem yapilirken lutfen bekleyiniz.',
-	                                             waitConfig: {interval:200}
-	                                            });                                            
-                        
-                            CompanyX.IlceSil(v[0].data.ilceId);
-                        }
-                    }
-                });
-                " />
             <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowIlce}.hide();" />
         </Buttons>
     </ext:Window>
+
+    <ext:Menu ID="RowContextMenuIlce" runat="server">
+        <Items>
+            <ext:MenuItem runat="server" Text="Ekle" Icon="CarAdd">
+                <Listeners>
+                    <Click Handler="
+                        #{pilce_ilce_id}.setValue('0');
+                        #{pilce_ilce_kodu}.setValue('');
+
+                        var filter = #{sehir_ad}.getValue() + '';
+                        Ext.getStore('StoreIl').filter('sehir_ad',filter);
+                        Ext.getStore('StoreIl').each(function(record) {
+                            #{pilce_sehir_ad2}.setValue(record.data.sehir_ad);
+                        });          
+                        #{PickWindowIlceEkle}.show();
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+            <ext:MenuItem runat="server" Text="Düzelt" Icon="CartEdit">
+                <Listeners>
+                    <Click Handler="
+                        var v= #{GridPanelIlce}.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        #{pilce_ilce_id}.setValue(v[0].data.ilceId);
+                        #{pilce_ilce_kodu}.setValue(v[0].data.ilce_ad);
+                        var filter = #{sehir_ad}.getValue() + '';
+                        Ext.getStore('StoreIl').filter('sehir_ad',filter);
+                        Ext.getStore('StoreIl').each(function(record) {
+                            #{pilce_sehir_ad2}.setValue(record.data.sehir_ad);
+                        }); 
+                        #{PickWindowIlceEkle}.show();
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+            <ext:MenuItem runat="server" Text="Sil" Icon="CarDelete">
+                <Listeners>
+                    <Click Handler="
+                        var v= #{GridPanelIlce}.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        Ext.MessageBox.show({
+                            title: 'Dikkat',
+                            msg: 'Silmek ister misiniz? ('+v[0].data.ilce_ad+')',
+                            buttons: Ext.MessageBox.OKCANCEL,
+                            icon: Ext.MessageBox.WARNING,
+                            fn: function(btn){
+                                if(btn === 'ok'){
+                                    Ext.MessageBox.show({
+                                                         msg: 'Islem yapilirken lutfen bekleyiniz.',
+	                                                     waitConfig: {interval:200}
+	                                                    });                                            
+                                
+                                    CompanyX.IlceSil(v[0].data.ilceId);
+                                }
+                            }
+                        });
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+        </Items>
+    </ext:Menu>
     
     <ext:Window ID="PickWindowIlceEkle" runat="server" Width="350" Height="160" AutoHeight="true" Title="İlçe Ekle/Düzelt"
             Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
@@ -1419,30 +1636,63 @@
         </Items>
     </ext:Window>
 
-    <!-- ilçe işlemleri end -->
+    <!-- cari kategori işlemleri -->
 
     <ext:Window ID="WindowCariKategori" runat="server" Width="400" Height="410" AutoHeight="true" Title="Cari Kategori"
             Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
-            LabelWidth="125">
-        <LayoutConfig>
-            <ext:HBoxLayoutConfig Align="Stretch" />
-        </LayoutConfig>
+            LabelWidth="125" Layout="Fit">
+        <BottomBar>
+            <ext:Toolbar runat="server">
+                <Items>
+                    <ext:Label ID="Label3" runat="server" Text="Sağ tuş ile düzenleme yapabilirsiniz." Width="300" />
+                </Items>
+            </ext:Toolbar>
+        </BottomBar>
         <Items>
-            <ext:Panel
-                ID="Panel1"
-                runat="server"           
-                Flex="1">
-                <Loader
-                    runat="server"
-                    Url="CKategoriGrupListesi.aspx"
-                    Mode="Frame">
-                    <LoadMask ShowMask="true" />
-                </Loader>
-            </ext:Panel>  
+            <ext:GridPanel
+                ID="GridPanelCariKategori"
+                runat="server" Height="310">
+                <Store>
+                    <ext:Store ID="StoreCariKategori" runat="server">
+                        <Model>
+                            <ext:Model runat="server">
+                                <Fields>
+                                    <ext:ModelField Name="kategori_kod" />
+                                    <ext:ModelField Name="kategori_ad" />
+                                    <ext:ModelField Name="grup" Type="Boolean"/>
+                                    <ext:ModelField Name="ckat_grup_kod" />
+                                    <ext:ModelField Name="cagri_gorunmesin" Type="Boolean"/>
+                                    <ext:ModelField Name="mobilcrm_gorunmesin" Type="Boolean" />
+                                    <ext:ModelField Name="ckarta_eklenemez" Type="Boolean" />
+                                    <ext:ModelField Name="CkatId" Type="Int" />
+                                </Fields>
+                            </ext:Model>
+                        </Model>
+                    </ext:Store>
+                </Store>
+                <ColumnModel>
+                    <Columns>
+                        <ext:Column runat="server" Text="Kod" DataIndex="kategori_kod" Width="130"/>
+                        <ext:Column runat="server" Text="Ad" DataIndex="kategori_ad" Width="230"/>
+                    </Columns>
+                </ColumnModel>
+                <Plugins>
+                    <ext:FilterHeader runat="server" />
+                </Plugins>
+                <SelectionModel>
+                    <ext:RowSelectionModel runat="server" />
+                </SelectionModel>
+                <Listeners>
+                    <RowContextMenu Handler="
+                    e.preventDefault(); 
+                    #{RowContextMenuCariKategori}.showAt(e.getXY());
+                " />
+                </Listeners>
+            </ext:GridPanel> 
         </Items>
         <Buttons>
             <ext:Button runat="server" Text="Seç" Icon="Add" Handler="
-                        var v= App.Panel1.getBody().App.GridPanelCariKategori.getSelectionModel().getSelection();
+                        var v= App.GridPanelCariKategori.getSelectionModel().getSelection();
                         if (v.length==0) return;
                         switch(kodSira) {
                             case 1:
@@ -1472,56 +1722,318 @@
             <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{WindowCariKategori}.hide();" />
         </Buttons>
     </ext:Window>
+    
+    <ext:Menu ID="RowContextMenuCariKategori" runat="server">
+        <Items>
+            <ext:MenuItem runat="server" Text="Ekle" Icon="CarAdd">
+                <Listeners>
+                    <Click Handler="
+                        #{pck_ckatId}.setValue('0');
+                        #{pck_kategori_kod}.setValue('');
+                        #{pck_kategori_ad}.setValue(''); 
+                        #{pck_grup}.setValue(false);
+                        #{pck_ckat_grup_kod}.setValue(''); 
+                        #{pck_cagri_gorunmesin}.setValue(false);
+                        #{pck_mobilcrm_gorunmesin}.setValue(false);
+                        #{pck_ckarta_eklenemez}.setValue(false);
+                        #{PickWindowCariKategoriEkle}.show();
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+            <ext:MenuItem runat="server" Text="Düzelt" Icon="CartEdit">
+                <Listeners>
+                    <Click Handler="
+                        var v= #{GridPanelCariKategori}.getSelectionModel().getSelection();
+                        if (v.length==0) return;
 
-    <ext:Window ID="WindowUnvan" runat="server" Width="400" Height="410" AutoHeight="true" Title="Ünvan"
+                        #{pck_ckatId}.setValue(v[0].data.CkatId);
+                        #{pck_kategori_kod}.setValue(v[0].data.kategori_kod);
+                        #{pck_kategori_ad}.setValue(v[0].data.kategori_ad); 
+                        #{pck_grup}.setValue(v[0].data.grup);
+                        #{pck_ckat_grup_kod}.setValue(v[0].data.ckat_grup_kod); 
+                        #{pck_cagri_gorunmesin}.setValue(v[0].data.cagri_gorunmesin);
+                        #{pck_mobilcrm_gorunmesin}.setValue(v[0].data.mobilcrm_gorunmesin);
+                        #{pck_ckarta_eklenemez}.setValue(v[0].data.ckarta_eklenemez);
+                        #{PickWindowCariKategoriEkle}.show();
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+            <ext:MenuItem runat="server" Text="Sil" Icon="CarDelete">
+                <Listeners>
+                    <Click Handler="
+                        var v= #{GridPanelCariKategori}.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        Ext.MessageBox.show({
+                            title: 'Dikkat',
+                            msg: 'Silmek ister misiniz? ('+v[0].data.kategori_ad+')',
+                            buttons: Ext.MessageBox.OKCANCEL,
+                            icon: Ext.MessageBox.WARNING,
+                            fn: function(btn){
+                                if(btn === 'ok'){
+                                    Ext.MessageBox.show({
+                                                         msg: 'Islem yapilirken lutfen bekleyiniz.',
+	                                                     waitConfig: {interval:200}
+	                                                    });                                            
+                                
+                                    CompanyX.CariKategoriSil(v[0].data.CkatId);
+                                }
+                            }
+                        });
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+        </Items>
+    </ext:Menu>
+
+    <ext:Window ID="PickWindowCariKategoriEkle" runat="server" Width="350" Height="400" AutoHeight="true" Title="Cari Kategori Ekle/Düzelt"
             Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
             LabelWidth="125" Layout="Fit">
         <Items>
-            <ext:GridPanel
-                ID="GridPanelUnvan"
-                runat="server">
-                 <Store>
-                     <ext:Store ID="StoreUnvan" runat="server">
-                         <Model>
-                             <ext:Model runat="server">
-                                 <Fields>
-                                     <ext:ModelField Name="grup_kod" />
-                                     <ext:ModelField Name="unvan_kod" />
-                                     <ext:ModelField Name="unvan_ad" />
-                                     <ext:ModelField Name="unvanId" Type="Int" />
-                                 </Fields>
-                             </ext:Model>
-                         </Model>
-                     </ext:Store>
-                 </Store>
-                 <ColumnModel>
-                     <Columns>
-                         <ext:Column runat="server" Text="Kod" DataIndex="unvan_kod" Width="120"/>
-                         <ext:Column runat="server" Text="Ad" DataIndex="unvan_ad" Width="240"/>
-                     </Columns>
-                 </ColumnModel>
-                 <Plugins>
-                    <ext:FilterHeader runat="server" />
-                 </Plugins>
-                 <SelectionModel>
-                     <ext:RowSelectionModel runat="server" />
-                 </SelectionModel>
-                <BottomBar>
-                    <ext:Toolbar runat="server">
-                        <Items>
-                            <ext:Button runat="server" Text="Seç" Icon="Add" Handler="
-                                var v= #{GridPanelUnvan}.getSelectionModel().getSelection();
-                                if (v.length==0) return;
-                                #{unvan}.setValue(v[0].data.unvan_kod);
-                                #{WindowUnvan}.hide();
-                            " />
-                            <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{WindowUnvan}.hide();" />
-                        </Items>
-                    </ext:Toolbar>
-                </BottomBar>
-            </ext:GridPanel>
+            <ext:FormPanel
+                ID="PickCariKategoriEkle"
+                runat="server"
+                Layout="Fit"
+                AutoScroll="true">
+                    <Items>
+                        <ext:FieldSet runat="server" DefaultWidth="310" Padding="5">
+                    <Items>
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            InputType="Number"
+                            AllowBlank="False"
+                            ID="pck_ckatId"
+                            Hidden="true" />
+
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            InputType="Text"
+                            AllowBlank="false"
+                            FieldLabel="Kod"
+                            ID="pck_kategori_kod"
+                            EmptyText="Kod" />
+
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            AllowBlank="false"
+                            FieldLabel="Ad"
+                            ID="pck_kategori_ad"
+                            EmptyText="Ad" />
+                        <ext:Checkbox runat="server" FieldLabel="Grup" ID="pck_grup" />
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            AllowBlank="false"
+                            FieldLabel="Kat.Grup Kod"
+                            ID="pck_ckat_grup_kod"
+                            EmptyText="Kat.Grup Kod" RightButtonsShowMode="MouseOver" ReadOnly="True">
+                            <RightButtons>
+                                <ext:Button runat="server" Icon="Add">
+                                    <Listeners>
+                                        <Click Handler="#{WindowCariKategoriGrup}.show();" />
+                                    </Listeners>
+                                </ext:Button>
+                            </RightButtons>
+                        </ext:TextField>
+                        <ext:Checkbox runat="server" FieldLabel="Cari Görünmesin" ID="pck_cagri_gorunmesin" />
+                        <ext:Checkbox runat="server" FieldLabel="Mobil Görünmesin" ID="pck_mobilcrm_gorunmesin" />
+                        <ext:Checkbox runat="server" FieldLabel="Cari K.Eklenemez" ID="pck_ckarta_eklenemez" />
+                    </Items>
+                </ext:FieldSet>
+                    </Items>
+                    <Buttons>
+                        <ext:Button runat="server" Text="Tamam" Icon="Accept" Disabled="True" FormBind="True"  Handler="#{PickWindowCariKategoriEkle}.show();">
+                            <DirectEvents>
+                                <Click OnEvent="CariKategoriKaydet" Before="Ext.MessageBox.show({
+	                                                                      msg: 'Islem yapilirken lutfen bekleyiniz.',
+	                                                                      waitConfig: {interval:200}
+	                                                                    });" Delay="1">
+                                    <ExtraParams>
+                                        <ext:Parameter Name="Values" Value="#{PickCariKategoriEkle}.getValues(false)" Mode="Raw" />
+                                    </ExtraParams>
+                                </Click>
+                            </DirectEvents>
+                        </ext:Button>
+                        <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowCariKategoriEkle}.hide();" />
+                    </Buttons>
+                </ext:FormPanel>
         </Items>
     </ext:Window>
+
+    <!-- cari kategori end -->
+
+    <!-- cari kategori grup işlemleri -->
+    
+     <ext:Window ID="WindowCariKategoriGrup" runat="server" Width="400" Height="410" AutoHeight="true" Title="Cari Kategori Grup"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
+            LabelWidth="125" Layout="Fit">
+        <BottomBar>
+            <ext:Toolbar runat="server">
+                <Items>
+                    <ext:Label ID="Label4" runat="server" Text="Sağ tuş ile düzenleme yapabilirsiniz." Width="300" />
+                </Items>
+            </ext:Toolbar>
+        </BottomBar>
+        <Items>
+            <ext:GridPanel
+                ID="GridPanelCariKategoriGrup"
+                runat="server" Height="310">
+                <Store>
+                    <ext:Store ID="StoreCariKategoriGrup" runat="server">
+                        <Model>
+                            <ext:Model runat="server">
+                                <Fields>
+                                    <ext:ModelField Name="ckat_grup_kod" />
+                                    <ext:ModelField Name="ckat_grup_ad" />
+                                    <ext:ModelField Name="grupId" Type="Int" />
+                                </Fields>
+                            </ext:Model>
+                        </Model>
+                    </ext:Store>
+                </Store>
+                <ColumnModel>
+                    <Columns>
+                        <ext:Column runat="server" Text="Kod" DataIndex="ckat_grup_kod" Width="130"/>
+                        <ext:Column runat="server" Text="Ad" DataIndex="ckat_grup_ad" Width="230"/>
+                    </Columns>
+                </ColumnModel>
+                <Plugins>
+                    <ext:FilterHeader runat="server" />
+                </Plugins>
+                <SelectionModel>
+                    <ext:RowSelectionModel runat="server" />
+                </SelectionModel>
+                <Listeners>
+                    <RowContextMenu Handler="
+                    e.preventDefault(); 
+                    #{RowContextMenuCariKategoriGrup}.showAt(e.getXY());
+                " />
+                </Listeners>
+            </ext:GridPanel> 
+        </Items>
+        <Buttons>
+            <ext:Button runat="server" Text="Seç" Icon="Add" Handler="
+                        var v= App.GridPanelCariKategoriGrup.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        #{pck_ckat_grup_kod}.setValue(v[0].data.ckat_grup_kod);
+                        #{WindowCariKategoriGrup}.hide();
+                    " />
+            <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{WindowCariKategoriGrup}.hide();" />
+        </Buttons>
+    </ext:Window>
+    
+    <ext:Menu ID="RowContextMenuCariKategoriGrup" runat="server">
+        <Items>
+            <ext:MenuItem runat="server" Text="Ekle" Icon="CarAdd">
+                <Listeners>
+                    <Click Handler="
+                        #{pckg_grupId}.setValue('0');
+                        #{pckg_ckat_grup_kod}.setValue('');
+                        #{pckg_ckat_grup_ad}.setValue(''); 
+                        #{PickWindowCariKategoriGrupEkle}.show();
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+            <ext:MenuItem runat="server" Text="Düzelt" Icon="CartEdit">
+                <Listeners>
+                    <Click Handler="
+                        var v= #{GridPanelCariKategoriGrup}.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        #{pckg_grupId}.setValue(v[0].data.grupId);
+                        #{pckg_ckat_grup_kod}.setValue(v[0].data.ckat_grup_kod);
+                        #{pckg_ckat_grup_ad}.setValue(v[0].data.ckat_grup_ad); 
+                        #{PickWindowCariKategoriGrupEkle}.show();
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+            <ext:MenuItem runat="server" Text="Sil" Icon="CarDelete">
+                <Listeners>
+                    <Click Handler="
+                        var v= #{GridPanelCariKategoriGrup}.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        Ext.MessageBox.show({
+                            title: 'Dikkat',
+                            msg: 'Silmek ister misiniz? ('+v[0].data.ckat_grup_kod+')',
+                            buttons: Ext.MessageBox.OKCANCEL,
+                            icon: Ext.MessageBox.WARNING,
+                            fn: function(btn){
+                                if(btn === 'ok'){
+                                    Ext.MessageBox.show({
+                                                         msg: 'Islem yapilirken lutfen bekleyiniz.',
+                                                         waitConfig: {interval:200}
+                                                        });                                            
+                                
+                                    CompanyX.CariKategoriGrupSil(v[0].data.grupId);
+                                }
+                            }
+                        });
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+        </Items>
+    </ext:Menu>
+
+    <ext:Window ID="PickWindowCariKategoriGrupEkle" runat="server" Width="350" Height="210" AutoHeight="true" Title="Cari Kategori Grup Ekle/Düzelt"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
+            LabelWidth="125" Layout="Fit">
+        <Items>
+            <ext:FormPanel
+                ID="PickCariKategoriGrupEkle"
+                runat="server"
+                Layout="Fit"
+                AutoScroll="true">
+                    <Items>
+                        <ext:FieldSet runat="server" DefaultWidth="310" Padding="5">
+                    <Items>
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            InputType="Number"
+                            AllowBlank="False"
+                            ID="pckg_grupId"
+                            Hidden="true" />
+
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            InputType="Text"
+                            AllowBlank="false"
+                            FieldLabel="Kod"
+                            ID="pckg_ckat_grup_kod"
+                            EmptyText="Kod" />
+
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            AllowBlank="false"
+                            FieldLabel="Ad"
+                            ID="pckg_ckat_grup_ad"
+                            EmptyText="Ad" />
+                    </Items>
+                </ext:FieldSet>
+                    </Items>
+                    <Buttons>
+                        <ext:Button runat="server" Text="Tamam" Icon="Accept" Disabled="True" FormBind="True"  Handler="#{PickWindowCariKategoriGrupEkle}.show();">
+                            <DirectEvents>
+                                <Click OnEvent="CariKategoriGrupKaydet" Before="Ext.MessageBox.show({
+                                                                          msg: 'Islem yapilirken lutfen bekleyiniz.',
+                                                                          waitConfig: {interval:200}
+                                                                        });" Delay="1">
+                                    <ExtraParams>
+                                        <ext:Parameter Name="Values" Value="#{PickCariKategoriGrupEkle}.getValues(false)" Mode="Raw" />
+                                    </ExtraParams>
+                                </Click>
+                            </DirectEvents>
+                        </ext:Button>
+                        <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowCariKategoriGrupEkle}.hide();" />
+                    </Buttons>
+                </ext:FormPanel>
+        </Items>
+    </ext:Window>
+
+    <!-- cari kategori grup end -->
 
 </body>
 </html>

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Dynamic;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using Microsoft.CSharp.RuntimeBinder;
 using UyumSosyal.Moduls.Yetkilendirme_Islemleri.Shared;
 using UyumSosyal.WebReference;
 
@@ -19,6 +21,19 @@ namespace UyumSosyal
         public static int MIN = 0;
         public static int MAX = 99999;
 
+        public static bool HasProperty(dynamic obj, string name)
+        {
+            try
+            {
+                var value = obj[name].Value;
+                return true;
+            }
+            catch (RuntimeBinderException)
+            {
+
+                return false;
+            }
+        }
         public static string JaponDate(this string str)
         {
             // 01.01.2018

@@ -28,6 +28,36 @@ namespace UyumSosyal
 
     public class WebServiceTest
     {
+        public static void CariKategori()
+        {
+            var ret = Helper.GetWebService().GetCKategoriListesi("").Value.CariKategori;
+
+            var ret2 = Helper.GetWebService().CkategoriKaydet(new CariKategori()
+            {
+                kategori_kod="",
+                kategori_ad="xxxx",
+                grup = true,
+                ckat_grup_kod ="",
+                cagri_gorunmesin = true,
+                mobilcrm_gorunmesin = true,
+                ckarta_eklenemez = true,
+                CkatId = 0
+            });
+
+            var ret3 = Helper.GetWebService().CKategoriSil(-99);
+
+            var ret4 = Helper.GetWebService().CKategoriOncelikListesi("");
+
+            var ret5 = Helper.GetWebService().CKategoriOncelikKaydet(new CkategoriOncelik()
+            {
+                ckategori_kod = "01 15 ",
+                oncelik_ad = "test",
+                oncelik_kod = "test 1"
+            });
+
+            var ret6 = Helper.GetWebService().CKategoriOncelikSil(34690406);
+        }
+
         public static void BelgeTip()
         {
             var ret = Helper.GetWebService().BelgeTipListesi("");
@@ -282,6 +312,7 @@ namespace UyumSosyal
             int i = 0;
             i++;
 
+            WebServiceTest.CariKategori();
             WebServiceTest.BelgeTip();
             WebServiceTest.ParametrikAlan();
             WebServiceTest.CariKategoriGrup();
