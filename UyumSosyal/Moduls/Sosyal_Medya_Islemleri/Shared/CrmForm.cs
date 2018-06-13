@@ -47,7 +47,7 @@ namespace UyumSosyal.Moduls.Sosyal_Medya_Islemleri.Shared
                 master_no = l.master_no,
                 faaliyet_yili = l.faaliyet_yili,
                 faaliyet_yili2 = l.faaliyet_yili.JaponDate(),
-                create_date = l.create_date.ToString("dd.MM.yyyy"),
+                create_date = l.create_date.ToString("dd.MM.yyyy") + " " + (l.create_time.Length == 4 ? (l.create_time.Substring(0, 2) + ":" + l.create_time.Substring(2)) : l.create_time),
                 create_date2 = l.create_date.ToString("yyyy-MM-dd")
 
             }));//.Where(x=> !string.IsNullOrEmpty(x.form_ad) && !string.IsNullOrEmpty(x.tip)));

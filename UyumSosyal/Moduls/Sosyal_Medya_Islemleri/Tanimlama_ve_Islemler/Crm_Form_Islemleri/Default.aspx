@@ -431,7 +431,7 @@
             <ColumnModel ID="ColumnModel1" runat="server">
                 <Columns>
                     <ext:Column ID="Kod" runat="server" Text="Faaliyet Yılı" DataIndex="faaliyet_yili" Width="100" />
-                    <ext:Column ID="Column23" runat="server" Text="Oluş.Tarihi" DataIndex="create_date" Width="100" />
+                    <ext:Column ID="Column23" runat="server" Text="Oluş.Tarihi" DataIndex="create_date" Width="140" />
                     <ext:Column ID="Column22" runat="server" Text="Form Ad" DataIndex="form_ad" Sortable="true" Width="130" />
                     <ext:Column ID="Column3" runat="server" Text="Tip" DataIndex="tip" Width="200" />
                     <ext:Column ID="Column4" runat="server" Text="Yetkili Kişi" DataIndex="yetkili_kisi" Width="130" />
