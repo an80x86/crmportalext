@@ -210,6 +210,95 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="CariKategoriKaydet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="kategori" type="tns:Ckategori" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Ckategori">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CKatId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="cari_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ckategori_kod" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="silinsin" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="silme_sebebi" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="create_date" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CariKategoriKaydetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CariKategoriKaydetResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CariKategoriSilinsin">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="cKatId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CariKategoriSilinsinResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CariKategoriSilinsinResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CariGrupKaydet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="grup" type="tns:CariGrup" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CariGrup">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="gupId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="cgrup_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="cgrup_ad" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="tip" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CariGrupKaydetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CariGrupKaydetResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CariGrupListesi">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="grupkod" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="grupad" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CariGrupListesiResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CariGrupListesiResult" type="tns:MobServiceResultOfListOfCariGrup" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MobServiceResultOfListOfCariGrup">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:ArrayOfCariGrup" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCariGrup">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CariGrup" nillable="true" type="tns:CariGrup" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="UnvanGrupKaydet">
         <s:complexType>
           <s:sequence>
@@ -2271,15 +2360,6 @@
       <s:complexType name="ArrayOfCkategori">
         <s:sequence>
           <s:element minOccurs="0" maxOccurs="unbounded" name="Ckategori" nillable="true" type="tns:Ckategori" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="Ckategori">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="cari_kod" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="ckategori_kod" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="silinsin" type="s:boolean" />
-          <s:element minOccurs="0" maxOccurs="1" name="silme_sebebi" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="create_date" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="UyumluYazilimKonnektorListesi">
@@ -4416,6 +4496,7 @@
           <s:element minOccurs="1" maxOccurs="1" name="kapali" type="s:boolean" />
           <s:element minOccurs="1" maxOccurs="1" name="master_no" type="s:int" />
           <s:element minOccurs="1" maxOccurs="1" name="create_date" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="create_time" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="CrmFormKaydetResponse">
@@ -7548,6 +7629,30 @@
   <wsdl:message name="CariBolgeSilSoapOut">
     <wsdl:part name="parameters" element="tns:CariBolgeSilResponse" />
   </wsdl:message>
+  <wsdl:message name="CariKategoriKaydetSoapIn">
+    <wsdl:part name="parameters" element="tns:CariKategoriKaydet" />
+  </wsdl:message>
+  <wsdl:message name="CariKategoriKaydetSoapOut">
+    <wsdl:part name="parameters" element="tns:CariKategoriKaydetResponse" />
+  </wsdl:message>
+  <wsdl:message name="CariKategoriSilinsinSoapIn">
+    <wsdl:part name="parameters" element="tns:CariKategoriSilinsin" />
+  </wsdl:message>
+  <wsdl:message name="CariKategoriSilinsinSoapOut">
+    <wsdl:part name="parameters" element="tns:CariKategoriSilinsinResponse" />
+  </wsdl:message>
+  <wsdl:message name="CariGrupKaydetSoapIn">
+    <wsdl:part name="parameters" element="tns:CariGrupKaydet" />
+  </wsdl:message>
+  <wsdl:message name="CariGrupKaydetSoapOut">
+    <wsdl:part name="parameters" element="tns:CariGrupKaydetResponse" />
+  </wsdl:message>
+  <wsdl:message name="CariGrupListesiSoapIn">
+    <wsdl:part name="parameters" element="tns:CariGrupListesi" />
+  </wsdl:message>
+  <wsdl:message name="CariGrupListesiSoapOut">
+    <wsdl:part name="parameters" element="tns:CariGrupListesiResponse" />
+  </wsdl:message>
   <wsdl:message name="UnvanGrupKaydetSoapIn">
     <wsdl:part name="parameters" element="tns:UnvanGrupKaydet" />
   </wsdl:message>
@@ -9085,6 +9190,22 @@
       <wsdl:input message="tns:CariBolgeSilSoapIn" />
       <wsdl:output message="tns:CariBolgeSilSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="CariKategoriKaydet">
+      <wsdl:input message="tns:CariKategoriKaydetSoapIn" />
+      <wsdl:output message="tns:CariKategoriKaydetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CariKategoriSilinsin">
+      <wsdl:input message="tns:CariKategoriSilinsinSoapIn" />
+      <wsdl:output message="tns:CariKategoriSilinsinSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CariGrupKaydet">
+      <wsdl:input message="tns:CariGrupKaydetSoapIn" />
+      <wsdl:output message="tns:CariGrupKaydetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CariGrupListesi">
+      <wsdl:input message="tns:CariGrupListesiSoapIn" />
+      <wsdl:output message="tns:CariGrupListesiSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="UnvanGrupKaydet">
       <wsdl:input message="tns:UnvanGrupKaydetSoapIn" />
       <wsdl:output message="tns:UnvanGrupKaydetSoapOut" />
@@ -10162,6 +10283,42 @@
     </wsdl:operation>
     <wsdl:operation name="CariBolgeSil">
       <soap:operation soapAction="http://tempuri.org/CariBolgeSil" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariKategoriKaydet">
+      <soap:operation soapAction="http://tempuri.org/CariKategoriKaydet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariKategoriSilinsin">
+      <soap:operation soapAction="http://tempuri.org/CariKategoriSilinsin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariGrupKaydet">
+      <soap:operation soapAction="http://tempuri.org/CariGrupKaydet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariGrupListesi">
+      <soap:operation soapAction="http://tempuri.org/CariGrupListesi" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -12496,6 +12653,42 @@
     </wsdl:operation>
     <wsdl:operation name="CariBolgeSil">
       <soap12:operation soapAction="http://tempuri.org/CariBolgeSil" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariKategoriKaydet">
+      <soap12:operation soapAction="http://tempuri.org/CariKategoriKaydet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariKategoriSilinsin">
+      <soap12:operation soapAction="http://tempuri.org/CariKategoriSilinsin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariGrupKaydet">
+      <soap12:operation soapAction="http://tempuri.org/CariGrupKaydet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariGrupListesi">
+      <soap12:operation soapAction="http://tempuri.org/CariGrupListesi" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

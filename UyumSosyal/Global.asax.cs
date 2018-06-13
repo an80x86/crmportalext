@@ -30,6 +30,8 @@ namespace UyumSosyal
     {
         public static void CariKategori()
         {
+            var t = Helper.GetWebService().ParametrikAlanListesi("", "").Value;
+
             var ret = Helper.GetWebService().GetCKategoriListesi("").Value.CariKategori;
 
             var ret2 = Helper.GetWebService().CkategoriKaydet(new CariKategori()

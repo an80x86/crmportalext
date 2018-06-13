@@ -25,6 +25,7 @@
             StoreUnvan.DataSource = Helper.GetWebService().UnvanListesi2("", "").Value;
             StoreUnvanGrupListesi.DataSource = Helper.GetWebService().UnvanGrupListesi("", "").Value;
             StoreCariKategoriOncelik.DataSource = Helper.GetWebService().KategoriOncelikListesi("").Value;
+            StoreUnvanParametrikAlanListesi.DataSource = Helper.GetWebService().ParametrikAlanListesi("", "").Value;
         }
     }
 
@@ -512,6 +513,70 @@
 
     #endregion
 
+    #region parametrik alan
+
+    protected void UnvanParametrikAlanListesiKaydet(object sender, DirectEventArgs e)
+    {
+        var deger = e.ExtraParams[0];
+        dynamic d = JObject.Parse(deger.Value.ToString());
+        try
+        {
+            var tmp = new KbParam()
+            {
+                paramId = int.Parse(d.pckua_paramId.Value.ToString()),
+                kok = d.pckua_kok.Value.ToString(),       
+                param_kod = d.pckua_param_kod.Value.ToString(),       
+                param_ad = d.pckua_param_ad.Value.ToString(),       
+                siralama_kod = d.pckua_siralama_kod.Value.ToString(),       
+                iskonto_yuzdesi = (decimal) Int32.Parse(d.pckua_iskonto_yuzdesi.Value.ToString()=="" ? "0" : d.pckua_iskonto_yuzdesi.Value.ToString()),       
+                pasif = Helper.HasProperty(d, "pckua_pasif"),       
+                faaliyet_olustur = Helper.HasProperty(d, "pckua_faaliyet_olustur")  
+            };
+
+            var sonuc = Helper.GetWebService().ParametrikAlanKaydet(tmp);
+            X.MessageBox.Hide();
+
+            if (!sonuc.Result)
+            {
+                X.MessageBox.Alert("Hata Oluştu", sonuc.Message).Show();
+                return;
+            }
+
+            StoreUnvanParametrikAlanListesi.DataSource = Helper.GetWebService().ParametrikAlanListesi("", "").Value;
+            StoreUnvanParametrikAlanListesi.DataBind();
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Hide();
+            X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
+        }
+
+        PickWindowUnvanParametrikAlanListesiEkle.Hide();
+    }
+
+    [DirectMethod]
+    public void UnvanParametrikAlanListesiSil(string id)
+    {
+        try
+        {
+            var sonuc = Helper.GetWebService().ParametrikAlanSil(id.ToInt());
+            X.MessageBox.Hide();
+            if (!sonuc.Result)
+            {
+                X.MessageBox.Alert("Hata Oluştu", sonuc.Message).Show();
+            }
+
+            StoreUnvanParametrikAlanListesi.DataSource = Helper.GetWebService().ParametrikAlanListesi("", "").Value;
+            StoreUnvanParametrikAlanListesi.DataBind();
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
+        }
+    }
+
+    #endregion
+
 </script>
 
 <!DOCTYPE html>
@@ -651,6 +716,7 @@
     </style>
     <script>
         var kodSira = 1;
+        var paramSira = 1;
         var template = '<span style="color:{0};">{1}</span>';
 
         var change = function (value) {
@@ -907,7 +973,6 @@
                                             return;
                                         }
                                         var filter = #{sehir_ad}.getValue() + '';
-                                        console.log(filter);
                                         #{pilce_sehir_ad2}.setValue(filter);
                                         Ext.getStore('StoreIlce').filter('sehir_ad',filter);
                                         #{PickWindowIlce}.show();
@@ -930,12 +995,23 @@
                                 AnchorHorizontal="100%"
                                 Layout="HBoxLayout">
                                 <Items>
-                                    <ext:TextField runat="server" Width="304" ID="cagri_cevap" FieldLabel="Çağrı Cevap" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                    <ext:TextField runat="server" Width="304" ID="cagri_cevap" FieldLabel="Çağrı Cevap" MarginSpec="0 3 0 0" AllowBlank="true" ReadOnly="True" RightButtonsShowMode="MouseOver">
                                         <RightButtons>
-                                            <ext:Button runat="server" Icon="Add" />
+                                            <ext:Button runat="server" Icon="Add">
+                                                <Listeners>
+                                                    <Click Handler="
+                                                        paramSira=1;
+                                                        #{pckua_kok}.setValue('Çağrı Cevap');
+                                                        Ext.getStore('StoreUnvanParametrikAlanListesi').filter('kok','Çağrı Cevap');
+                                                        #{PickWindowUnvanParametrikAlanListesiEkle}.setTitle('Çağrı Cevap Ekle/Düzelt');
+                                                        #{WindowUnvanParametrikAlanListesi}.setTitle('Çağrı Cevap');
+                                                        #{WindowUnvanParametrikAlanListesi}.show();
+                                                    " />
+                                                </Listeners>
+                                            </ext:Button>
                                         </RightButtons>
                                     </ext:TextField>
-                                    <ext:TextField runat="server" Width="146" ID="cagri_cevap2" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                    <ext:TextField runat="server" Width="146" ID="cagri_cevap2" MarginSpec="0 3 0 0" ReadOnly="True" AllowBlank="true" />
                                 </Items>
                             </ext:FieldContainer>
                     
@@ -944,12 +1020,23 @@
                                 AnchorHorizontal="100%"
                                 Layout="HBoxLayout">
                                 <Items>
-                                    <ext:TextField runat="server" Width="304" ID="onem_derece" FieldLabel="Önem Derece" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                    <ext:TextField runat="server" Width="304" ID="onem_derece" FieldLabel="Önem Derece" MarginSpec="0 3 0 0" AllowBlank="true" ReadOnly="True" RightButtonsShowMode="MouseOver">
                                         <RightButtons>
-                                            <ext:Button runat="server" Icon="Add" />
+                                            <ext:Button runat="server" Icon="Add">
+                                                <Listeners>
+                                                    <Click Handler="
+                                                        paramSira=2;
+                                                        #{pckua_kok}.setValue('Çağrı Önem Derecesi');
+                                                        Ext.getStore('StoreUnvanParametrikAlanListesi').filter('kok','Çağrı Önem Derecesi');
+                                                        #{PickWindowUnvanParametrikAlanListesiEkle}.setTitle('Çağrı Önem Ekle/Düzelt');
+                                                        #{WindowUnvanParametrikAlanListesi}.setTitle('Önem Derece');
+                                                        #{WindowUnvanParametrikAlanListesi}.show();
+                                                    " />
+                                                </Listeners>
+                                            </ext:Button>
                                         </RightButtons>
                                     </ext:TextField>
-                                    <ext:TextField runat="server" Width="146" ID="onem_derece2" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                    <ext:TextField runat="server" Width="146" ID="onem_derece2" MarginSpec="0 3 0 0" ReadOnly="True" AllowBlank="true" />
                                 </Items>
                             </ext:FieldContainer>
                             
@@ -1158,12 +1245,23 @@
                             AnchorHorizontal="100%"
                             Layout="HBoxLayout">
                             <Items>
-                                <ext:TextField runat="server" Width="304" ID="cagri_nedeni" FieldLabel="Çağri Nedeni" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                <ext:TextField runat="server" Width="304" ID="cagri_nedeni" FieldLabel="Çağri Nedeni" MarginSpec="0 3 0 0" AllowBlank="true" ReadOnly="True" RightButtonsShowMode="MouseOver">
                                     <RightButtons>
-                                        <ext:Button runat="server" Icon="Add" />
+                                        <ext:Button runat="server" Icon="Add">
+                                                <Listeners>
+                                                    <Click Handler="
+                                                        paramSira=3;
+                                                        #{pckua_kok}.setValue('Çağrı Nedeni');
+                                                        Ext.getStore('StoreUnvanParametrikAlanListesi').filter('kok','Çağrı Nedeni');
+                                                        #{PickWindowUnvanParametrikAlanListesiEkle}.setTitle('Çağrı Nedeni Ekle/Düzelt');
+                                                        #{WindowUnvanParametrikAlanListesi}.setTitle('Çağrı Nedeni');
+                                                        #{WindowUnvanParametrikAlanListesi}.show();
+                                                    " />
+                                                </Listeners>
+                                            </ext:Button>
                                     </RightButtons>
                                 </ext:TextField>
-                                <ext:TextField runat="server" Width="264" ID="cagri_nedeni2" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                <ext:TextField runat="server" Width="264" ID="cagri_nedeni2" MarginSpec="0 3 0 0" ReadOnly="True" AllowBlank="true" />
                             </Items>
                         </ext:FieldContainer>
 
@@ -1172,12 +1270,23 @@
                             AnchorHorizontal="100%"
                             Layout="HBoxLayout">
                             <Items>
-                                <ext:TextField runat="server" Width="304" ID="cagri_konusu" FieldLabel="Çağri Konusu" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                                <ext:TextField runat="server" Width="304" ID="cagri_konusu" FieldLabel="Çağri Konusu" MarginSpec="0 3 0 0" AllowBlank="true" ReadOnly="True" RightButtonsShowMode="MouseOver">
                                     <RightButtons>
-                                        <ext:Button runat="server" Icon="Add" />
+                                        <ext:Button runat="server" Icon="Add">
+                                                <Listeners>
+                                                    <Click Handler="
+                                                        paramSira=4;
+                                                        #{pckua_kok}.setValue('Çağrı Konusu');
+                                                        Ext.getStore('StoreUnvanParametrikAlanListesi').filter('kok','Çağrı Konusu');
+                                                        #{PickWindowUnvanParametrikAlanListesiEkle}.setTitle('Çağrı Konusu Ekle/Düzelt');
+                                                        #{WindowUnvanParametrikAlanListesi}.setTitle('Çağrı Konusu');
+                                                        #{WindowUnvanParametrikAlanListesi}.show();
+                                                    " />
+                                                </Listeners>
+                                            </ext:Button>
                                     </RightButtons>
                                 </ext:TextField>
-                                <ext:TextField runat="server" Width="266" ID="cagri_konusu2" MarginSpec="0 3 0 0" AllowBlank="true" />
+                                <ext:TextField runat="server" Width="266" ID="cagri_konusu2" MarginSpec="0 3 0 0" ReadOnly="True" AllowBlank="true" />
                             </Items>
                         </ext:FieldContainer>
 
@@ -2705,5 +2814,231 @@
 
     <!-- ünvan grup listesi end -->
 
+    <!-- çağrı cevap / önem derecesi / çağrı nedeni / çağrı konusu -->
+
+    <ext:Window ID="WindowUnvanParametrikAlanListesi" runat="server" Width="400" Height="410" AutoHeight="true" Title="Parametrik Alan"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
+            LabelWidth="125" Layout="Fit">
+        <BottomBar>
+            <ext:Toolbar runat="server">
+                <Items>
+                    <ext:Label ID="Label7" runat="server" Text="Sağ tuş ile düzenleme yapabilirsiniz." Width="300" />
+                </Items>
+            </ext:Toolbar>
+        </BottomBar>
+        <Items>
+            <ext:GridPanel
+                ID="GridPanelUnvanParametrikAlanListesi"
+                runat="server" Height="310">
+                <Store>
+                    <ext:Store ID="StoreUnvanParametrikAlanListesi" runat="server">
+                        <Model>
+                            <ext:Model runat="server">
+                                <Fields>
+                                    <ext:ModelField Name="kok" />
+                                    <ext:ModelField Name="param_kod" />
+                                    <ext:ModelField Name="param_ad" />
+                                    <ext:ModelField Name="siralama_kod" />
+                                    <ext:ModelField Name="iskonto_yuzdesi" Type="Int" />
+                                    <ext:ModelField Name="pasif" Type="Boolean" />
+                                    <ext:ModelField Name="faaliyet_olustur" Type="Boolean" />
+                                    <ext:ModelField Name="paramId" Type="Int" />
+                                </Fields>
+                            </ext:Model>
+                        </Model>
+                    </ext:Store>
+                </Store>
+                <ColumnModel>
+                    <Columns>
+                        <ext:Column runat="server" Text="Kod" DataIndex="param_kod" Width="130"/>
+                        <ext:Column runat="server" Text="Ad" DataIndex="param_ad" Width="230"/>
+                    </Columns>
+                </ColumnModel>
+                <Plugins>
+                    <ext:FilterHeader runat="server" />
+                </Plugins>
+                <SelectionModel>
+                    <ext:RowSelectionModel runat="server" />
+                </SelectionModel>
+                <Listeners>
+                    <RowContextMenu Handler="
+                    e.preventDefault(); 
+                    #{RowContextMenuUnvanParametrikAlanListesi}.showAt(e.getXY());
+                " />
+                </Listeners>
+            </ext:GridPanel> 
+        </Items>
+        <Buttons>
+            <ext:Button runat="server" Text="Seç" Icon="Add" Handler="
+                        var v= App.GridPanelUnvanParametrikAlanListesi.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        switch(paramSira) {
+                            case 1:
+                                #{cagri_cevap}.setValue(v[0].data.param_kod);
+                                #{cagri_cevap2}.setValue(v[0].data.param_ad);
+                                break;
+                            case 2:
+                                #{onem_derece}.setValue(v[0].data.param_kod);
+                                #{onem_derece2}.setValue(v[0].data.param_ad);
+                                break;
+                            case 3:
+                                #{cagri_nedeni}.setValue(v[0].data.param_kod);
+                                #{cagri_nedeni2}.setValue(v[0].data.param_ad);
+                                break;
+                            case 4:
+                                #{cagri_konusu}.setValue(v[0].data.param_kod);
+                                #{cagri_konusu2}.setValue(v[0].data.param_ad);
+                                break;
+                        }
+                        #{WindowUnvanParametrikAlanListesi}.hide();
+                    " />
+            <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{WindowUnvanParametrikAlanListesi}.hide();" />
+        </Buttons>
+    </ext:Window>
+
+    <ext:Menu ID="RowContextMenuUnvanParametrikAlanListesi" runat="server">
+        <Items>
+            <ext:MenuItem runat="server" Text="Ekle" Icon="CarAdd">
+                <Listeners>
+                    <Click Handler="
+                        #{pckua_paramId}.setValue('0');
+                        #{pckua_param_kod}.setValue('');
+                        #{pckua_param_ad}.setValue(''); 
+                        #{pckua_siralama_kod}.setValue(''); 
+                        #{pckua_iskonto_yuzdesi}.setValue('0'); 
+                        #{pckua_pasif}.setValue(false); 
+                        #{pckua_faaliyet_olustur}.setValue(false); 
+                        #{PickWindowUnvanParametrikAlanListesiEkle}.show();
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+            <ext:MenuItem runat="server" Text="Düzelt" Icon="CartEdit">
+                <Listeners>
+                    <Click Handler="
+                        var v= #{GridPanelUnvanParametrikAlanListesi}.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        #{pckua_paramId}.setValue(v[0].data.paramId);
+                        #{pckua_param_kod}.setValue(v[0].data.param_kod);
+                        #{pckua_param_ad}.setValue(v[0].data.param_ad); 
+                        #{pckua_siralama_kod}.setValue(v[0].data.siralama_kod); 
+                        #{pckua_iskonto_yuzdesi}.setValue(v[0].data.iskonto_yuzdesi); 
+                        #{pckua_pasif}.setValue(v[0].data.pasif); 
+                        #{pckua_faaliyet_olustur}.setValue(v[0].data.faaliyet_olustur); 
+                        #{PickWindowUnvanParametrikAlanListesiEkle}.show();
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+            <ext:MenuItem runat="server" Text="Sil" Icon="CarDelete">
+                <Listeners>
+                    <Click Handler="
+                        var v= #{GridPanelUnvanParametrikAlanListesi}.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        Ext.MessageBox.show({
+                            title: 'Dikkat',
+                            msg: 'Silmek ister misiniz? ('+v[0].data.param_ad+')',
+                            buttons: Ext.MessageBox.OKCANCEL,
+                            icon: Ext.MessageBox.WARNING,
+                            fn: function(btn){
+                                if(btn === 'ok'){
+                                    Ext.MessageBox.show({
+                                                         msg: 'Islem yapilirken lutfen bekleyiniz.',
+                                                         waitConfig: {interval:200}
+                                                        });                                            
+                                
+                                    CompanyX.UnvanParametrikAlanListesiSil(v[0].data.paramId);
+                                }
+                            }
+                        });
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+        </Items>
+    </ext:Menu>
+
+    <ext:Window ID="PickWindowUnvanParametrikAlanListesiEkle" runat="server" Width="350" Height="385" AutoHeight="true" Title="Çağrı Cevap Ekle/Düzelt"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
+            LabelWidth="125" Layout="Fit">
+        <Items>
+            <ext:FormPanel
+                ID="PickUnvanParametrikAlanListesiEkle"
+                runat="server"
+                Layout="Fit"
+                AutoScroll="true">
+                    <Items>
+                        <ext:FieldSet runat="server" DefaultWidth="310" Padding="5">
+                    <Items>
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            InputType="Number"
+                            AllowBlank="False"
+                            ID="pckua_paramId"
+                            Hidden="true" />
+
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            AllowBlank="False"
+                            ID="pckua_kok"
+                            Hidden="true" />
+
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            InputType="Text"
+                            AllowBlank="false"
+                            FieldLabel="Kod"
+                            ID="pckua_param_kod"
+                            EmptyText="Kod" />
+
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            AllowBlank="false"
+                            FieldLabel="Ad"
+                            ID="pckua_param_ad"
+                            EmptyText="Ad" />
+
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            AllowBlank="false"
+                            FieldLabel="Sıralama Kodu"
+                            ID="pckua_siralama_kod"
+                            EmptyText="Sıralama Kodu" />
+
+                        <ext:TextField
+                            Width="180"
+                            runat="server"
+                            AllowBlank="false"
+                            FieldLabel="İ.Yüzdesi"
+                            InputType="Number"
+                            ID="pckua_iskonto_yuzdesi"
+                            EmptyText="%" MaxLengthText="2" />
+                        <ext:Checkbox runat="server" FieldLabel="Cari Görünmesin" ID="pckua_pasif" />
+                        <ext:Checkbox runat="server" FieldLabel="Cari Görünmesin" ID="pckua_faaliyet_olustur" />
+                    </Items>
+                </ext:FieldSet>
+                    </Items>
+                    <Buttons>
+                        <ext:Button runat="server" Text="Tamam" Icon="Accept" Disabled="True" FormBind="True"  Handler="#{PickWindowUnvanParametrikAlanListesiEkle}.show();">
+                            <DirectEvents>
+                                <Click OnEvent="UnvanParametrikAlanListesiKaydet" Before="Ext.MessageBox.show({
+                                                                          msg: 'Islem yapilirken lutfen bekleyiniz.',
+                                                                          waitConfig: {interval:200}
+                                                                        });" Delay="1">
+                                    <ExtraParams>
+                                        <ext:Parameter Name="Values" Value="#{PickUnvanParametrikAlanListesiEkle}.getValues(false)" Mode="Raw" />
+                                    </ExtraParams>
+                                </Click>
+                            </DirectEvents>
+                        </ext:Button>
+                        <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowUnvanParametrikAlanListesiEkle}.hide();" />
+                    </Buttons>
+                </ext:FormPanel>
+        </Items>
+    </ext:Window>
+    
+    <!-- çağrı cevap / önem derecesi / çağrı nedeni / çağrı konusu end -->
 </body>
 </html>
