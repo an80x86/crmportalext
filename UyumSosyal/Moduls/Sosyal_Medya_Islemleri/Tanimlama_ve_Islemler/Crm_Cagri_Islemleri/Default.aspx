@@ -13,54 +13,18 @@
     {
         if (!X.IsAjaxRequest)
         {
-            this.Store1.DataSource = this.Data;
             ulke_kod.SetText("TÜRKİYE");
+            cari_id.SetText("U-00050843");
 
-            //StoreUnvan.DataSource = Helper.GetWebService().UnvanListesi2("", "").Value;
             StoreUlke.DataSource = Helper.GetWebService().UlkeListesi("").Value;
             StoreIl.DataSource = Helper.GetWebService().GenelSehirListesi("").Value;
             StoreIlce.DataSource = Helper.GetWebService().GenelIlceListesi("").Value;
             StoreCariKategori.DataSource = Helper.GetWebService().GetCKategoriListesi("").Value.CariKategori;
             StoreCariKategoriGrup.DataSource = Helper.GetWebService().CKategoriGrupListesi("").Value;
-        }
-    }
-
-    private object[] Data
-    {
-        get
-        {
-            return new object[]
-            {
-                new object[] {"3m Co", 71.72, 0.02, 0.03, "9/1 12:00am"},
-                new object[] {"Alcoa Inc", 29.01, 0.42, 1.47, "9/1 12:00am"},
-                new object[] {"Altria Group Inc", 83.81, 0.28, 0.34, "9/1 12:00am"},
-                new object[] {"American Express Company", 52.55, 0.01, 0.02, "9/1 12:00am"},
-                new object[] {"American International Group, Inc.", 64.13, 0.31, 0.49, "9/1 12:00am"},
-                new object[] {"AT&T Inc.", 31.61, -0.48, -1.54, "9/1 12:00am"},
-                new object[] {"Boeing Co.", 75.43, 0.53, 0.71, "9/1 12:00am"},
-                new object[] {"Caterpillar Inc.", 67.27, 0.92, 1.39, "9/1 12:00am"},
-                new object[] {"Citigroup, Inc.", 49.37, 0.02, 0.04, "9/1 12:00am"},
-                new object[] {"E.I. du Pont de Nemours and Company", 40.48, 0.51, 1.28, "9/1 12:00am"},
-                new object[] {"Exxon Mobil Corp", 68.1, -0.43, -0.64, "9/1 12:00am"},
-                new object[] {"General Electric Company", 34.14, -0.08, -0.23, "9/1 12:00am"},
-                new object[] {"General Motors Corporation", 30.27, 1.09, 3.74, "9/1 12:00am"},
-                new object[] {"Hewlett-Packard Co.", 36.53, -0.03, -0.08, "9/1 12:00am"},
-                new object[] {"Honeywell Intl Inc", 38.77, 0.05, 0.13, "9/1 12:00am"},
-                new object[] {"Intel Corporation", 19.88, 0.31, 1.58, "9/1 12:00am"},
-                new object[] {"International Business Machines", 81.41, 0.44, 0.54, "9/1 12:00am"},
-                new object[] {"Johnson & Johnson", 64.72, 0.06, 0.09, "9/1 12:00am"},
-                new object[] {"JP Morgan & Chase & Co", 45.73, 0.07, 0.15, "9/1 12:00am"},
-                new object[] {"McDonald\"s Corporation", 36.76, 0.86, 2.40, "9/1 12:00am"},
-                new object[] {"Merck & Co., Inc.", 40.96, 0.41, 1.01, "9/1 12:00am"},
-                new object[] {"Microsoft Corporation", 25.84, 0.14, 0.54, "9/1 12:00am"},
-                new object[] {"Pfizer Inc", 27.96, 0.4, 1.45, "9/1 12:00am"},
-                new object[] {"The Coca-Cola Company", 45.07, 0.26, 0.58, "9/1 12:00am"},
-                new object[] {"The Home Depot, Inc.", 34.64, 0.35, 1.02, "9/1 12:00am"},
-                new object[] {"The Procter & Gamble Company", 61.91, 0.01, 0.02, "9/1 12:00am"},
-                new object[] {"United Technologies Corporation", 63.26, 0.55, 0.88, "9/1 12:00am"},
-                new object[] {"Verizon Communications", 35.57, 0.39, 1.11, "9/1 12:00am"},
-                new object[] {"Wal-Mart Stores, Inc.", 45.45, 0.73, 1.63, "9/1 12:00am"}
-            };
+            StoreCariKategoriListesi.DataSource = Helper.GetWebService().CariKategoriListesi("U-00050843").Value;
+            StoreUnvan.DataSource = Helper.GetWebService().UnvanListesi2("", "").Value;
+            StoreUnvanGrupListesi.DataSource = Helper.GetWebService().UnvanGrupListesi("", "").Value;
+            StoreCariKategoriOncelik.DataSource = Helper.GetWebService().KategoriOncelikListesi("").Value;
         }
     }
 
@@ -351,21 +315,200 @@
         try
         {
             // silme de hata oluştu!..
-            var sonuc = Helper.GetWebService().CKategoriSil(id.ToInt());
+            var sonuc = Helper.GetWebService().CKategoriGrupSil(id.ToInt());
             X.MessageBox.Hide();
             if (!sonuc.Result)
             {
                 X.MessageBox.Alert("Hata Oluştu", sonuc.Message).Show();
             }
 
-            StoreCariKategori.DataSource = Helper.GetWebService().GetCKategoriListesi("").Value.CariKategori;
-            StoreCariKategori.DataBind();
+            StoreCariKategoriGrup.DataSource = Helper.GetWebService().CKategoriGrupListesi("").Value;
+            StoreCariKategoriGrup.DataBind();
         }
         catch (Exception ex)
         {
             X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
         }
-    }    
+    }
+
+    #endregion
+
+    #region cari kategori oncelik sil
+
+    protected void KategoriOncelikKaydet(object sender, DirectEventArgs e)
+    {
+        var deger = e.ExtraParams[0];
+        dynamic d = JObject.Parse(deger.Value.ToString());
+        try
+        {
+            var tmp = new KategoriOncelik()
+            {
+                oncelikId = int.Parse(d.poncelik_oncelikId.Value.ToString()),
+                oncelik_kod = d.poncelik_oncelik_kod.Value.ToString(),
+                oncelik_Ad = d.poncelik_oncelik_ad.Value.ToString()
+            };
+            var sonuc = Helper.GetWebService().KategoriOncelikKaydet(tmp);
+            X.MessageBox.Hide();
+
+            if (!sonuc.Result)
+            {
+                X.MessageBox.Alert("Hata Oluştu", sonuc.Message).Show();
+                return;
+            }
+
+            StoreCariKategoriOncelik.DataSource = Helper.GetWebService().KategoriOncelikListesi("").Value;
+            StoreCariKategoriOncelik.DataBind();
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Hide();
+            X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
+        }
+
+        PickWindowCariKategoriOncelikEkle.Hide();
+    }
+
+    [DirectMethod]
+    public void KategoriOncelikSil(string id)
+    {
+        try
+        {
+            // silme de hata oluştu!..
+            var sonuc = Helper.GetWebService().KategoriOncelikSil(id.ToInt());
+            X.MessageBox.Hide();
+            if (!sonuc.Result)
+            {
+                X.MessageBox.Alert("Hata Oluştu", sonuc.Message).Show();
+            }
+
+            StoreCariKategoriOncelik.DataSource = Helper.GetWebService().KategoriOncelikListesi("").Value;
+            StoreCariKategoriOncelik.DataBind();
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
+        }
+    }
+    #endregion
+
+    #region unvan 
+
+    protected void UnvanKaydet(object sender, DirectEventArgs e)
+    {
+        var deger = e.ExtraParams[0];
+        dynamic d = JObject.Parse(deger.Value.ToString());
+        try
+        {
+            var tmp = new Unvan()
+            {
+                UnvanId = int.Parse(d.pcku_unvanId.Value.ToString()),
+                grup_kod =  d.pcku_grup_kod.Value.ToString(),
+                unvan_kod = d.pcku_unvan_kod.Value.ToString(),
+                unvan_ad = d.pcku_unvan_ad.Value.ToString()
+            };
+
+            var sonuc = Helper.GetWebService().UnvanKaydet(tmp);
+            X.MessageBox.Hide();
+
+            if (!sonuc.Result)
+            {
+                X.MessageBox.Alert("Hata Oluştu", sonuc.Message).Show();
+                return;
+            }
+
+            StoreUnvan.DataSource = Helper.GetWebService().UnvanListesi2("", "").Value;
+            StoreUnvan.DataBind();
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Hide();
+            X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
+        }
+
+        PickWindowUnvanEkle.Hide();
+    }
+
+    [DirectMethod]
+    public void UnvanSil(string id)
+    {
+        try
+        {
+            // silme de hata oluştu!..
+            var sonuc = Helper.GetWebService().UnvanSil(id.ToInt());
+            X.MessageBox.Hide();
+            if (!sonuc.Result)
+            {
+                X.MessageBox.Alert("Hata Oluştu", sonuc.Message).Show();
+            }
+
+            StoreUnvan.DataSource = Helper.GetWebService().UnvanListesi2("", "").Value;
+            StoreUnvan.DataBind();
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
+        }
+    }
+
+    #endregion
+
+    #region unvan-grup
+
+    protected void UnvanGrupListesiKaydet(object sender, DirectEventArgs e)
+    {
+        var deger = e.ExtraParams[0];
+        dynamic d = JObject.Parse(deger.Value.ToString());
+        try
+        {
+            var tmp = new UnvanGrup()
+            {
+                grupId = int.Parse(d.pckug_grupId.Value.ToString()),
+                grup_kod = d.pckug_grup_kod.Value.ToString(),
+                grup_ad = d.pckug_grup_ad.Value.ToString()
+            };
+
+            var sonuc = Helper.GetWebService().UnvanGrupKaydet(tmp);
+            X.MessageBox.Hide();
+
+            if (!sonuc.Result)
+            {
+                X.MessageBox.Alert("Hata Oluştu", sonuc.Message).Show();
+                return;
+            }
+
+            StoreUnvanGrupListesi.DataSource = Helper.GetWebService().UnvanGrupListesi("", "").Value;
+            StoreUnvanGrupListesi.DataBind();
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Hide();
+            X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
+        }
+
+        PickWindowUnvanGrupListesiEkle.Hide();
+    }
+
+    [DirectMethod]
+    public void UnvanGrupListesiSil(string id)
+    {
+        try
+        {
+            // silme de hata oluştu!..
+            var sonuc = Helper.GetWebService().UnvanGrupSil(id.ToInt());
+            X.MessageBox.Hide();
+            if (!sonuc.Result)
+            {
+                X.MessageBox.Alert("Hata Oluştu", sonuc.Message).Show();
+            }
+
+            StoreUnvanGrupListesi.DataSource = Helper.GetWebService().UnvanGrupListesi("", "").Value;;
+            StoreUnvanGrupListesi.DataBind();
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
+        }
+    }
 
     #endregion
 
@@ -485,6 +628,11 @@
         }
 
         #pck_ckat_grup_kod .x-form-text {
+            background-image: none;
+            background-color: yellow;
+        }
+
+        #pcku_grup_kod .x-form-text {
             background-image: none;
             background-color: yellow;
         }
@@ -678,7 +826,7 @@
                 AnchorHorizontal="100%"
                 Layout="HBoxLayout">
                 <Items>
-                    <ext:TextField runat="server" Width="355" ID="unvan" FieldLabel="Ünvan" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                    <ext:TextField runat="server" Width="355" ID="unvan" FieldLabel="Ünvan" MarginSpec="0 3 0 0" AllowBlank="true" ReadOnly="True" RightButtonsShowMode="MouseOver">
                         <RightButtons>
                             <ext:Button runat="server" Icon="Add">
                                 <Listeners>
@@ -932,15 +1080,15 @@
                             Width="300"
                             Height="400">
                             <Store>
-                                <ext:Store ID="Store1" runat="server">
+                                <ext:Store ID="StoreCariKategoriListesi" runat="server">
                                     <Model>
                                         <ext:Model runat="server">
                                             <Fields>
-                                                <ext:ModelField Name="company" />
-                                                <ext:ModelField Name="price" Type="Float" />
-                                                <ext:ModelField Name="change" Type="Float" />
-                                                <ext:ModelField Name="pctChange" Type="Float" />
-                                                <ext:ModelField Name="lastChange" Type="Date" DateFormat="M/d hh:mmtt" />
+                                                <ext:ModelField Name="cari_kod" />
+                                                <ext:ModelField Name="ckategori_kod" />
+                                                <ext:ModelField Name="silme_sebebi" Type="Boolean" />
+                                                <ext:ModelField Name="silme_sebebi" />
+                                                <ext:ModelField Name="create_date" />
                                             </Fields>
                                         </ext:Model>
                                     </Model>
@@ -948,7 +1096,9 @@
                             </Store>
                             <ColumnModel>
                                 <Columns>
-                                    <ext:Column runat="server" Text="Company" DataIndex="company" Width="290"/>
+                                    <ext:Column runat="server" Text="İ.Kay.Tarihi" DataIndex="create_date" Width="140"/>
+                                    <ext:Column runat="server" Text="Kategori Kodu" DataIndex="ckategori_kod" Width="120"/>
+                                    <ext:Column runat="server" Text="Kategori Adı" DataIndex="cari_kod" Width="270"/>
                                 </Columns>
                             </ColumnModel>
                             <SelectionModel>
@@ -1785,12 +1935,187 @@
         </Items>
     </ext:Menu>
 
-    <ext:Window ID="PickWindowCariKategoriEkle" runat="server" Width="350" Height="400" AutoHeight="true" Title="Cari Kategori Ekle/Düzelt"
+    <ext:Window ID="PickWindowCariKategoriEkle" runat="server" Width="350" Height="480" AutoHeight="true" Title="Cari Kategori Ekle/Düzelt"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false"
+            Layout="Fit">
+        <Items>
+            <ext:TabPanel
+                runat="server"
+                Border="false" 
+                DefaultAnchor="100%">
+                <Items>
+                    <ext:FormPanel
+                    ID="PickCariKategoriEkle"
+                    runat="server"
+                    DefaultAnchor="100%"
+                    Title="Kategori"
+                    AutoScroll="true">
+                        <Items>
+                            <ext:FieldSet runat="server" DefaultWidth="310" Padding="5">
+                                <Items>
+                                    <ext:TextField
+                                        Width="290"
+                                        runat="server"
+                                        InputType="Number"
+                                        AllowBlank="False"
+                                        ID="pck_ckatId"
+                                        Hidden="true" />
+
+                                    <ext:TextField
+                                        Width="290"
+                                        runat="server"
+                                        InputType="Text"
+                                        AllowBlank="false"
+                                        FieldLabel="Kod"
+                                        ID="pck_kategori_kod"
+                                        EmptyText="Kod" />
+
+                                    <ext:TextField
+                                        Width="290"
+                                        runat="server"
+                                        AllowBlank="false"
+                                        FieldLabel="Ad"
+                                        ID="pck_kategori_ad"
+                                        EmptyText="Ad" />
+                                    <ext:Checkbox runat="server" FieldLabel="Grup" ID="pck_grup" />
+                                    <ext:TextField
+                                        Width="290"
+                                        runat="server"
+                                        AllowBlank="false"
+                                        FieldLabel="Kat.Grup Kod"
+                                        ID="pck_ckat_grup_kod"
+                                        EmptyText="Kat.Grup Kod" RightButtonsShowMode="MouseOver" ReadOnly="True">
+                                        <RightButtons>
+                                            <ext:Button runat="server" Icon="Add">
+                                                <Listeners>
+                                                    <Click Handler="#{WindowCariKategoriGrup}.show();" />
+                                                </Listeners>
+                                            </ext:Button>
+                                        </RightButtons>
+                                    </ext:TextField>
+                                    <ext:Checkbox runat="server" FieldLabel="Cari Görünmesin" ID="pck_cagri_gorunmesin" />
+                                    <ext:Checkbox runat="server" FieldLabel="Mobil Görünmesin" ID="pck_mobilcrm_gorunmesin" />
+                                    <ext:Checkbox runat="server" FieldLabel="Cari K.Eklenemez" ID="pck_ckarta_eklenemez" />
+                                </Items>
+                            </ext:FieldSet>
+                        </Items>
+
+                    </ext:FormPanel>
+                
+                    <ext:GridPanel
+                        ID="GridPanelCariKategoriOncelik"
+                        runat="server" 
+                        DefaultAnchor="100%" 
+                        Title="Öncelik">
+                        <Store>
+                            <ext:Store ID="StoreCariKategoriOncelik" runat="server">
+                                <Model>
+                                    <ext:Model runat="server">
+                                        <Fields>
+                                            <ext:ModelField Name="oncelik_kod" />
+                                            <ext:ModelField Name="oncelik_Ad" />
+                                            <ext:ModelField Name="oncelikId" Type="Int" />
+                                        </Fields>
+                                    </ext:Model>
+                                </Model>
+                            </ext:Store>
+                        </Store>
+                        <ColumnModel>
+                            <Columns>
+                                <ext:Column runat="server" Text="Kod" DataIndex="oncelik_kod" Width="130"/>
+                                <ext:Column runat="server" Text="Ad" DataIndex="oncelik_Ad" Width="230"/>
+                            </Columns>
+                        </ColumnModel>
+                        <Plugins>
+                            <ext:FilterHeader runat="server" />
+                        </Plugins>
+                        <SelectionModel>
+                            <ext:RowSelectionModel runat="server" />
+                        </SelectionModel>
+                        <Listeners>
+                            <RowContextMenu Handler="
+                            e.preventDefault(); 
+                            #{RowContextMenuCariKategoriOncelik}.showAt(e.getXY());
+                        " />
+                        </Listeners>
+                    </ext:GridPanel>
+                </Items>
+            </ext:TabPanel>
+        </Items>
+        <Buttons>
+            <ext:Button runat="server" Text="Tamam" Icon="Accept" Disabled="True" FormBind="True"  Handler="#{PickWindowCariKategoriEkle}.show();">
+                <DirectEvents>
+                    <Click OnEvent="CariKategoriKaydet" Before="Ext.MessageBox.show({
+	                                                          msg: 'Islem yapilirken lutfen bekleyiniz.',
+	                                                          waitConfig: {interval:200}
+	                                                        });" Delay="1">
+                        <ExtraParams>
+                            <ext:Parameter Name="Values" Value="#{PickCariKategoriEkle}.getValues(false)" Mode="Raw" />
+                        </ExtraParams>
+                    </Click>
+                </DirectEvents>
+            </ext:Button>
+            <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowCariKategoriEkle}.hide();" />
+        </Buttons>
+    </ext:Window>
+
+    <ext:Menu ID="RowContextMenuCariKategoriOncelik" runat="server">
+        <Items>
+            <ext:MenuItem runat="server" Text="Ekle" Icon="CarAdd">
+                <Listeners>
+                    <Click Handler="
+                        #{poncelik_oncelikId}.setValue('0');
+                        #{poncelik_oncelik_kod}.setValue('');
+                        #{poncelik_oncelik_ad}.setValue(''); 
+                        #{PickWindowCariKategoriOncelikEkle}.show();
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+            <ext:MenuItem runat="server" Text="Düzelt" Icon="CartEdit">
+                <Listeners>
+                    <Click Handler="
+                        var v= #{GridPanelCariKategoriOncelik}.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        #{poncelik_oncelikId}.setValue(v[0].data.oncelikId);
+                        #{poncelik_oncelik_kod}.setValue(v[0].data.oncelik_kod);
+                        #{poncelik_oncelik_ad}.setValue(v[0].data.oncelik_Ad); 
+                        #{PickWindowCariKategoriOncelikEkle}.show();
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+            <ext:MenuItem runat="server" Text="Sil" Icon="CarDelete">
+                <Listeners>
+                    <Click Handler="
+                        var v= #{GridPanelCariKategoriOncelik}.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        Ext.MessageBox.show({
+                            title: 'Dikkat',
+                            msg: 'Silmek ister misiniz? ('+v[0].data.oncelik_Ad+')',
+                            buttons: Ext.MessageBox.OKCANCEL,
+                            icon: Ext.MessageBox.WARNING,
+                            fn: function(btn){
+                                if(btn === 'ok'){
+                                    Ext.MessageBox.show({
+                                                         msg: 'Islem yapilirken lutfen bekleyiniz.',
+	                                                     waitConfig: {interval:200}
+	                                                    });                                            
+                                
+                                    CompanyX.KategoriOncelikSil(v[0].data.oncelikId);
+                                }
+                            }
+                        });
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+        </Items>
+    </ext:Menu>
+
+    <ext:Window ID="PickWindowCariKategoriOncelikEkle" runat="server" Width="350" Height="200" AutoHeight="true" Title="Öncelik Ekle/Düzelt"
             Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
             LabelWidth="125" Layout="Fit">
         <Items>
             <ext:FormPanel
-                ID="PickCariKategoriEkle"
+                ID="PickCariKategoriOncelikEkle"
                 runat="server"
                 Layout="Fit"
                 AutoScroll="true">
@@ -1802,61 +2127,42 @@
                             runat="server"
                             InputType="Number"
                             AllowBlank="False"
-                            ID="pck_ckatId"
+                            ID="poncelik_oncelikId"
                             Hidden="true" />
 
                         <ext:TextField
                             Width="290"
                             runat="server"
                             InputType="Text"
-                            AllowBlank="false"
-                            FieldLabel="Kod"
-                            ID="pck_kategori_kod"
-                            EmptyText="Kod" />
+                            AllowBlank="False"
+                            FieldLabel="Öncelik Kod"
+                            ID="poncelik_oncelik_kod"
+                            EmptyText="Öncelik Kod" />
 
                         <ext:TextField
                             Width="290"
                             runat="server"
                             AllowBlank="false"
-                            FieldLabel="Ad"
-                            ID="pck_kategori_ad"
-                            EmptyText="Ad" />
-                        <ext:Checkbox runat="server" FieldLabel="Grup" ID="pck_grup" />
-                        <ext:TextField
-                            Width="290"
-                            runat="server"
-                            AllowBlank="false"
-                            FieldLabel="Kat.Grup Kod"
-                            ID="pck_ckat_grup_kod"
-                            EmptyText="Kat.Grup Kod" RightButtonsShowMode="MouseOver" ReadOnly="True">
-                            <RightButtons>
-                                <ext:Button runat="server" Icon="Add">
-                                    <Listeners>
-                                        <Click Handler="#{WindowCariKategoriGrup}.show();" />
-                                    </Listeners>
-                                </ext:Button>
-                            </RightButtons>
-                        </ext:TextField>
-                        <ext:Checkbox runat="server" FieldLabel="Cari Görünmesin" ID="pck_cagri_gorunmesin" />
-                        <ext:Checkbox runat="server" FieldLabel="Mobil Görünmesin" ID="pck_mobilcrm_gorunmesin" />
-                        <ext:Checkbox runat="server" FieldLabel="Cari K.Eklenemez" ID="pck_ckarta_eklenemez" />
+                            FieldLabel="Öncelik Ad"
+                            ID="poncelik_oncelik_ad"
+                            EmptyText="Öncelik Ad" />
                     </Items>
                 </ext:FieldSet>
                     </Items>
                     <Buttons>
-                        <ext:Button runat="server" Text="Tamam" Icon="Accept" Disabled="True" FormBind="True"  Handler="#{PickWindowCariKategoriEkle}.show();">
+                        <ext:Button runat="server" Text="Tamam" Icon="Accept" Disabled="True" FormBind="True"  Handler="#{PickWindowCariKategoriOncelikEkle}.show();">
                             <DirectEvents>
-                                <Click OnEvent="CariKategoriKaydet" Before="Ext.MessageBox.show({
+                                <Click OnEvent="KategoriOncelikKaydet" Before="Ext.MessageBox.show({
 	                                                                      msg: 'Islem yapilirken lutfen bekleyiniz.',
 	                                                                      waitConfig: {interval:200}
 	                                                                    });" Delay="1">
                                     <ExtraParams>
-                                        <ext:Parameter Name="Values" Value="#{PickCariKategoriEkle}.getValues(false)" Mode="Raw" />
+                                        <ext:Parameter Name="Values" Value="#{PickCariKategoriOncelikEkle}.getValues(false)" Mode="Raw" />
                                     </ExtraParams>
                                 </Click>
                             </DirectEvents>
                         </ext:Button>
-                        <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowCariKategoriEkle}.hide();" />
+                        <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowCariKategoriOncelikEkle}.hide();" />
                     </Buttons>
                 </ext:FormPanel>
         </Items>
@@ -1866,7 +2172,7 @@
 
     <!-- cari kategori grup işlemleri -->
     
-     <ext:Window ID="WindowCariKategoriGrup" runat="server" Width="400" Height="410" AutoHeight="true" Title="Cari Kategori Grup"
+    <ext:Window ID="WindowCariKategoriGrup" runat="server" Width="400" Height="410" AutoHeight="true" Title="Cari Kategori Grup"
             Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
             LabelWidth="125" Layout="Fit">
         <BottomBar>
@@ -2014,26 +2320,390 @@
                     </Items>
                 </ext:FieldSet>
                     </Items>
+                </ext:FormPanel>
+        </Items>
+        <Buttons>
+            <ext:Button runat="server" Text="Tamam" Icon="Accept" Disabled="True" FormBind="True"  Handler="#{PickWindowCariKategoriGrupEkle}.show();">
+                <DirectEvents>
+                    <Click OnEvent="CariKategoriGrupKaydet" Before="Ext.MessageBox.show({
+                                                              msg: 'Islem yapilirken lutfen bekleyiniz.',
+                                                              waitConfig: {interval:200}
+                                                            });" Delay="1">
+                        <ExtraParams>
+                            <ext:Parameter Name="Values" Value="#{PickCariKategoriGrupEkle}.getValues(false)" Mode="Raw" />
+                        </ExtraParams>
+                    </Click>
+                </DirectEvents>
+            </ext:Button>
+            <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowCariKategoriGrupEkle}.hide();" />
+        </Buttons>
+    </ext:Window>
+
+    <!-- cari kategori grup end -->
+
+    <!-- ünvan işlemleri -->
+    
+    <ext:Window ID="WindowUnvan" runat="server" Width="400" Height="410" AutoHeight="true" Title="Ünvan"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
+            LabelWidth="125" Layout="Fit">
+        <BottomBar>
+            <ext:Toolbar runat="server">
+                <Items>
+                    <ext:Label ID="Label5" runat="server" Text="Sağ tuş ile düzenleme yapabilirsiniz." Width="300" />
+                </Items>
+            </ext:Toolbar>
+        </BottomBar>
+        <Items>
+            <ext:GridPanel
+                ID="GridPanelUnvan"
+                runat="server" Height="310">
+                <Store>
+                    <ext:Store ID="StoreUnvan" runat="server">
+                        <Model>
+                            <ext:Model runat="server">
+                                <Fields>
+                                    <ext:ModelField Name="grup_kod" />
+                                    <ext:ModelField Name="unvan_kod" />
+                                    <ext:ModelField Name="unvan_ad" />
+                                    <ext:ModelField Name="UnvanId" Type="Int" />
+                                </Fields>
+                            </ext:Model>
+                        </Model>
+                    </ext:Store>
+                </Store>
+                <ColumnModel>
+                    <Columns>
+                        <ext:Column runat="server" Text="Grup" DataIndex="grup_kod" Width="70"/>
+                        <ext:Column runat="server" Text="Kod" DataIndex="unvan_kod" Width="70"/>
+                        <ext:Column runat="server" Text="Ad" DataIndex="unvan_ad" Width="230"/>
+                    </Columns>
+                </ColumnModel>
+                <Plugins>
+                    <ext:FilterHeader runat="server" />
+                </Plugins>
+                <SelectionModel>
+                    <ext:RowSelectionModel runat="server" />
+                </SelectionModel>
+                <Listeners>
+                    <RowContextMenu Handler="
+                    e.preventDefault(); 
+                    #{RowContextMenuUnvan}.showAt(e.getXY());
+                " />
+                </Listeners>
+            </ext:GridPanel> 
+        </Items>
+        <Buttons>
+            <ext:Button runat="server" Text="Seç" Icon="Add" Handler="
+                        var v= App.GridPanelUnvan.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        #{unvan}.setValue(v[0].data.unvan_kod);
+                        #{WindowUnvan}.hide();
+                    " />
+            <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{WindowUnvan}.hide();" />
+        </Buttons>
+    </ext:Window>
+
+    <ext:Menu ID="RowContextMenuUnvan" runat="server">
+        <Items>
+            <ext:MenuItem runat="server" Text="Ekle" Icon="CarAdd">
+                <Listeners>
+                    <Click Handler="
+                        #{pcku_unvanId}.setValue('0');
+                        #{pcku_grup_kod}.setValue('');
+                        #{pcku_unvan_kod}.setValue(''); 
+                        #{pcku_unvan_ad}.setValue(''); 
+                        #{PickWindowUnvanEkle}.show();
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+            <ext:MenuItem runat="server" Text="Düzelt" Icon="CartEdit">
+                <Listeners>
+                    <Click Handler="
+                        var v= #{GridPanelUnvan}.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        #{pcku_unvanId}.setValue(v[0].data.UnvanId);
+                        #{pcku_grup_kod}.setValue(v[0].data.grup_kod);
+                        #{pcku_unvan_kod}.setValue(v[0].data.unvan_kod); 
+                        #{pcku_unvan_ad}.setValue(v[0].data.unvan_ad); 
+                        #{PickWindowUnvanEkle}.show();
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+            <ext:MenuItem runat="server" Text="Sil" Icon="CarDelete">
+                <Listeners>
+                    <Click Handler="
+                        var v= #{GridPanelUnvan}.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        Ext.MessageBox.show({
+                            title: 'Dikkat',
+                            msg: 'Silmek ister misiniz? ('+v[0].data.unvan_ad+')',
+                            buttons: Ext.MessageBox.OKCANCEL,
+                            icon: Ext.MessageBox.WARNING,
+                            fn: function(btn){
+                                if(btn === 'ok'){
+                                    Ext.MessageBox.show({
+                                                         msg: 'Islem yapilirken lutfen bekleyiniz.',
+                                                         waitConfig: {interval:200}
+                                                        });                                            
+                                
+                                    CompanyX.UnvanSil(v[0].data.UnvanId);
+                                }
+                            }
+                        });
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+        </Items>
+    </ext:Menu>
+
+    <ext:Window ID="PickWindowUnvanEkle" runat="server" Width="350" Height="240" AutoHeight="true" Title="Ünvan Ekle/Düzelt"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
+            LabelWidth="125" Layout="Fit">
+        <Items>
+            <ext:FormPanel
+                ID="PickUnvanEkle"
+                runat="server"
+                Layout="Fit"
+                AutoScroll="true">
+                    <Items>
+                        <ext:FieldSet runat="server" DefaultWidth="310" Padding="5">
+                    <Items>
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            InputType="Number"
+                            AllowBlank="False"
+                            ID="pcku_unvanId"
+                            Hidden="true" />
+
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            InputType="Text"
+                            AllowBlank="true"
+                            FieldLabel="Grup"
+                            ID="pcku_grup_kod"
+                            EmptyText="Grup" ReadOnly="True">
+                            <RightButtons>
+                                <ext:Button runat="server" Icon="Add">
+                                    <Listeners>
+                                        <Click Handler="#{WindowUnvanGrupListesi}.show();" />
+                                    </Listeners>
+                                </ext:Button>
+                            </RightButtons>
+
+                        </ext:TextField>
+
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            InputType="Text"
+                            AllowBlank="false"
+                            FieldLabel="Kod"
+                            ID="pcku_unvan_kod"
+                            EmptyText="Kod" />
+
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            AllowBlank="false"
+                            FieldLabel="Ad"
+                            ID="pcku_unvan_ad"
+                            EmptyText="Ad" />
+                    </Items>
+                </ext:FieldSet>
+                    </Items>
                     <Buttons>
-                        <ext:Button runat="server" Text="Tamam" Icon="Accept" Disabled="True" FormBind="True"  Handler="#{PickWindowCariKategoriGrupEkle}.show();">
+                        <ext:Button runat="server" Text="Tamam" Icon="Accept" Disabled="True" FormBind="True"  Handler="#{PickWindowUnvanEkle}.show();">
                             <DirectEvents>
-                                <Click OnEvent="CariKategoriGrupKaydet" Before="Ext.MessageBox.show({
+                                <Click OnEvent="UnvanKaydet" Before="Ext.MessageBox.show({
                                                                           msg: 'Islem yapilirken lutfen bekleyiniz.',
                                                                           waitConfig: {interval:200}
                                                                         });" Delay="1">
                                     <ExtraParams>
-                                        <ext:Parameter Name="Values" Value="#{PickCariKategoriGrupEkle}.getValues(false)" Mode="Raw" />
+                                        <ext:Parameter Name="Values" Value="#{PickUnvanEkle}.getValues(false)" Mode="Raw" />
                                     </ExtraParams>
                                 </Click>
                             </DirectEvents>
                         </ext:Button>
-                        <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowCariKategoriGrupEkle}.hide();" />
+                        <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowUnvanEkle}.hide();" />
                     </Buttons>
                 </ext:FormPanel>
         </Items>
     </ext:Window>
 
-    <!-- cari kategori grup end -->
+    <!-- ünvan end -->
+
+    <!-- ünvan grup listesi işlemleri -->
+    
+    <ext:Window ID="WindowUnvanGrupListesi" runat="server" Width="400" Height="410" AutoHeight="true" Title="Ünvan Grup"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
+            LabelWidth="125" Layout="Fit">
+        <BottomBar>
+            <ext:Toolbar runat="server">
+                <Items>
+                    <ext:Label ID="Label6" runat="server" Text="Sağ tuş ile düzenleme yapabilirsiniz." Width="300" />
+                </Items>
+            </ext:Toolbar>
+        </BottomBar>
+        <Items>
+            <ext:GridPanel
+                ID="GridPanelUnvanGrupListesi"
+                runat="server" Height="310">
+                <Store>
+                    <ext:Store ID="StoreUnvanGrupListesi" runat="server">
+                        <Model>
+                            <ext:Model runat="server">
+                                <Fields>
+                                    <ext:ModelField Name="grup_kod" />
+                                    <ext:ModelField Name="grup_ad" />
+                                    <ext:ModelField Name="grupId" Type="Int" />
+                                </Fields>
+                            </ext:Model>
+                        </Model>
+                    </ext:Store>
+                </Store>
+                <ColumnModel>
+                    <Columns>
+                        <ext:Column runat="server" Text="Kod" DataIndex="grup_kod" Width="130"/>
+                        <ext:Column runat="server" Text="Ad" DataIndex="grup_ad" Width="230"/>
+                    </Columns>
+                </ColumnModel>
+                <Plugins>
+                    <ext:FilterHeader runat="server" />
+                </Plugins>
+                <SelectionModel>
+                    <ext:RowSelectionModel runat="server" />
+                </SelectionModel>
+                <Listeners>
+                    <RowContextMenu Handler="
+                    e.preventDefault(); 
+                    #{RowContextMenuUnvanGrupListesi}.showAt(e.getXY());
+                " />
+                </Listeners>
+            </ext:GridPanel> 
+        </Items>
+        <Buttons>
+            <ext:Button runat="server" Text="Seç" Icon="Add" Handler="
+                        var v= App.GridPanelUnvanGrupListesi.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        #{pcku_grup_kod}.setValue(v[0].data.grup_kod);
+                        #{WindowUnvanGrupListesi}.hide();
+                    " />
+            <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{WindowUnvanGrupListesi}.hide();" />
+        </Buttons>
+    </ext:Window>
+
+    <ext:Menu ID="RowContextMenuUnvanGrupListesi" runat="server">
+        <Items>
+            <ext:MenuItem runat="server" Text="Ekle" Icon="CarAdd">
+                <Listeners>
+                    <Click Handler="
+                        #{pckug_grupId}.setValue('0');
+                        #{pckug_grup_kod}.setValue('');
+                        #{pckug_grup_ad}.setValue(''); 
+                        #{PickWindowUnvanGrupListesiEkle}.show();
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+            <ext:MenuItem runat="server" Text="Düzelt" Icon="CartEdit">
+                <Listeners>
+                    <Click Handler="
+                        var v= #{GridPanelUnvanGrupListesi}.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        #{pckug_grupId}.setValue(v[0].data.grupId);
+                        #{pckug_grup_kod}.setValue(v[0].data.grup_kod);
+                        #{pckug_grup_ad}.setValue(v[0].data.grup_ad); 
+                        #{PickWindowUnvanGrupListesiEkle}.show();
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+            <ext:MenuItem runat="server" Text="Sil" Icon="CarDelete">
+                <Listeners>
+                    <Click Handler="
+                        var v= #{GridPanelUnvanGrupListesi}.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        Ext.MessageBox.show({
+                            title: 'Dikkat',
+                            msg: 'Silmek ister misiniz? ('+v[0].data.grup_ad+')',
+                            buttons: Ext.MessageBox.OKCANCEL,
+                            icon: Ext.MessageBox.WARNING,
+                            fn: function(btn){
+                                if(btn === 'ok'){
+                                    Ext.MessageBox.show({
+                                                         msg: 'Islem yapilirken lutfen bekleyiniz.',
+                                                         waitConfig: {interval:200}
+                                                        });                                            
+                                
+                                    CompanyX.UnvanGrupListesiSil(v[0].data.grupId);
+                                }
+                            }
+                        });
+                        " />
+                </Listeners>
+            </ext:MenuItem>
+        </Items>
+    </ext:Menu>
+
+    <ext:Window ID="PickWindowUnvanGrupListesiEkle" runat="server" Width="350" Height="210" AutoHeight="true" Title="Ünvan Grup Ekle/Düzelt"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
+            LabelWidth="125" Layout="Fit">
+        <Items>
+            <ext:FormPanel
+                ID="PickUnvanGrupListesiEkle"
+                runat="server"
+                Layout="Fit"
+                AutoScroll="true">
+                    <Items>
+                        <ext:FieldSet runat="server" DefaultWidth="310" Padding="5">
+                    <Items>
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            InputType="Number"
+                            AllowBlank="False"
+                            ID="pckug_grupId"
+                            Hidden="true" />
+
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            InputType="Text"
+                            AllowBlank="false"
+                            FieldLabel="Kod"
+                            ID="pckug_grup_kod"
+                            EmptyText="Kod" />
+
+                        <ext:TextField
+                            Width="290"
+                            runat="server"
+                            AllowBlank="false"
+                            FieldLabel="Ad"
+                            ID="pckug_grup_ad"
+                            EmptyText="Ad" />
+                    </Items>
+                </ext:FieldSet>
+                    </Items>
+                    <Buttons>
+                        <ext:Button runat="server" Text="Tamam" Icon="Accept" Disabled="True" FormBind="True"  Handler="#{PickWindowUnvanGrupListesiEkle}.show();">
+                            <DirectEvents>
+                                <Click OnEvent="UnvanGrupListesiKaydet" Before="Ext.MessageBox.show({
+                                                                          msg: 'Islem yapilirken lutfen bekleyiniz.',
+                                                                          waitConfig: {interval:200}
+                                                                        });" Delay="1">
+                                    <ExtraParams>
+                                        <ext:Parameter Name="Values" Value="#{PickUnvanGrupListesiEkle}.getValues(false)" Mode="Raw" />
+                                    </ExtraParams>
+                                </Click>
+                            </DirectEvents>
+                        </ext:Button>
+                        <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowUnvanGrupListesiEkle}.hide();" />
+                    </Buttons>
+                </ext:FormPanel>
+        </Items>
+    </ext:Window>
+
+    <!-- ünvan grup listesi end -->
 
 </body>
 </html>

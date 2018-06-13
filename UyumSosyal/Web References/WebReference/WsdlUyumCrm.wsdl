@@ -141,6 +141,75 @@
           <s:element minOccurs="0" maxOccurs="unbounded" name="OzelKod" nillable="true" type="tns:OzelKod" />
         </s:sequence>
       </s:complexType>
+      <s:element name="CariBolgeKaydet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="bolge" type="tns:CariBolge" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CariBolge">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="bolgeId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="bolge_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="bolge_ad" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="adres1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="adres2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="adres3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="tel1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="tel2" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CariBolgeKaydetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CariBolgeKaydetResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CariBolgeListesi">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="bolgekod" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="bolgead" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CariBolgeListesiResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CariBolgeListesiResult" type="tns:MobServiceResultOfListOfCariBolge" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MobServiceResultOfListOfCariBolge">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:ArrayOfCariBolge" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCariBolge">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CariBolge" nillable="true" type="tns:CariBolge" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CariBolgeSil">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="bolgeId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CariBolgeSilResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CariBolgeSilResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="UnvanGrupKaydet">
         <s:complexType>
           <s:sequence>
@@ -7461,6 +7530,24 @@
   <wsdl:message name="OzelKodListesiSoapOut">
     <wsdl:part name="parameters" element="tns:OzelKodListesiResponse" />
   </wsdl:message>
+  <wsdl:message name="CariBolgeKaydetSoapIn">
+    <wsdl:part name="parameters" element="tns:CariBolgeKaydet" />
+  </wsdl:message>
+  <wsdl:message name="CariBolgeKaydetSoapOut">
+    <wsdl:part name="parameters" element="tns:CariBolgeKaydetResponse" />
+  </wsdl:message>
+  <wsdl:message name="CariBolgeListesiSoapIn">
+    <wsdl:part name="parameters" element="tns:CariBolgeListesi" />
+  </wsdl:message>
+  <wsdl:message name="CariBolgeListesiSoapOut">
+    <wsdl:part name="parameters" element="tns:CariBolgeListesiResponse" />
+  </wsdl:message>
+  <wsdl:message name="CariBolgeSilSoapIn">
+    <wsdl:part name="parameters" element="tns:CariBolgeSil" />
+  </wsdl:message>
+  <wsdl:message name="CariBolgeSilSoapOut">
+    <wsdl:part name="parameters" element="tns:CariBolgeSilResponse" />
+  </wsdl:message>
   <wsdl:message name="UnvanGrupKaydetSoapIn">
     <wsdl:part name="parameters" element="tns:UnvanGrupKaydet" />
   </wsdl:message>
@@ -8986,6 +9073,18 @@
       <wsdl:input message="tns:OzelKodListesiSoapIn" />
       <wsdl:output message="tns:OzelKodListesiSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="CariBolgeKaydet">
+      <wsdl:input message="tns:CariBolgeKaydetSoapIn" />
+      <wsdl:output message="tns:CariBolgeKaydetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CariBolgeListesi">
+      <wsdl:input message="tns:CariBolgeListesiSoapIn" />
+      <wsdl:output message="tns:CariBolgeListesiSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CariBolgeSil">
+      <wsdl:input message="tns:CariBolgeSilSoapIn" />
+      <wsdl:output message="tns:CariBolgeSilSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="UnvanGrupKaydet">
       <wsdl:input message="tns:UnvanGrupKaydetSoapIn" />
       <wsdl:output message="tns:UnvanGrupKaydetSoapOut" />
@@ -10036,6 +10135,33 @@
     </wsdl:operation>
     <wsdl:operation name="OzelKodListesi">
       <soap:operation soapAction="http://tempuri.org/OzelKodListesi" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariBolgeKaydet">
+      <soap:operation soapAction="http://tempuri.org/CariBolgeKaydet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariBolgeListesi">
+      <soap:operation soapAction="http://tempuri.org/CariBolgeListesi" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariBolgeSil">
+      <soap:operation soapAction="http://tempuri.org/CariBolgeSil" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -12343,6 +12469,33 @@
     </wsdl:operation>
     <wsdl:operation name="OzelKodListesi">
       <soap12:operation soapAction="http://tempuri.org/OzelKodListesi" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariBolgeKaydet">
+      <soap12:operation soapAction="http://tempuri.org/CariBolgeKaydet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariBolgeListesi">
+      <soap12:operation soapAction="http://tempuri.org/CariBolgeListesi" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariBolgeSil">
+      <soap12:operation soapAction="http://tempuri.org/CariBolgeSil" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
