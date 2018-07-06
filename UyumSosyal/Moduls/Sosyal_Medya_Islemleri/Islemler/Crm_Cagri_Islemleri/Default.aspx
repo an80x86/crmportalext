@@ -14,7 +14,10 @@
         if (!X.IsAjaxRequest)
         {
             ulke_kod.SetText("TÜRKİYE");
-            cari_id.SetText("U-00050843");
+            son_gorusme_tarih.SetValue(DateTime.Now.ToString("dd.MM.yyyy"));
+            belge_tarih.SetValue(DateTime.Now.ToString("dd.MM.yyyy"));
+            //ilk_randevu_tarih.SetValue(DateTime.Now.ToString("dd.MM.yyyy"));
+            son_gorusme_tarih.SetValue(DateTime.Now.ToString("dd.MM.yyyy"));
 
             StoreUlke.DataSource = Helper.GetWebService().UlkeListesi("").Value;
             StoreUlkeGrupKod.DataSource = Helper.GetWebService().UlkeGrupListesi("").Value;
@@ -22,7 +25,7 @@
             StoreIlce.DataSource = Helper.GetWebService().GenelIlceListesi("").Value;
             StoreCariKategori.DataSource = Helper.GetWebService().GetCKategoriListesi("").Value.CariKategori;
             StoreCariKategoriGrup.DataSource = Helper.GetWebService().CKategoriGrupListesi("").Value;
-            StoreCariKategoriListesi.DataSource = Helper.GetWebService().CariKategoriListesi("U-00050843").Value.Where(x=>x.silinsin==false);
+            // parametre ile yüklenecek StoreCariKategoriListesi.DataSource = Helper.GetWebService().CariKategoriListesi("U-00050843").Value.Where(x=>x.silinsin==false);
             StoreUnvan.DataSource = Helper.GetWebService().UnvanListesi2("", "").Value;
             StoreUnvanGrupListesi.DataSource = Helper.GetWebService().UnvanGrupListesi("", "").Value;
             StoreCariKategoriOncelik.DataSource = Helper.GetWebService().KategoriOncelikListesi("").Value;
@@ -30,8 +33,78 @@
             StoreIlBolge.DataSource = Helper.GetWebService().BolgeListesi("").Value;
             StoreUrunHizmetListesi.DataSource = Helper.GetWebService().GenelUrunLilstesi("").Value;
             StoreUrunGrupHizmetListesi.DataSource = Helper.GetWebService().UrunGrupListesi("", "").Value;
+            StoreListeKodListesi.DataSource = Helper.GetWebService().AramaListeleri("","").Value;
+            // parametre ile yüklenecek StoreCariListesi.DataSource = Helper.GetWebService().AramaKartListesi("",0,"","").Value;
         }
     }
+
+    #endregion
+
+    #region cari yükle
+
+    [DirectMethod]
+    public AramaKart OnEnterCariSec(string listeKod, string enter)
+    {
+        try
+        {
+            string justNumbers = new String(enter.Where(Char.IsDigit).ToArray());
+            var lst = Helper.GetWebService().AramaKartListesi(listeKod,0,"","").Value;
+            if (lst != null && lst.Length>0 && !string.IsNullOrWhiteSpace(enter))
+            {
+                var ret = lst.FirstOrDefault(x => x.cari_id == justNumbers.ToInt());
+                if (ret!=null)
+                {
+                    cari_kod.SetValue(ret.cari_kod);
+                    cari_id.SetValue(ret.cari_id);
+                    cari_ad.SetValue(ret.cari_ad);
+                    telefon.SetValue(ret.tel2);
+                    sehir_ad.SetValue(ret.sehir_ad);
+                    ilce_ad.SetValue(ret.ilce_ad);
+                    ceptel.SetValue(ret.tel1);
+                    aciklama1.SetValue(ret.aciklama01);
+                    ilk_randevu_tarih.SetValue(ret.tarih1);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Alert("Hata Oluştu", "Arama sırasında problem!\n" + ex.Message).Show();
+        }
+
+        return null;
+    }
+
+
+    [DirectMethod]
+    public void CariYukle(string listeKod)
+    {
+        try
+        {
+            StoreCariListesi.DataSource = Helper.GetWebService().AramaKartListesi(listeKod,0,"","").Value;
+            StoreCariListesi.DataBind();
+            X.MessageBox.Hide();
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
+        }
+    }
+
+    [DirectMethod]
+    public void CariSec(string carKod)
+    {
+        try
+        {
+            StoreCariKategoriListesi.DataSource = Helper.GetWebService().CariKategoriListesi(carKod).Value.Where(x=>x.silinsin==false);
+            StoreCariKategoriListesi.DataBind();
+            X.MessageBox.Hide();
+        }
+        catch (Exception ex)
+        {
+            X.MessageBox.Alert("Hata Oluştu", "Uyum servisi meşgul yada ulaşılamıyor.\n" + ex.Message).Show();
+        }
+    }
+
 
     #endregion
 
@@ -726,7 +799,8 @@
                 return;
             }
 
-            StoreCariKategoriListesi.DataSource = Helper.GetWebService().CariKategoriListesi("U-00050843").Value.Where(x=>x.silinsin==false);
+            var cariKod = cari_kod.Value.ToString();
+            StoreCariKategoriListesi.DataSource = Helper.GetWebService().CariKategoriListesi(cariKod).Value.Where(x=>x.silinsin==false);
             StoreCariKategoriListesi.DataBind();
         }
         catch (Exception ex)
@@ -743,7 +817,8 @@
     {
         try
         {
-            var temp = Helper.GetWebService().CariKategoriListesi("U-00050843").Value.FirstOrDefault(x=>x.CKatId == id.ToInt());
+            var cariKod = cari_kod.Value.ToString();
+            var temp = Helper.GetWebService().CariKategoriListesi(cariKod).Value.FirstOrDefault(x=>x.CKatId == id.ToInt());
             var tmp = new Ckategori()
             {
                 CKatId = id.ToInt(),
@@ -763,7 +838,7 @@
                 return;
             }
 
-            StoreCariKategoriListesi.DataSource = Helper.GetWebService().CariKategoriListesi("U-00050843").Value.Where(x=>x.silinsin==false);
+            StoreCariKategoriListesi.DataSource = Helper.GetWebService().CariKategoriListesi(cariKod).Value.Where(x=>x.silinsin==false);
             StoreCariKategoriListesi.DataBind();
         }
         catch (Exception ex)
@@ -854,7 +929,7 @@
             };
 
             var sonuc = Helper.GetWebService().UrunGrubuKaydet(tmp);
-            X.MessageBox.Hide(); 
+            X.MessageBox.Hide();
 
             if (!sonuc.Result)
             {
@@ -1148,14 +1223,35 @@
                         runat="server"
                         Width="255"
                         ID="cari_id"
-                        FieldLabel="Cari Id"
+                        FieldLabel="Id"
+                        EmptyText="Id girip enter'a basın"
                         MarginSpec="0 3 0 0"
-                        AllowBlank="true" />
+                        EnableKeyEvents="true"
+                        AllowBlank="true">
+                        <Listeners>
+                            <KeyDown Fn="function(field,e) {
+                                if (e.getKey() === e.ENTER) {
+                                    e.stopEvent();
+                                    if (#{liste_kod}.getValue() == '') {
+                                        Ext.Msg.alert('Dikkat','Lütfen önce liste seçiniz!');
+                                        return;
+                                    }
+                                    CompanyX.OnEnterCariSec(#{liste_kod}.getValue(), #{cari_id}.getValue());
+                                }
+                            }" />
+                        </Listeners>
+                    </ext:TextField>
                     
                     <ext:DisplayField runat="server" Width="135" Html="&nbsp;" />
-                    <ext:TextField runat="server" Width="225" ID="liste_kod" FieldLabel="Liste Kodu" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                    <ext:TextField runat="server" Width="225" ID="liste_kod" FieldLabel="Liste Kodu" ReadOnly="True" AllowBlank="true" RightButtonsShowMode="MouseOver">
                         <RightButtons>
-                            <ext:Button runat="server" Icon="Add" />
+                            <ext:Button runat="server" Icon="Add">
+                                <Listeners>
+                                    <Click Handler="
+                                        #{WindowListeKodListesi}.show();
+                                    " />
+                                </Listeners>
+                            </ext:Button>
                         </RightButtons>
                     </ext:TextField>
                     
@@ -1173,17 +1269,27 @@
                 AnchorHorizontal="100%"
                 Layout="HBoxLayout">
                 <Items>
-                    <ext:TextField runat="server" Width="255" ID="cari_kod" FieldLabel="Müşteri Kodu" MarginSpec="0 3 0 0" AllowBlank="true" RightButtonsShowMode="MouseOver">
+                    <ext:TextField runat="server" Width="255" ID="cari_kod" FieldLabel="Müşteri Kodu" MarginSpec="0 3 0 0" AllowBlank="false" ReadOnly="true" RightButtonsShowMode="MouseOver">
                         <RightButtons>
-                            <ext:Button runat="server" Icon="Add" />
-                        </RightButtons>    
+                            <ext:Button runat="server" Icon="Add">
+                                <Listeners>
+                                    <Click Handler="
+                                        if (#{liste_kod}.getValue() == '') {
+                                            Ext.Msg.alert('Dikkat','Lütfen önce liste seçiniz!');
+                                            return;
+                                        }
+                                        #{WindowCariListesi}.show();
+                                        " />
+                                </Listeners>
+                            </ext:Button>
+                        </RightButtons>  
                     </ext:TextField>
                     
                     <ext:DisplayField runat="server" Width="10" Html="&nbsp;" />
                     <ext:TextField runat="server" Width="425" ID="cari_ad" ReadOnly="True" AllowBlank="true" />
                     
                     <ext:DisplayField runat="server" Width="10" Html="&nbsp;" />
-                    <ext:Button runat="server" Text="Google'da Ara" />
+                    <ext:Button runat="server" Text="Google'da Ara" Handler="if (#{cari_ad}.getValue()==='') return;window.open('http://google.com/search?q='+#{cari_ad}.getValue(),'_blank');" />
                 </Items>
             </ext:FieldContainer>
             
@@ -1520,8 +1626,12 @@
                                 <ext:Toolbar runat="server">
                                     <Items>
                                         <ext:Button runat="server" Text="Kategori Ekle" Icon="Add" Handler="
+                                            if (#{cari_kod}.getValue() === '') {
+                                                Ext.Msg.alert('Dikkat','Lütfen önce cari seçiniz!');  
+                                                return;
+                                            }
                                             #{pckak_CKatId}.setValue('0');
-                                            #{pckak_cari_kod}.setValue('U-00050843');
+                                            #{pckak_cari_kod}.setValue(#{cari_kod}.getValue());
                                             #{pckak_ckategori_kod}.setValue(''); 
                                             #{pckak_silinsin}.setValue(false); 
                                             #{pckak_silme_sebebi}.setValue(''); 
@@ -2304,7 +2414,7 @@
 
     <!-- şehir bölge kodu -------------------------------->
 
-    <ext:Window ID="PickWindowIlBolge" runat="server" Width="400" Height="440" AutoHeight="true" Title="İl"
+    <ext:Window ID="PickWindowIlBolge" runat="server" Width="400" Height="440" AutoHeight="true" Title="Bölge"
             Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
             LabelWidth="125" Layout="Fit">
         <BottomBar>
@@ -2352,10 +2462,9 @@
         </Items>
         <Buttons>
             <ext:Button runat="server" Text="Seç" Icon="Add" Handler="
-                    var v= #{GridPanelIl}.getSelectionModel().getSelection();
+                    var v= #{GridPanelIlBolge}.getSelectionModel().getSelection();
                     if (v.length==0) return;
-                    #{sehir_ad}.setValue(v[0].data.sehir_ad);
-                    #{ilce_ad}.setValue('');
+                    #{pil_bolge_kod}.setValue(v[0].data.bolge_kod);
                     #{PickWindowIlBolge}.hide();
                 " />
             <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{PickWindowIlBolge}.hide();" />
@@ -4108,7 +4217,7 @@
 
     <!-- Ürün Hizmet Grup -->
 
-    <ext:Window ID="WindowUrunGrupHizmetListesi" runat="server" Width="400" Height="410" AutoHeight="true" Title="Ürüz Hizmet Listesi"
+    <ext:Window ID="WindowUrunGrupHizmetListesi" runat="server" Width="400" Height="410" AutoHeight="true" Title="Ürün Hizmet Listesi"
             Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
             LabelWidth="125" Layout="Fit">
         <BottomBar>
@@ -4293,5 +4402,150 @@
     <!-- Ürün Hizmet Grup End -->
 
     <!-- Ürün Hizmet end -->
+
+    <!-- Liste Kod -->
+
+    <ext:Window ID="WindowListeKodListesi" runat="server" Width="400" Height="410" AutoHeight="true" Title="Liste"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
+            LabelWidth="125" Layout="Fit">
+        <Items>
+            <ext:GridPanel
+                ID="GridPanelListeKodListesi"
+                runat="server" Height="310">
+                <Store>
+                    <ext:Store ID="StoreListeKodListesi" runat="server">
+                        <Model>
+                            <ext:Model runat="server">
+                                <Fields>
+                                    <ext:ModelField Name="arama_kod" />
+                                    <ext:ModelField Name="arama_ad" />
+                                    <ext:ModelField Name="bas_tarih" />
+                                    <ext:ModelField Name="bitis_tarih" />
+                                    <ext:ModelField Name="listeId" Type="Int" />
+                                </Fields>
+                            </ext:Model>
+                        </Model>
+                    </ext:Store>
+                </Store>
+                <ColumnModel>
+                    <Columns>
+                        <ext:Column runat="server" Text="Kod" DataIndex="arama_kod" Width="130"/>
+                        <ext:Column runat="server" Text="Ad" DataIndex="arama_ad" Width="230"/>
+                        <ext:Column runat="server" Text="Ba.Tarih" DataIndex="bas_tarih" Width="80"/>
+                        <ext:Column runat="server" Text="Bi.Tarih" DataIndex="bitis_tarih" Width="80"/>
+                    </Columns>
+                </ColumnModel>
+                <Plugins>
+                    <ext:FilterHeader runat="server" />
+                </Plugins>
+                <SelectionModel>
+                    <ext:RowSelectionModel runat="server" />
+                </SelectionModel>
+            </ext:GridPanel> 
+        </Items>
+        <Buttons>
+            <ext:Button runat="server" Text="Seç" Icon="Add" Handler="
+                        var v= App.GridPanelListeKodListesi.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        #{liste_kod}.setValue(v[0].data.arama_kod);
+                        #{WindowListeKodListesi}.hide();
+                        Ext.MessageBox.show({
+                                                         msg: 'Islem yapilirken lutfen bekleyiniz.',
+	                                                     waitConfig: {interval:200}
+	                                                    }); 
+                        CompanyX.CariYukle(v[0].data.arama_kod);
+                    " />
+            <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{WindowListeKodListesi}.hide();" />
+        </Buttons>
+    </ext:Window>
+
+    <!-- Liste Kod end -->
+
+    <!-- Cari Kod Kod -->
+
+    <ext:Window ID="WindowCariListesi" runat="server" Width="400" Height="410" AutoHeight="true" Title="Cari Listesi"
+            Icon="Add" Hidden="true" Modal="true" InitCenter="true" Closable="false" Padding="5"
+            LabelWidth="125" Layout="Fit">
+        <Items>
+            <ext:GridPanel
+                ID="GridPanelCariListesi"
+                runat="server" Height="310">
+                <Store>
+                    <ext:Store ID="StoreCariListesi" runat="server">
+                        <Model>
+                            <ext:Model runat="server">
+                                <Fields>
+                                    <ext:ModelField Name="cari_id" />
+                                    <ext:ModelField Name="cari_kod" />
+                                    <ext:ModelField Name="cari_ad" />
+                                    <ext:ModelField Name="calisan_Say" />
+                                    <ext:ModelField Name="entegrator" />
+                                    <ext:ModelField Name="yazilim" />
+                                    <ext:ModelField Name="pc_say" />
+                                    <ext:ModelField Name="tel1" />
+                                    <ext:ModelField Name="tel2" />
+                                    <ext:ModelField Name="sektor_kod" />
+                                    <ext:ModelField Name="ilce_ad" />
+                                    <ext:ModelField Name="sehir_ad" />
+                                    <ext:ModelField Name="liste_kod" />
+                                    <ext:ModelField Name="liste_ad" />
+                                    <ext:ModelField Name="user_kod" />
+                                    <ext:ModelField Name="tarih1" />
+                                    <ext:ModelField Name="vkn_no" />
+                                    <ext:ModelField Name="pasif" />
+                                    <ext:ModelField Name="not1" />
+                                    <ext:ModelField Name="not2" />
+                                    <ext:ModelField Name="aciklama01" />
+                                    <ext:ModelField Name="aciklama02" />
+                                    <ext:ModelField Name="aciklama03" />
+                                    <ext:ModelField Name="aciklama04" />
+                                    <ext:ModelField Name="aciklama05" />
+                                    <ext:ModelField Name="aciklama06" />
+                                    <ext:ModelField Name="aciklama07" />
+                                    <ext:ModelField Name="aciklama08" />
+                                    <ext:ModelField Name="aciklama09" />
+                                    <ext:ModelField Name="aciklama10" />
+                                    <ext:ModelField Name="master_no" Type="Int" />
+                                </Fields>
+                            </ext:Model>
+                        </Model>
+                    </ext:Store>
+                </Store>
+                <ColumnModel>
+                    <Columns>
+                        <ext:Column runat="server" Text="Kod" DataIndex="cari_kod" Width="130"/>
+                        <ext:Column runat="server" Text="Ad" DataIndex="cari_ad" Width="230"/>
+                    </Columns>
+                </ColumnModel>
+                <Plugins>
+                    <ext:FilterHeader runat="server" />
+                </Plugins>
+                <SelectionModel>
+                    <ext:RowSelectionModel runat="server" />
+                </SelectionModel>
+            </ext:GridPanel> 
+        </Items>
+        <Buttons>
+            <ext:Button runat="server" Text="Seç" Icon="Add" Handler="
+                        var v= App.GridPanelCariListesi.getSelectionModel().getSelection();
+                        if (v.length==0) return;
+                        #{cari_kod}.setValue(v[0].data.cari_kod);
+                        #{cari_id}.setValue(v[0].data.cari_id);
+                        #{cari_ad}.setValue(v[0].data.cari_ad);
+                        #{telefon}.setValue(v[0].data.tel2);
+                        #{sehir_ad}.setValue(v[0].data.sehir_ad);
+                        #{ilce_ad}.setValue(v[0].data.ilce_ad);
+                        #{ceptel}.setValue(v[0].data.tel1);
+                        #{aciklama1}.setValue(v[0].data.aciklama1);
+                        #{ilk_randevu_tarih}.setValue(v[0].data.tarih1);
+                        CompanyX.CariSec(v[0].data.cari_kod);
+                        #{WindowCariListesi}.hide();
+                    " />
+            <ext:Button runat="server" Text="Kapat" Icon="Door" Handler="#{WindowCariListesi}.hide();" />
+        </Buttons>
+    </ext:Window>
+
+    <!-- Cari Kod end -->
+
 </body>
 </html>

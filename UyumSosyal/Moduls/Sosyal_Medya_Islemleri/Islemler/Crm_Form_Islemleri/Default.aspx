@@ -309,7 +309,7 @@
     BodyPadding="5"
     Frame="true"
     Layout="Fit"
-    Height="300"
+    Height="400"
     Split="true"
     MarginSpec="5 5 5 5">
     <Items>
@@ -361,6 +361,15 @@
                         </ext:DateField>
                                         
                         <ext:Button ID="Button3" runat="server" Enabled="true" Text="Ara" Icon="Find">
+                            <Listeners>
+                                <Click Delay="100" Handler = "
+                                                            Ext.getCmp('GridPanel1').getStore().load();
+                                                            #{TextFieldArama}.focus(false, 200);
+                                                    "/>
+                            </Listeners>
+                        </ext:Button>
+
+                        <ext:Button ID="Button1" runat="server" Visible="false" Enabled="true" Text="Filtre" Icon="Anchor">
                             <Listeners>
                                 <Click Delay="100" Handler = "
                                                             Ext.getCmp('GridPanel1').getStore().load();
@@ -435,7 +444,7 @@
                     <ext:Column ID="Column22" runat="server" Text="Form Ad" DataIndex="form_ad" Sortable="true" Width="130" />
                     <ext:Column ID="Column3" runat="server" Text="Tip" DataIndex="tip" Width="200" />
                     <ext:Column ID="Column4" runat="server" Text="Yetkili Kişi" DataIndex="yetkili_kisi" Width="130" />
-                    <ext:Column ID="Column1" runat="server" Text="Firma Tel" DataIndex="firma_tel" Width="100" />
+                    <ext:Column ID="Column1" runat="server" Text="Firma Tel" DataIndex="firma_tel" Width="180" />
                     <ext:Column ID="Column2" runat="server" Text="Firma Mail" DataIndex="firma_email" Width="180" />
                     <ext:Column ID="Column5" runat="server" Text="Açıklama" DataIndex="aciklama" Width="400">
                         <Commands>
@@ -452,6 +461,9 @@
                     <ext:Column ID="Column17" runat="server" Text="Geldiği Kanal" DataIndex="geldigi_kanal" Width="200" />
                 </Columns>
             </ColumnModel>
+            <Plugins>
+                <ext:FilterHeader runat="server" />
+            </Plugins>
             <View>
                 <ext:GridView ID="GridView1" runat="server">
                     <GetRowClass Handler="return 'x-grid-row-expanded';" />

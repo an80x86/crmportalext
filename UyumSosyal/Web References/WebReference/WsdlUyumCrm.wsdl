@@ -299,6 +299,256 @@
           <s:element minOccurs="0" maxOccurs="unbounded" name="CariGrup" nillable="true" type="tns:CariGrup" />
         </s:sequence>
       </s:complexType>
+      <s:element name="CariGrupSil">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="grupId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CariGrupSilResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CariGrupSilResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CariKartKaydet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="carikart" type="tns:UCariKart" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="UCariKart">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="cari_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="cari_ad" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="cari_yetki" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="fat_adres1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="fat_adres2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="fat_adres3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ilce_ad" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sehir_ad" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ulke_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="tel1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="tel2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="fax" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="vergi_daire" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="vergi_no" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="web" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="satici_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sektor_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="okod1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="okod2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="bolge_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="cgrup_kod1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="cgrup_kod2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="cgrup_kod3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="cari_tip" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="mail_gonder" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="onem_derecesi" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="email_cc" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="mail_gonder_cc" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="ust_cari_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ust_cari_ad" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="sermaye" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="tckimlik_no" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="sicil_no" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="kurulus_tarih" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="tasfiye_halinde" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="kisa_ad" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="silinmesin" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="silme_nedeni" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="mersis_no" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="cari_id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="bitis_tarih" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="faaliyet_sikligi" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="arama_sikligi" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="nace_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="organizasyon_tip" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="kamu_ozel" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="bagli_smm_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="alt_sektor_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="tel3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="tel4" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="eski_cari_ad" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="eski_vergi_no" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="degisiklik_tarih" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="aciklama" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="aciklama2" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CariKartKaydetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CariKartKaydetResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CariKartSil">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="cariId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CariKartSilResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CariKartSilResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CrmFormSorgula">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="masterno" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CrmFormSorgulaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CrmFormSorgulaResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FormKategoriKaydet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="formkategori" type="tns:FormKategori" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="FormKategori">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="kategoriId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="kategori_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="kategori_ad" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="FormKategoriKaydetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FormKategoriKaydetResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FormKategoriSil">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="kategoriId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FormKategoriSilResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FormKategoriSilResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FormKategoriListesi">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="kategorikod" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="kategoriad" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FormKategoriListesiResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FormKategoriListesiResult" type="tns:MobServiceResultOfListOfFormKategori" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MobServiceResultOfListOfFormKategori">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:ArrayOfFormKategori" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfFormKategori">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="FormKategori" nillable="true" type="tns:FormKategori" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="TakipCariKaydet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="takipcari" type="tns:UTakipCari" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="UTakipCari">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="takipId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="cari_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="cari_ad" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="user_kod" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="bas_tarih" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="gun" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="urun_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="takip_durum" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="aciklama" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="TakipCariKaydetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TakipCariKaydetResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TakipCariListesi">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="carikod" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="userkod" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TakipCariListesiResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TakipCariListesiResult" type="tns:MobServiceResultOfListOfUTakipCari" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MobServiceResultOfListOfUTakipCari">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="V" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NeedLogin" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:ArrayOfUTakipCari" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfUTakipCari">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="UTakipCari" nillable="true" type="tns:UTakipCari" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="TakipCariSil">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="takipId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TakipCariSilResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TakipCariSilResult" type="tns:MobServiceResultOfBoolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="UnvanGrupKaydet">
         <s:complexType>
           <s:sequence>
@@ -2129,19 +2379,37 @@
       </s:complexType>
       <s:complexType name="AramaKart">
         <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="kartId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="master_no" type="s:int" />
           <s:element minOccurs="1" maxOccurs="1" name="cari_id" type="s:int" />
           <s:element minOccurs="0" maxOccurs="1" name="cari_kod" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="cari_ad" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="calisan_Say" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="calisan_Say" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="entegrator" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="yazilim" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="pc_say" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="pc_say" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="tel1" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="tel2" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="sektor_kod" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="ilce_ad" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="sehir_ad" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="liste_kod" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="liste_ad" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="user_kod" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="tarih1" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="vkn_no" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="pasif" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="not1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="not2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="aciklama01" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="aciklama02" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="aciklama03" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="aciklama04" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="aciklama05" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="aciklama06" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="aciklama07" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="aciklama08" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="aciklama09" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="aciklama10" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="GenelFirsatListesi">
@@ -7653,6 +7921,66 @@
   <wsdl:message name="CariGrupListesiSoapOut">
     <wsdl:part name="parameters" element="tns:CariGrupListesiResponse" />
   </wsdl:message>
+  <wsdl:message name="CariGrupSilSoapIn">
+    <wsdl:part name="parameters" element="tns:CariGrupSil" />
+  </wsdl:message>
+  <wsdl:message name="CariGrupSilSoapOut">
+    <wsdl:part name="parameters" element="tns:CariGrupSilResponse" />
+  </wsdl:message>
+  <wsdl:message name="CariKartKaydetSoapIn">
+    <wsdl:part name="parameters" element="tns:CariKartKaydet" />
+  </wsdl:message>
+  <wsdl:message name="CariKartKaydetSoapOut">
+    <wsdl:part name="parameters" element="tns:CariKartKaydetResponse" />
+  </wsdl:message>
+  <wsdl:message name="CariKartSilSoapIn">
+    <wsdl:part name="parameters" element="tns:CariKartSil" />
+  </wsdl:message>
+  <wsdl:message name="CariKartSilSoapOut">
+    <wsdl:part name="parameters" element="tns:CariKartSilResponse" />
+  </wsdl:message>
+  <wsdl:message name="CrmFormSorgulaSoapIn">
+    <wsdl:part name="parameters" element="tns:CrmFormSorgula" />
+  </wsdl:message>
+  <wsdl:message name="CrmFormSorgulaSoapOut">
+    <wsdl:part name="parameters" element="tns:CrmFormSorgulaResponse" />
+  </wsdl:message>
+  <wsdl:message name="FormKategoriKaydetSoapIn">
+    <wsdl:part name="parameters" element="tns:FormKategoriKaydet" />
+  </wsdl:message>
+  <wsdl:message name="FormKategoriKaydetSoapOut">
+    <wsdl:part name="parameters" element="tns:FormKategoriKaydetResponse" />
+  </wsdl:message>
+  <wsdl:message name="FormKategoriSilSoapIn">
+    <wsdl:part name="parameters" element="tns:FormKategoriSil" />
+  </wsdl:message>
+  <wsdl:message name="FormKategoriSilSoapOut">
+    <wsdl:part name="parameters" element="tns:FormKategoriSilResponse" />
+  </wsdl:message>
+  <wsdl:message name="FormKategoriListesiSoapIn">
+    <wsdl:part name="parameters" element="tns:FormKategoriListesi" />
+  </wsdl:message>
+  <wsdl:message name="FormKategoriListesiSoapOut">
+    <wsdl:part name="parameters" element="tns:FormKategoriListesiResponse" />
+  </wsdl:message>
+  <wsdl:message name="TakipCariKaydetSoapIn">
+    <wsdl:part name="parameters" element="tns:TakipCariKaydet" />
+  </wsdl:message>
+  <wsdl:message name="TakipCariKaydetSoapOut">
+    <wsdl:part name="parameters" element="tns:TakipCariKaydetResponse" />
+  </wsdl:message>
+  <wsdl:message name="TakipCariListesiSoapIn">
+    <wsdl:part name="parameters" element="tns:TakipCariListesi" />
+  </wsdl:message>
+  <wsdl:message name="TakipCariListesiSoapOut">
+    <wsdl:part name="parameters" element="tns:TakipCariListesiResponse" />
+  </wsdl:message>
+  <wsdl:message name="TakipCariSilSoapIn">
+    <wsdl:part name="parameters" element="tns:TakipCariSil" />
+  </wsdl:message>
+  <wsdl:message name="TakipCariSilSoapOut">
+    <wsdl:part name="parameters" element="tns:TakipCariSilResponse" />
+  </wsdl:message>
   <wsdl:message name="UnvanGrupKaydetSoapIn">
     <wsdl:part name="parameters" element="tns:UnvanGrupKaydet" />
   </wsdl:message>
@@ -9206,6 +9534,46 @@
       <wsdl:input message="tns:CariGrupListesiSoapIn" />
       <wsdl:output message="tns:CariGrupListesiSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="CariGrupSil">
+      <wsdl:input message="tns:CariGrupSilSoapIn" />
+      <wsdl:output message="tns:CariGrupSilSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CariKartKaydet">
+      <wsdl:input message="tns:CariKartKaydetSoapIn" />
+      <wsdl:output message="tns:CariKartKaydetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CariKartSil">
+      <wsdl:input message="tns:CariKartSilSoapIn" />
+      <wsdl:output message="tns:CariKartSilSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CrmFormSorgula">
+      <wsdl:input message="tns:CrmFormSorgulaSoapIn" />
+      <wsdl:output message="tns:CrmFormSorgulaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FormKategoriKaydet">
+      <wsdl:input message="tns:FormKategoriKaydetSoapIn" />
+      <wsdl:output message="tns:FormKategoriKaydetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FormKategoriSil">
+      <wsdl:input message="tns:FormKategoriSilSoapIn" />
+      <wsdl:output message="tns:FormKategoriSilSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="FormKategoriListesi">
+      <wsdl:input message="tns:FormKategoriListesiSoapIn" />
+      <wsdl:output message="tns:FormKategoriListesiSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TakipCariKaydet">
+      <wsdl:input message="tns:TakipCariKaydetSoapIn" />
+      <wsdl:output message="tns:TakipCariKaydetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TakipCariListesi">
+      <wsdl:input message="tns:TakipCariListesiSoapIn" />
+      <wsdl:output message="tns:TakipCariListesiSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TakipCariSil">
+      <wsdl:input message="tns:TakipCariSilSoapIn" />
+      <wsdl:output message="tns:TakipCariSilSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="UnvanGrupKaydet">
       <wsdl:input message="tns:UnvanGrupKaydetSoapIn" />
       <wsdl:output message="tns:UnvanGrupKaydetSoapOut" />
@@ -10319,6 +10687,96 @@
     </wsdl:operation>
     <wsdl:operation name="CariGrupListesi">
       <soap:operation soapAction="http://tempuri.org/CariGrupListesi" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariGrupSil">
+      <soap:operation soapAction="http://tempuri.org/CariGrupSil" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariKartKaydet">
+      <soap:operation soapAction="http://tempuri.org/CariKartKaydet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariKartSil">
+      <soap:operation soapAction="http://tempuri.org/CariKartSil" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CrmFormSorgula">
+      <soap:operation soapAction="http://tempuri.org/CrmFormSorgula" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FormKategoriKaydet">
+      <soap:operation soapAction="http://tempuri.org/FormKategoriKaydet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FormKategoriSil">
+      <soap:operation soapAction="http://tempuri.org/FormKategoriSil" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FormKategoriListesi">
+      <soap:operation soapAction="http://tempuri.org/FormKategoriListesi" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TakipCariKaydet">
+      <soap:operation soapAction="http://tempuri.org/TakipCariKaydet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TakipCariListesi">
+      <soap:operation soapAction="http://tempuri.org/TakipCariListesi" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TakipCariSil">
+      <soap:operation soapAction="http://tempuri.org/TakipCariSil" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -12689,6 +13147,96 @@
     </wsdl:operation>
     <wsdl:operation name="CariGrupListesi">
       <soap12:operation soapAction="http://tempuri.org/CariGrupListesi" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariGrupSil">
+      <soap12:operation soapAction="http://tempuri.org/CariGrupSil" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariKartKaydet">
+      <soap12:operation soapAction="http://tempuri.org/CariKartKaydet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CariKartSil">
+      <soap12:operation soapAction="http://tempuri.org/CariKartSil" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CrmFormSorgula">
+      <soap12:operation soapAction="http://tempuri.org/CrmFormSorgula" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FormKategoriKaydet">
+      <soap12:operation soapAction="http://tempuri.org/FormKategoriKaydet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FormKategoriSil">
+      <soap12:operation soapAction="http://tempuri.org/FormKategoriSil" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FormKategoriListesi">
+      <soap12:operation soapAction="http://tempuri.org/FormKategoriListesi" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TakipCariKaydet">
+      <soap12:operation soapAction="http://tempuri.org/TakipCariKaydet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TakipCariListesi">
+      <soap12:operation soapAction="http://tempuri.org/TakipCariListesi" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TakipCariSil">
+      <soap12:operation soapAction="http://tempuri.org/TakipCariSil" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

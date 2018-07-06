@@ -132,17 +132,48 @@
     <Content Include="Code\SharpZipLib\ICSharpCode.SharpZipLib.dll" />
     <Content Include="Code\SharpZipLib\ReadMe.txt" />
     <Content Include="Code\UI\CommentsWindow.ascx" />
-    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Crm_Cagri_Islemleri\CKategoriGrupListesi.aspx" />
-    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Crm_Cagri_Islemleri\config.xml" />
-    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Crm_Cagri_Islemleri\Default.aspx" />
-    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Crm_Form_Islemleri\config.xml" />
-    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Crm_Form_Islemleri\Default.aspx" />
-    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Hedef_Kitle\config.xml" />
-    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Hedef_Kitle\Firsat.ascx" />
-    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Hedef_Kitle\Sehir.ascx" />
-    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Hedef_Kitle\Urun.ascx" />
-    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Hedef_Kitle\Sektor.ascx" />
-    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Hedef_Kitle\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Islemler\Crm_Cagri_Islemleri\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Islemler\Crm_Cagri_Islemleri\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Islemler\Crm_Form_Islemleri\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Islemler\Crm_Form_Islemleri\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Islemler\Form_Islemleri\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Islemler\Form_Islemleri\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Islemler\Hedef_Kitle\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Islemler\Hedef_Kitle\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Islemler\Hedef_Kitle\Firsat.ascx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Islemler\Hedef_Kitle\Sehir.ascx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Islemler\Hedef_Kitle\Sektor.ascx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Islemler\Hedef_Kitle\Urun.ascx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Alt_Sektor_Tanim\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Alt_Sektor_Tanim\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Belge_Tip\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Belge_Tip\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Cari_Kart_Bolge\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Cari_Kart_Bolge\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Cari_Kategori\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Cari_Kategori\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Cari_Yetkili\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Cari_Yetkili\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Cari_Yetki\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Cari_Yetki\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Form_Kategori\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Form_Kategori\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Marka\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Marka\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Organizasyon_Tur\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Organizasyon_Tur\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Portal_Ozel_Kod\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Portal_Ozel_Kod\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Rakip\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Rakip\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Satici\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Satici\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Sektor\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Sektor\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Sektor_Alt_Sektor\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Sektor_Alt_Sektor\Default.aspx" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Statu\config.xml" />
+    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama\Statu\Default.aspx" />
     <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\5.Tanim\config.xml" />
     <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\5.Tanim\Default.aspx" />
     <Content Include="UpdatePassword.aspx" />
@@ -152,8 +183,6 @@
     <Content Include="HighLighter\Wilco.SyntaxHighlighter.dll" />
     <Content Include="Home\Default.aspx" />
     <Content Include="Moduls\Sosyal_Medya_Islemleri\config.xml" />
-    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Form_Islemleri\config.xml" />
-    <Content Include="Moduls\Sosyal_Medya_Islemleri\Tanimlama_ve_Islemler\Form_Islemleri\Default.aspx" />
     <Content Include="Moduls\Yetkilendirme_Islemleri\config.xml" />
     <Content Include="Moduls\config.xml" />
     <Content Include="Moduls\Yetkilendirme_Islemleri\Tanimlama_ve_Islemler\1.Kullanici\config.xml" />
@@ -681,6 +710,12 @@
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
     <Content Include="Web References\WebReference\MobServiceResultOfListOfCariGrup.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebReference\MobServiceResultOfListOfFormKategori.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\WebReference\MobServiceResultOfListOfUTakipCari.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
     <None Include="Web References\WebReference\Reference.map">
